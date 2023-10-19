@@ -8,6 +8,12 @@ sendMail = function(input) {
         const obj = {input, function: "sendMail"}
         FileMaker.PerformScript("receiveJavascript", JSON.stringify(obj));
     }; 
+
+onRowClick = function(ID) {
+        const obj = {ID, function: "editEmail"}
+        FileMaker.PerformScript("receiveJavascript", JSON.stringify(obj));
+    }; 
+
     export default function EmailTable() {
         return (
             <div className="grow overflow-x-auto">
@@ -24,10 +30,10 @@ sendMail = function(input) {
                             <tbody className="divide-y divide-gray-200 bg-white overflow-y-auto">
                                 {email.map((mail) => (
                                     <tr key={mail.ID}>
-                                        <td className="whitespace-nowrap py-4 pl-4 pr-4 text-md font-medium text-gray-900 sm:pl-6">
+                                        <td onClick={() => onRowClick(mail.ID)} className="whitespace-nowrap py-4 pl-4 pr-4 text-md font-medium text-gray-900 sm:pl-6 cursor-pointer">
                                             {mail.label}
                                         </td>
-                                        <td className="whitespace-nowrap py-4 pl-4 pr-4 text-md font-light text-gray-900 sm:pl-6">
+                                        <td onClick={() => onRowClick(mail.ID)} className="whitespace-nowrap py-4 pl-4 pr-4 text-md font-light text-gray-900 sm:pl-6 cursor-pointer">
                                             {mail.address}
                                         </td>
                                         <td className="whitespace-nowrap py-4 pl-4 pr-4 text-md font-light text-gray-900 sm:pl-6">

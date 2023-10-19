@@ -4,7 +4,11 @@ const people = [
     { name: 'Jenn Wright', role: 'Secondary Contact', ID: 'UUID3'  },
     // More people...
     ]
-    
+onRowClick = function(ID) {
+        const obj = {ID, function: "editContact"}
+        FileMaker.PerformScript("receiveJavascript", JSON.stringify(obj));
+    }; 
+
     export default function ContactTable() {
         return (
             <div className="grow overflow-x-auto">
@@ -21,7 +25,7 @@ const people = [
                             <tbody className="divide-y divide-gray-200 bg-white overflow-y-auto">
                                 {people.map((person) => (
                                     <tr key={person.ID}>
-                                        <td className="whitespace-nowrap py-4 pl-4 pr-4 text-md font-medium text-gray-900 sm:pl-6">
+                                        <td onClick={() => onRowClick(person.ID)} className="whitespace-nowrap py-4 pl-4 pr-4 text-md font-medium text-gray-900 sm:pl-6 cursor-pointer">
                                             {person.name}
                                             <p className="text-sm font-light text-gray-600">{person.role}</p>
                                         </td>

@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-
-import Button from "../components/Button";
-import GroupedRowTable from "../components/GroupedRowTable";
 import ContactTable from "../components/ContactTable";
 import EmailTable from "../components/EmailTable";
 import PhoneTable from "../components/PhoneTable";

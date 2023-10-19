@@ -7,7 +7,12 @@ const phones = [
 dialPhone = function(number) {
         const obj = {number, function: "dialNumber"}
         FileMaker.PerformScript("receiveJavascript", JSON.stringify(obj));
-    };    
+    };   
+    
+onRowClick = function(ID) {
+        const obj = {ID, function: "editPhone"}
+        FileMaker.PerformScript("receiveJavascript", JSON.stringify(obj));
+    }; 
     export default function PhoneTable() {
         return (
             <div className="grow overflow-x-auto">
@@ -24,10 +29,10 @@ dialPhone = function(number) {
                             <tbody className="divide-y divide-gray-200 bg-white overflow-y-auto">
                                 {phones.map((phone) => (
                                     <tr key={phone.ID}>
-                                        <td className="whitespace-nowrap py-4 pl-4 pr-4 text-md font-medium text-gray-900 sm:pl-6">
+                                        <td onClick={() => onRowClick(phone.ID)} className="whitespace-nowrap py-4 pl-4 pr-4 text-md font-medium text-gray-900 sm:pl-6 cursor-pointer">
                                             {phone.label}
                                         </td>
-                                        <td className="whitespace-nowrap py-4 pl-4 pr-4 text-md font-light text-gray-900 sm:pl-6">
+                                        <td onClick={() => onRowClick(phone.ID)} className="whitespace-nowrap py-4 pl-4 pr-4 text-md font-light text-gray-900 sm:pl-6 cursor-pointer">
                                             {phone.number}
                                         </td>
                                         <td className="whitespace-nowrap py-4 pl-4 pr-4 text-md font-light text-gray-900 sm:pl-6">
