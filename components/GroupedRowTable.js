@@ -23,7 +23,7 @@ function classNames(...classes) {
 
 export default function GroupedRowTable() {
     return (
-    <div className="pr-px sm:pr-4 lg:pr-6">
+    <div className="pr-3">
         <table className="min-w-full divide-y divide-gray-300">
             <tbody className=" bg-white">
                 {worksheets.map((worksheet) => (
@@ -32,7 +32,7 @@ export default function GroupedRowTable() {
                         <th
                             colSpan={5}
                             scope="colgroup"
-                            className="bg-gray-200 py-3.5 px-4 text-left text-sm font-semibold text-gray-900 sm:pl-3"
+                            className="bg-gray-100 py-3.5 px-4 text-left text-sm font-semibold text-gray-900 sm:pl-3"
                         >
                             {worksheet.state}
                         </th>
