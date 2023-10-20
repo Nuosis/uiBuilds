@@ -1,6 +1,6 @@
 import { Disclosure } from '@headlessui/react'
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
-
+/*
 const navigation = [
     { name: 'Worksheets', href: '#', current: true },
     {
@@ -18,13 +18,13 @@ const navigation = [
         { name: 'General Janitorial', href: '#' },
         ],
     },
-]
+]*/
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function SideBar() {
+export default function SideBar({ navigation }) {
     return (
         <div className="flex grow flex-col gap-y-5 overflow-y-auto h-full rounded-l-lg border-r border-gray-200 bg-slate-900 px-6">
             <nav className="flex flex-1 flex-col">

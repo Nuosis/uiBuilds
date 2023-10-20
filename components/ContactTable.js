@@ -1,15 +1,15 @@
-const people = [
+/*const people = [
     { name: 'Lindsay Walton', role: 'Primary Contact', ID: 'UUID1' },
     { name: 'Tom Steele', role: 'Owner', ID: 'UUID2'  },
     { name: 'Jenn Wright', role: 'Secondary Contact', ID: 'UUID3'  },
     // More people...
-    ]
+    ]*/
 onRowClick = function(ID) {
         const obj = {ID, function: "editContact"}
         FileMaker.PerformScript("receiveJavascript", JSON.stringify(obj));
     }; 
 
-    export default function ContactTable() {
+    export default function ContactTable({people}) {
         return (
             <div className="grow overflow-x-auto">
                 <div className="inline-block min-w-full align-middle">

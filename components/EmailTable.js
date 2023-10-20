@@ -1,9 +1,10 @@
+/*
 const email = [
     { label: 'Main', address: 'mspsi@me.com', ID: 'UUID1' },
     { label: 'Alt', address: 'me@you.com', ID: 'UUID2'  },
     { label: 'Bob', address: 'bob@you.com', ID: 'UUID3'  },
     // More people...
-    ]
+    ]*/
 sendMail = function(input) {
         const obj = {input, function: "sendMail"}
         FileMaker.PerformScript("receiveJavascript", JSON.stringify(obj));
@@ -14,7 +15,7 @@ onRowClick = function(ID) {
         FileMaker.PerformScript("receiveJavascript", JSON.stringify(obj));
     }; 
 
-    export default function EmailTable() {
+    export default function EmailTable({email}) {
         return (
             <div className="grow overflow-x-auto">
                 <div className="inline-block min-w-full align-middle">
