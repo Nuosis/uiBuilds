@@ -1,22 +1,22 @@
 
 const getInfo = function(worksheet) {
-    if (worksheet.org === worksheet.contractOrg)
+    if (worksheet.worksheetInfo.org === worksheet.worksheetInfo.contractOrg)
         {
         const obj = {
-            subCompany: worksheet.provider,
-            subStartDate: worksheet.providerStartDate,
-            contractValue: worksheet.contractValue,
-            payValue: worksheet.providerValue,
-            percent: (worksheet.providerValue / worksheet.contractValue * 100).toFixed(2) + '%'
+            subCompany: worksheet.worksheetInfo.provider,
+            subStartDate: worksheet.worksheetInfo.providerStartDate,
+            contractValue: worksheet.worksheetInfo.contractValue,
+            payValue: worksheet.worksheetInfo.providerValue,
+            percent: (worksheet.worksheetInfo.providerValue / worksheet.worksheetInfo.contractValue * 100).toFixed(2) + '%'
         }
         return obj
     } else {
         const obj = {
-            subCompany: worksheet.cleaner,
-            subStartDate: worksheet.cleanerStartDate,
-            contractValue: worksheet.providerValue,
-            payValue: worksheet.cleanerValue,
-            percent: (worksheet.cleanerValue / worksheet.providerValue * 100).toFixed(2) + '%'
+            subCompany: worksheet.worksheetInfo.cleaner,
+            subStartDate: worksheet.worksheetInfo.cleanerStartDate,
+            contractValue: worksheet.worksheetInfo.providerValue,
+            payValue: worksheet.worksheetInfo.cleanerValue,
+            percent: (worksheet.worksheetInfo.cleanerValue / worksheet.worksheetInfo.providerValue * 100).toFixed(2) + '%'
         }
         return obj
 
@@ -40,10 +40,11 @@ showSideBar = function(ID) {
 
 export default function WorksheetHeader(worksheetInfo) {
     const displayInfo = getInfo(worksheetInfo);
+    console.log(worksheetInfo)
     return (
         <div id="headerWrapper" className="w-full columns-2 flex flex-col gap-2">
             <div onClick={() => edit()} className="font-serif font-bold text-lg cursor-pointer">
-                {worksheetInfo.name}
+                {worksheetInfo.worksheetInfo.name}
                 <p className="font-serif font-light text-xs leading-4">
                     {worksheetInfo.startDate}    {worksheetInfo.endDate}
                 </p>

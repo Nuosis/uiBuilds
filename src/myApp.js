@@ -30,22 +30,23 @@ const worksheets = [
   { name: 'Worksheets', href: '#', current: true },
   {
       name: 'Active',
-      current: false,
+      current: true,
       children: [
-      { name: 'General Janitorial 2021', href: '#' },
-      { name: 'Periodic Tasks', href: '#' },
+      { name: 'General Janitorial 2021', href: '#', ID: "UUID9" },
+      { name: 'Periodic Tasks', href: '#', ID: "UUID10" },
       ],
   },
   {
       name: 'Inactive',
       current: false,
       children: [
-      { name: 'General Janitorial', href: '#' },
+      { name: 'General Janitorial', href: '#', ID: "UUID11" },
       ],
   },
 ]
 
 const worksheet = {
+  ID: "UUID9",
   org: "UUID1", // the current getOrg state
   contractOrg: "UUID1", // eg Select Janitorial UUID
   name: "General Janitorial 2021",
@@ -74,12 +75,13 @@ const worksheetRecords = [
 
 const MyApp = () => {
   const [records, setRecords] = useState(worksheetRecords);
+  const [selectedWorksheetID, setSelectedWorksheetID] = useState(worksheet.ID);
   return (
     <div id="wrapper" className="container mx-auto my-6 max-w-7xl sm:px-6 lg:px-8 columns-2 flex flex-col">
       <div id="panelHeader" className="h-[10%] min-w-full mx-auto max-w-7xl "><p className="font-serif text-xl text-center text-transform: uppercase text-slate-700">Worksheets</p></div>
       <div id= "worksheetsContainer" className="w-full columns-2 flex flex-row">
         <div id="sidePanel" className="w-auto bg-white" >
-          <SideBar navigation = {worksheets}/>
+          <SideBar navigation = {worksheets} selectedWorksheetID={selectedWorksheetID} setSelectedWorksheetID={setSelectedWorksheetID}/>
         </div>
         <div id="mainPanel" className="container columns-3 flex flex-col">
           <div id="customerinfo" className="container columns-3 flex flex-row gap-2 justify-between">

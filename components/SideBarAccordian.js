@@ -1,5 +1,6 @@
 import { Disclosure } from '@headlessui/react'
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
+
 /*
 const navigation = [
     { name: 'Worksheets', href: '#', current: true },
@@ -24,7 +25,7 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function SideBar({ navigation }) {
+export default function SideBar({ navigation, selectedWorksheetID, setSelectedWorksheetID }) {
     return (
         <div className="flex grow flex-col gap-y-5 overflow-y-auto h-full rounded-l-lg border-r border-gray-200 bg-slate-900 px-6">
             <nav className="flex flex-1 flex-col">
@@ -44,7 +45,7 @@ export default function SideBar({ navigation }) {
                                 {item.name}
                                 </a>
                             ) : (
-                                <Disclosure as="div">
+                                <Disclosure as="div" defaultOpen={item.children?.some(subItem => subItem.ID === selectedWorksheetID)}>
                                 {({ open }) => (
                                     <>
                                     <Disclosure.Button
@@ -69,9 +70,10 @@ export default function SideBar({ navigation }) {
                                             as="a"
                                             href={subItem.href}
                                             className={classNames(
-                                                subItem.current ? 'bg-slate-900' : 'hover:bg-slate-800',
+                                                subItem.ID === selectedWorksheetID ? 'bg-slate-800' : 'hover:bg-slate-800',
                                                 'block rounded-md py-2 pr-2 pl-9 text-sm leading-6 text-gray-400'
                                             )}
+                                            onClick={() => setSelectedWorksheetID(subItem.id)}
                                             >
                                             {subItem.name}
                                             </Disclosure.Button>
