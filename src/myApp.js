@@ -72,8 +72,8 @@ import React, { useState, useEffect } from "react";
 import ContactTable from "../components/ContactTable";
 import EmailTable from "../components/EmailTable";
 import PhonesTable from "../components/PhonesTable";
-import WorksheetTable from "../components/WorksheetTable";
-import WorksheetHeader from "../components/WorksheetHeader";
+import MainTable from "../components/MainTable";
+import MainTableHeader from "../components/MainTableHeader";
 import SideBar from "../components/SideBarAccordian";
 import transformData from "./transformData";
 import ShowTime from "../components/SlideOut";
@@ -122,10 +122,10 @@ const MyApp = ({data}) => {
             <EmailTable email = {custEmail}/>
           </div>
           <div id="mainPanelHeader" className="container mx-auto p-4 bg-gray-100">
-            <WorksheetHeader wsInfo={wsInfo} open={open} setOpen={setOpen}/>
+            <MainTableHeader wsInfo={wsInfo} open={open} setOpen={setOpen}/>
           </div>
           <div id="mainPanelWorksheet" className="container mx-auto bg-slate-600">
-            <WorksheetTable records={records} setRecords={setRecords}/>
+            <MainTable records={records} setRecords={setRecords}/>
           </div>
         </div>
         <div>

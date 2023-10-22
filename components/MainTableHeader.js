@@ -60,7 +60,7 @@ showSideBar = function(ID) {
     }; 
     
 
-export default function WorksheetHeader({wsInfo, open, setOpen}) {
+export default function MainTableHeader({wsInfo, open, setOpen}) {
     // console.log("wsHeader",wsInfo)
     const displayInfo = getInfo(wsInfo);
     const totalTime = wsInfo.totalTime;

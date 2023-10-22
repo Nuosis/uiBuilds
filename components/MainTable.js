@@ -33,7 +33,7 @@ showSideBar = function(ID) {
     }; 
     
 
-    export default function WorksheetTable({ records, setRecords }) {
+    export default function MainTable({ records, setRecords }) {
 
         const onDragEnd = (result) => {
             const { destination, source } = result;
