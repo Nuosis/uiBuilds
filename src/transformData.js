@@ -367,148 +367,150 @@ const wsArray = [
 
 const currentState = {org: "6FF320DD-757B-42BB-ACD5-00BFCD5F58E0"}
 
-export default function transformData(custObj, currentState, wsArray) {
+export default function transformData(custObj, currentState, wsArray, selectedWorksheetID) {
 	console.log("custObj", custObj)
 	console.log("wsArray", wsArray)
+	console.log("selectedWS", selectedWorksheetID)
 	const newObj = {};
 	
-		// Emails Array
-		newObj.emails = custObj.portalData.customersEmail.map((email) => ({
-		label: email['customersEmail::Label'],
-		address: email['customersEmail::Email'],
-		ID: email['customersEmail::__ID'],
-		}));
-		// console.log("emailsArray",newObj)
-	
-		// People Array
-		newObj.people = custObj.portalData.customerContacts.map((contact) => ({
-		name: contact['customerContacts::Name_of_Relation'],
-		role: contact['customerContacts::Role'],
-		ID: contact['customerContacts::__ID'],
-		}));
-		// console.log("PeopleArray",newObj)
-	
-		// Phones Array
-		newObj.phones = custObj.portalData.customersPhone.map((phone) => ({
-		label: phone['customersPhone::Label'],
-		number: phone['customersPhone::Number'],
-		ID: phone['customersPhone::__ID'],
-		}));
+	// Emails Array
+	newObj.emails = custObj.portalData.customersEmail.map((email) => ({
+	label: email['customersEmail::Label'],
+	address: email['customersEmail::Email'],
+	ID: email['customersEmail::__ID'],
+	}));
+	// console.log("emailsArray",newObj)
 
-		// console.log("phoneArray",newObj)
-	
-		// Navigation Array
-		newObj.navigation = [
-		{
-			name: 'Worksheets',
+	// People Array
+	newObj.people = custObj.portalData.customerContacts.map((contact) => ({
+	name: contact['customerContacts::Name_of_Relation'],
+	role: contact['customerContacts::Role'],
+	ID: contact['customerContacts::__ID'],
+	}));
+	// console.log("PeopleArray",newObj)
+
+	// Phones Array
+	newObj.phones = custObj.portalData.customersPhone.map((phone) => ({
+	label: phone['customersPhone::Label'],
+	number: phone['customersPhone::Number'],
+	ID: phone['customersPhone::__ID'],
+	}));
+
+	// console.log("phoneArray",newObj)
+
+	// Navigation Array
+	newObj.navigation = [
+	{
+		name: 'Worksheets',
+		href: '#',
+		current: true,
+	},
+	{
+		name: 'Active',
+		current: false,
+		children: custObj.portalData.customerWorksheets
+		.filter((worksheet) => worksheet['customerWorksheets::Select'] === "1")
+		.map((worksheet) => ({
+			name: worksheet['customerWorksheets::Worksheet Name'],
+			ID: worksheet['customerWorksheets::__ID'],
 			href: '#',
-			current: true,
-		},
-		{
-			name: 'Active',
-			current: false,
-			children: custObj.portalData.customerWorksheets
-			.filter((worksheet) => worksheet['customerWorksheets::Select'] === "1")
-			.map((worksheet) => ({
-				name: worksheet['customerWorksheets::Worksheet Name'],
-				ID: worksheet['customerWorksheets::__ID'],
-				href: '#',
-			})),
-		},
-		{
-			name: 'Inactive',
-			current: false,
-			children: custObj.portalData.customerWorksheets
-			.filter((worksheet) => worksheet['customerWorksheets::Select'] !== "1")
-			.map((worksheet) => ({
-				name: worksheet['customerWorksheets::Worksheet Name'],
-				ID: worksheet['customerWorksheets::__ID'],
-				href: '#',
-			})),
-		},
-		];
-		// console.log("navigation",newObj.navigation)
-	
-		const selectedWorksheet = custObj.portalData.customerWorksheets.find(
-		(worksheet) => worksheet['customerWorksheets::Select'] === "1"
-		);
-		const matchingWsArray = wsArray.find(
-		(fieldData) => fieldData.fieldData['__ID'] === selectedWorksheet['customerWorksheets::__ID']
-		);
-		// console.log("matchingWsArray",matchingWsArray)
-	
-		// Worksheet Object
-		newObj.worksheet = {
-		ID: selectedWorksheet['customerWorksheets::__ID'],
-		org: currentState.org,
-		contractOrg: selectedWorksheet['customerWorksheets::_orgID'],
-		name: selectedWorksheet['customerWorksheets::Worksheet Name'],
-		startDate: matchingWsArray.fieldData['Start Date'],
-		endDate: matchingWsArray.fieldData['End Date'],
-		provider: matchingWsArray.fieldData['provider'],
-		providerStartDate: matchingWsArray.fieldData['providerAssignedDate'],
-		providerID: matchingWsArray.fieldData['_providerID'],
-		cleaner: matchingWsArray.fieldData['Cleaner'],
-		cleanerStartDate: matchingWsArray.fieldData['Cleaner Assigned Date'],
-		cleanerID: matchingWsArray.fieldData['_cleanerID'],
-		contractValue: matchingWsArray.fieldData["saved AMOUNT TOTAL"],
-		providerValue: matchingWsArray.fieldData["saved AMOUNT TOTAL PROVIDER"],
-		cleanerValue: matchingWsArray.fieldData["SCSA Value"],
-		};
-		// console.log("worksheetObj",newObj.worksheet)
-	
-		// WorksheetRecords Array
-		newObj.worksheetRecords = matchingWsArray.portalData.workSheet_WorksheetInfo
-		.sort((a, b) => a['workSheet_WorksheetInfo::~order'] - b['workSheet_WorksheetInfo::~order'])
-		.map((record) => ({
-			area: record['workSheet_WorksheetInfo::Area'],
-			frequency: record['workSheet_WorksheetInfo::Frequency Specified Horozontal'],
-			rate: record['workSheet_WorksheetInfo::Rate'],
-			eot: record['workSheet_WorksheetInfo::Total Time Per Visit'],
-			ID: record['workSheet_WorksheetInfo::__ID'],
-		}));
-		// console.log("recordsArray",newObj)
-		// Initialize an empty object to hold the subtotals based on frequency
-		const totalTime = {};
+		})),
+	},
+	{
+		name: 'Inactive',
+		current: false,
+		children: custObj.portalData.customerWorksheets
+		.filter((worksheet) => worksheet['customerWorksheets::Select'] !== "1")
+		.map((worksheet) => ({
+			name: worksheet['customerWorksheets::Worksheet Name'],
+			ID: worksheet['customerWorksheets::__ID'],
+			href: '#',
+		})),
+	},
+	];
+	// console.log("navigation",newObj.navigation)
 
-		// Calculate the sum of eot based on frequency
-		newObj.worksheetRecords.reduce((acc, record) => {
-			const frequency = record.frequency;  // Extract frequency from the current record
-			const eotValue = parseFloat(record.eot);  // Extract and convert eot to a floating-point number
-			
-			// Initialize frequency in acc if it doesn't already exist
-			if (!acc[frequency]) {
-				acc[frequency] = 0;
-			}
-			
-			// Add the eot value to the running total for this frequency
-			acc[frequency] += eotValue;
-			
-			return acc;  // Return updated acc for the next iteration
-		}, totalTime);
+	const selectedWorksheet = custObj.portalData.customerWorksheets.find(
+	(worksheet) => worksheet['customerWorksheets::__ID'] === selectedWorksheetID
+	);
+	const matchingWsArray = wsArray.find(
+	(fieldData) => fieldData.fieldData['__ID'] === selectedWorksheetID
+	);
+	// console.log("matchingWsArray",matchingWsArray)
 
-		// Add the totalTime object to newObj.worksheet
-		newObj.worksheet.totalTime = totalTime;
+	// Worksheet Object
+	newObj.worksheet = {
+	ID: selectedWorksheet['customerWorksheets::__ID'],
+	org: currentState.org,
+	contractOrg: selectedWorksheet['customerWorksheets::_orgID'],
+	name: selectedWorksheet['customerWorksheets::Worksheet Name'],
+	startDate: matchingWsArray.fieldData['Start Date'],
+	endDate: matchingWsArray.fieldData['End Date'],
+	provider: matchingWsArray.fieldData['provider'],
+	providerStartDate: matchingWsArray.fieldData['providerAssignedDate'],
+	providerID: matchingWsArray.fieldData['_providerID'],
+	cleaner: matchingWsArray.fieldData['Cleaner'],
+	cleanerStartDate: matchingWsArray.fieldData['Cleaner Assigned Date'],
+	cleanerID: matchingWsArray.fieldData['_cleanerID'],
+	contractValue: matchingWsArray.fieldData["saved AMOUNT TOTAL"],
+	providerValue: matchingWsArray.fieldData["saved AMOUNT TOTAL PROVIDER"],
+	cleanerValue: matchingWsArray.fieldData["SCSA Value"],
+	};
+	// console.log("worksheetObj",newObj.worksheet)
 
-		// Get the first record from the worksheetRecords array
-		const firstRecord = newObj.worksheetRecords[0];
+	// WorksheetRecords Array
+	newObj.worksheetRecords = matchingWsArray.portalData.workSheet_WorksheetInfo
+	.sort((a, b) => a['workSheet_WorksheetInfo::~order'] - b['workSheet_WorksheetInfo::~order'])
+	.map((record) => ({
+		area: record['workSheet_WorksheetInfo::Area'],
+		frequency: record['workSheet_WorksheetInfo::Frequency Specified Horozontal'],
+		rate: record['workSheet_WorksheetInfo::Rate'],
+		eot: record['workSheet_WorksheetInfo::Total Time Per Visit'],
+		ID: record['workSheet_WorksheetInfo::__ID'],
+	}));
+	// console.log("recordsArray",newObj)
 
-		// Initialize an empty object for firstRecordTotalTime
-		let firstRecordTotalTime = {};
-
-		// Extract the total time from totalTime for the key with the same value as firstRecord.frequency
-		if (firstRecord && newObj.worksheet.totalTime && newObj.worksheet.totalTime.hasOwnProperty(firstRecord.frequency)) {
-		firstRecordTotalTime = newObj.worksheet.totalTime[firstRecord.frequency];
+	// CONSTRUCT TOTALTIME
+	// Initialize an empty object to hold the subtotals based on frequency
+	const totalTime = {};
+	// Calculate the sum of eot based on frequency
+	newObj.worksheetRecords.reduce((acc, record) => {
+		const frequency = record.frequency;  // Extract frequency from the current record
+		const eotValue = parseFloat(record.eot);  // Extract and convert eot to a floating-point number
+		
+		// Initialize frequency in acc if it doesn't already exist
+		if (!acc[frequency]) {
+			acc[frequency] = 0;
 		}
+		
+		// Add the eot value to the running total for this frequency
+		acc[frequency] += eotValue;
+		
+		return acc;  // Return updated acc for the next iteration
+	}, totalTime);
 
-		// Set totalTime.default to firstRecordTotalTime
-		newObj.worksheet.totalTime.default = firstRecordTotalTime;
-		// console.log("worksheetObj",newObj.worksheet)
+	// Add the totalTime object to newObj.worksheet
+	newObj.worksheet.totalTime = totalTime;
 
-		// Check if totalTime has only two keys
-		if (newObj.worksheet.totalTime && Object.keys(newObj.worksheet.totalTime).length === 2) {
-			// Remove the key that matches firstRecord.frequency
-			delete newObj.worksheet.totalTime[firstRecord.frequency];
-		}
-		return newObj;
+	// Get the first record from the worksheetRecords array
+	const firstRecord = newObj.worksheetRecords[0];
+
+	// Initialize an empty object for firstRecordTotalTime
+	let firstRecordTotalTime = {};
+
+	// Extract the total time from totalTime for the key with the same value as firstRecord.frequency
+	if (firstRecord && newObj.worksheet.totalTime && newObj.worksheet.totalTime.hasOwnProperty(firstRecord.frequency)) {
+	firstRecordTotalTime = newObj.worksheet.totalTime[firstRecord.frequency];
 	}
+
+	// Set totalTime.default to firstRecordTotalTime
+	newObj.worksheet.totalTime.default = firstRecordTotalTime;
+	// console.log("worksheetObj",newObj.worksheet)
+
+	// Check if totalTime has only two keys
+	if (newObj.worksheet.totalTime && Object.keys(newObj.worksheet.totalTime).length === 2) {
+		// Remove the key that matches firstRecord.frequency
+		delete newObj.worksheet.totalTime[firstRecord.frequency];
+	}
+	return newObj;
+}

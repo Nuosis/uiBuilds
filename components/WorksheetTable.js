@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+
 /*
 const worksheetRecords = [
     { area: 'Main', frequency: 'Weekly: Tuesday, Friday', rate: '30.75', eot: '24 min', ID: 'UUID1' },
@@ -10,7 +9,12 @@ const worksheetRecords = [
     { area: 'Kitchen', frequency: 'Weekly: Tuesday, Friday', rate: '30.75', eot: '27 min', ID: 'UUID6'  },
     { area: 'Kitchen', frequency: 'Weekly: Tuesday, Friday', rate: '30.75', eot: '27 min', ID: 'UUID7'  },
     ]
-*/    
+*/
+
+
+import React, { useState } from 'react';
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";   
+
 deleteRow = function(ID) {
         const obj = {ID, function: "deleteWsRecord"}
         FileMaker.PerformScript("customers . loadWebViewer . worksheets . callbacks", JSON.stringify(obj));
@@ -43,7 +47,7 @@ showSideBar = function(ID) {
         
             setRecords(reorderedRecords);
             const obj = {reorderedRecords, function: "wsReorderRecords"}
-            FileMaker.PerformScript("receiveJavascript", JSON.stringify(obj));
+            FileMaker.PerformScript("customers . loadWebViewer . worksheets . callbacks", JSON.stringify(obj));
         };
     
         return (
@@ -59,17 +63,18 @@ showSideBar = function(ID) {
                                                 <Draggable key={record.ID} draggableId={record.ID.toString()} index={index}>
                                                     {(provided) => (
                                                         <tr
+                                                            className="flex flex-row columns-3 items-center"
                                                             {...provided.draggableProps}
                                                             {...provided.dragHandleProps}
                                                             ref={provided.innerRef}
                                                         >
-                                                            <td className="whitespace-nowrap py-4 pl-4 pr-4 text-md font-medium text-gray-900 sm:pl-6">
+                                                            <td className="w-1/2 whitespace-nowrap py-4 pl-4 pr-4 text-md font-medium text-gray-900 sm:pl-6">
                                                                 <div onClick={() => edit(record.ID)} className="cursor-pointer">
                                                                     {record.area}
                                                                     <p className="text-sm font-light text-gray-600">{record.frequency}</p>
                                                                 </div>
                                                             </td>
-                                                            <td className="whitespace-nowrap py-4 pl-4 pr-4 text-md font-light text-gray-900 sm:pl-6">
+                                                            <td className="whitespace-nowrap py-4 gap-2 text-md font-light text-gray-900">
                                                                 ${parseFloat(record.rate).toFixed(2)} x {record.eot} mins
                                                             </td>
                                                             <td className="whitespace-nowrap py-4 pl-4 pr-4 text-md font-light text-gray-900 sm:pl-6">

@@ -30,8 +30,8 @@ onRowClick = function(ID) {
                             </thead>
                             <tbody className="divide-y divide-gray-200 bg-white overflow-y-auto">
                                 {email.map((mail) => (
-                                    <tr key={mail.ID}>
-                                        <td onClick={() => onRowClick(mail.ID)} className="whitespace-nowrap py-4 pl-4 pr-4 text-md font-medium text-gray-900 sm:pl-6 cursor-pointer">
+                                    <tr key={mail.ID} style={{height: "77px"}}>
+                                        <td onClick={() => onRowClick(mail.ID)} className="whitespace-nowrap py-4 pl-4 pr-4 text-md font-medium capitalize text-gray-900 sm:pl-6 cursor-pointer">
                                             {mail.label}
                                         </td>
                                         <td onClick={() => sendMail(mail.ID)} className="whitespace-nowrap py-4 pl-4 pr-4 text-md font-light text-gray-900 sm:pl-6 cursor-pointer">

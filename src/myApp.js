@@ -84,8 +84,12 @@ const MyApp = ({data}) => {
   // console.log(json)
   const custObj = json.custObj;
   const wsArray = json.wsArray;
+  //console.log("initWsArray",wsArray)
   const currentState = json.currentState;
-  const wsData = transformData(custObj, currentState, wsArray);
+  const selectedWorksheet = wsArray.find(wsArray => wsArray.fieldData.Select === "1");
+  const [selectedWorksheetID, setSelectedWorksheetID] = useState(selectedWorksheet.fieldData.__ID);
+  console.log("initSelectedID", selectedWorksheetID)
+  const wsData = transformData(custObj, currentState, wsArray, selectedWorksheetID);
   const custEmail = wsData.emails;
   const custRelated = wsData.people;
   const custPhones = wsData.phones;
@@ -93,15 +97,13 @@ const MyApp = ({data}) => {
   const worksheet = wsData.worksheet;
   const worksheetRecords = wsData.worksheetRecords;
   const [wsInfo, setWsInfo] = useState(worksheet);
-  // console.log(wsInfo);
   const [records, setRecords] = useState(worksheetRecords);
-  const [selectedWorksheetID, setSelectedWorksheetID] = useState(worksheet.ID);
   const [open, setOpen] = useState(false); // for side panel open/closed state
 
   useEffect(() => {
     // Fetch new worksheet data, update state, etc.
     // This will re-render the associated components.
-    const newWsData = transformData(custObj, currentState, wsArray);
+    const newWsData = transformData(custObj, currentState, wsArray, selectedWorksheetID);
     setWsInfo(newWsData.worksheet);
     setRecords(newWsData.worksheetRecords);
   }, [selectedWorksheetID]);

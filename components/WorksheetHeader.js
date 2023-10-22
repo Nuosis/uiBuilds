@@ -64,6 +64,7 @@ export default function WorksheetHeader({wsInfo, open, setOpen}) {
     // console.log("wsHeader",wsInfo)
     const displayInfo = getInfo(wsInfo);
     const totalTime = wsInfo.totalTime;
+    console.log("totalTime",totalTime)
     const groupedTime = {
         'Monday': 0,
         'Tuesday': 0,
@@ -101,6 +102,8 @@ export default function WorksheetHeader({wsInfo, open, setOpen}) {
     const nonZeroKeys = Object.keys(groupedTime).filter(key => groupedTime[key] !== 0);
     const sum = nonZeroKeys.reduce((acc, key) => acc + groupedTime[key], 0);
     const average = nonZeroKeys.length > 0 ? sum / nonZeroKeys.length : 0;
+    const finalAverage = average === 0 ? wsInfo.totalTime.default : average;
+    console.log("timeAverage",average)
     return (
         <div id="headerWrapper" className="w-full columns-2 flex flex-col gap-2">
                 <div className="columns-2 flex flex-row gap-2 font-bold text-lg ">
@@ -118,7 +121,7 @@ export default function WorksheetHeader({wsInfo, open, setOpen}) {
                         <div className="w-52 columns-2 flex flex-row gap-1 font-serif text-base justify-start items-center">
                             <div className="w-24">Target TPC</div>
                             <div>
-                                {`${Math.floor(average / 60)}hrs ${Math.round(average % 60/5) * 5}mins`}
+                                {`${Math.floor(finalAverage / 60)}hrs ${Math.round(average % 60/5) * 5}mins`}
                             </div>
                         </div>
                         <div className="w-16 columns-2 flex flex-row gap-2">
