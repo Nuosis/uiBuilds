@@ -1,11 +1,5 @@
-import React, { useState } from "react";
-import ContactTable from "../components/ContactTable";
-import EmailTable from "../components/EmailTable";
-import PhoneTable from "../components/PhoneTable";
-import WorksheetTable from "../components/WorksheetTable";
-import WorksheetHeader from "../components/WorksheetHeader";
-import SideBar from "../components/SideBarAccordian";
 
+/*
 const custEmail = [
   { label: 'Main', address: 'mspsi@me.com', ID: 'UUID1' },
   { label: 'Alt', address: 'me@you.com', ID: 'UUID2'  },
@@ -22,7 +16,7 @@ const custRelated = [
 
 const custPhones = [
       { label: 'Main', number: '(778) 678-3674', ID: 'UUID1' },
-      { label: 'Work', number: '(250) 360-0666)', ID: 'UUID2'  },
+      { label: 'Work', number: '(250) 360-0666', ID: 'UUID2'  },
       { label: 'Sherry', number: '(604) 256-2243', ID: 'UUID3'  },
   ]
 
@@ -72,29 +66,68 @@ const worksheetRecords = [
   { area: 'Kitchen', frequency: 'Weekly: Tuesday, Friday', rate: '30.75', eot: '27 min', ID: 'UUID6'  },
   { area: 'Kitchen', frequency: 'Weekly: Tuesday, Friday', rate: '30.75', eot: '27 min', ID: 'UUID7'  },
   ]
+  */
 
-const MyApp = () => {
+import React, { useState, useEffect } from "react";
+import ContactTable from "../components/ContactTable";
+import EmailTable from "../components/EmailTable";
+import PhonesTable from "../components/PhonesTable";
+import WorksheetTable from "../components/WorksheetTable";
+import WorksheetHeader from "../components/WorksheetHeader";
+import SideBar from "../components/SideBarAccordian";
+import transformData from "./transformData";
+import ShowTime from "../components/SlideOut";
+
+const MyApp = ({data}) => {
+  // console.log(data)
+  const json = JSON.parse(data);
+  // console.log(json)
+  const custObj = json.custObj;
+  const wsArray = json.wsArray;
+  const currentState = json.currentState;
+  const wsData = transformData(custObj, currentState, wsArray);
+  const custEmail = wsData.emails;
+  const custRelated = wsData.people;
+  const custPhones = wsData.phones;
+  const worksheets = wsData.navigation;
+  const worksheet = wsData.worksheet;
+  const worksheetRecords = wsData.worksheetRecords;
+  const [wsInfo, setWsInfo] = useState(worksheet);
+  // console.log(wsInfo);
   const [records, setRecords] = useState(worksheetRecords);
   const [selectedWorksheetID, setSelectedWorksheetID] = useState(worksheet.ID);
+  const [open, setOpen] = useState(false); // for side panel open/closed state
+
+  useEffect(() => {
+    // Fetch new worksheet data, update state, etc.
+    // This will re-render the associated components.
+    const newWsData = transformData(custObj, currentState, wsArray);
+    setWsInfo(newWsData.worksheet);
+    setRecords(newWsData.worksheetRecords);
+  }, [selectedWorksheetID]);
+
   return (
-    <div id="wrapper" className="container mx-auto my-6 max-w-7xl sm:px-6 lg:px-8 columns-2 flex flex-col">
-      <div id="panelHeader" className="h-[10%] min-w-full mx-auto max-w-7xl "><p className="font-serif text-xl text-center text-transform: uppercase text-slate-700">Worksheets</p></div>
-      <div id= "worksheetsContainer" className="w-full columns-2 flex flex-row">
+    <div id="wrapper" className="container mx-auto max-w-7xl sm:px-6 lg:px-8 columns-2 flex flex-col">
+      <div id="panelHeader" className="min-h-max min-w-full mx-auto max-w-7xl "><p className="font-serif text-xl text-center text-transform: uppercase text-slate-700">Worksheets</p></div>
+      <div id= "worksheetsContainer" className="w-full pt-2 columns-2 flex flex-row">
         <div id="sidePanel" className="w-auto bg-white" >
           <SideBar navigation = {worksheets} selectedWorksheetID={selectedWorksheetID} setSelectedWorksheetID={setSelectedWorksheetID}/>
         </div>
         <div id="mainPanel" className="container columns-3 flex flex-col">
           <div id="customerinfo" className="container columns-3 flex flex-row gap-2 justify-between">
             <ContactTable people = {custRelated}/>
+            <PhonesTable phones = {custPhones}/>
             <EmailTable email = {custEmail}/>
-            <PhoneTable phones = {custPhones}/>
           </div>
           <div id="mainPanelHeader" className="container mx-auto p-4 bg-gray-100">
-            <WorksheetHeader worksheetInfo={worksheet}/>
+            <WorksheetHeader wsInfo={wsInfo} open={open} setOpen={setOpen}/>
           </div>
           <div id="mainPanelWorksheet" className="container mx-auto bg-slate-600">
             <WorksheetTable records={records} setRecords={setRecords}/>
           </div>
+        </div>
+        <div>
+          <ShowTime wsInfo={wsInfo} setWsInfo={setWsInfo} open={open} setOpen={setOpen}/>
         </div>
       </div>
     </div>
@@ -102,3 +135,4 @@ const MyApp = () => {
 };
 
 export default MyApp;
+

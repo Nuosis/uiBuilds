@@ -7,12 +7,12 @@ const email = [
     ]*/
 sendMail = function(input) {
         const obj = {input, function: "sendMail"}
-        FileMaker.PerformScript("receiveJavascript", JSON.stringify(obj));
+        FileMaker.PerformScript("customers . loadWebViewer . worksheets . callbacks", JSON.stringify(obj));
     }; 
 
 onRowClick = function(ID) {
         const obj = {ID, function: "editEmail"}
-        FileMaker.PerformScript("receiveJavascript", JSON.stringify(obj));
+        FileMaker.PerformScript("customers . loadWebViewer . worksheets . callbacks", JSON.stringify(obj));
     }; 
 
     export default function EmailTable({email}) {
@@ -34,7 +34,7 @@ onRowClick = function(ID) {
                                         <td onClick={() => onRowClick(mail.ID)} className="whitespace-nowrap py-4 pl-4 pr-4 text-md font-medium text-gray-900 sm:pl-6 cursor-pointer">
                                             {mail.label}
                                         </td>
-                                        <td onClick={() => onRowClick(mail.ID)} className="whitespace-nowrap py-4 pl-4 pr-4 text-md font-light text-gray-900 sm:pl-6 cursor-pointer">
+                                        <td onClick={() => sendMail(mail.ID)} className="whitespace-nowrap py-4 pl-4 pr-4 text-md font-light text-gray-900 sm:pl-6 cursor-pointer">
                                             {mail.address}
                                         </td>
                                         <td className="whitespace-nowrap py-4 pl-4 pr-4 text-md font-light text-gray-900 sm:pl-6">

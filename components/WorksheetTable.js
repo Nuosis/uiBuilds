@@ -1,21 +1,31 @@
 import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-    
+/*
+const worksheetRecords = [
+    { area: 'Main', frequency: 'Weekly: Tuesday, Friday', rate: '30.75', eot: '24 min', ID: 'UUID1' },
+    { area: 'Stairwell', frequency: 'Weekly: Tuesday, Friday', rate: '30.75', eot: '3 min', ID: 'UUID2'  },
+    { area: 'Kitchen', frequency: 'Weekly: Tuesday, Friday', rate: '30.75', eot: '27 min', ID: 'UUID3'  },
+    { area: 'Kitchen', frequency: 'Weekly: Tuesday, Friday', rate: '30.75', eot: '27 min', ID: 'UUID4'  },
+    { area: 'Kitchen', frequency: 'Weekly: Tuesday, Friday', rate: '30.75', eot: '27 min', ID: 'UUID5'  },
+    { area: 'Kitchen', frequency: 'Weekly: Tuesday, Friday', rate: '30.75', eot: '27 min', ID: 'UUID6'  },
+    { area: 'Kitchen', frequency: 'Weekly: Tuesday, Friday', rate: '30.75', eot: '27 min', ID: 'UUID7'  },
+    ]
+*/    
 deleteRow = function(ID) {
         const obj = {ID, function: "deleteWsRecord"}
-        FileMaker.PerformScript("receiveJavascript", JSON.stringify(obj));
+        FileMaker.PerformScript("customers . loadWebViewer . worksheets . callbacks", JSON.stringify(obj));
     };
 edit = function(ID) {
         const obj = {ID, function: "editWs"}
-        FileMaker.PerformScript("receiveJavascript", JSON.stringify(obj));
+        FileMaker.PerformScript("customers . loadWebViewer . worksheets . callbacks", JSON.stringify(obj));
     }; 
 showInfo = function(ID) {
         const obj = {ID, function: "popWsInfo"}
-        FileMaker.PerformScript("receiveJavascript", JSON.stringify(obj));
+        FileMaker.PerformScript("customers . loadWebViewer . worksheets . callbacks", JSON.stringify(obj));
     }; 
 showSideBar = function(ID) {
         const obj = {ID, function: "popWsSideBar"}
-        FileMaker.PerformScript("receiveJavascript", JSON.stringify(obj));
+        FileMaker.PerformScript("customers . loadWebViewer . worksheets . callbacks", JSON.stringify(obj));
     }; 
     
 
@@ -32,6 +42,8 @@ showSideBar = function(ID) {
             reorderedRecords.splice(destination.index, 0, removed);
         
             setRecords(reorderedRecords);
+            const obj = {reorderedRecords, function: "wsReorderRecords"}
+            FileMaker.PerformScript("receiveJavascript", JSON.stringify(obj));
         };
     
         return (
@@ -58,7 +70,7 @@ showSideBar = function(ID) {
                                                                 </div>
                                                             </td>
                                                             <td className="whitespace-nowrap py-4 pl-4 pr-4 text-md font-light text-gray-900 sm:pl-6">
-                                                                {record.rate} x {record.eot} mins
+                                                                ${parseFloat(record.rate).toFixed(2)} x {record.eot} mins
                                                             </td>
                                                             <td className="whitespace-nowrap py-4 pl-4 pr-4 text-md font-light text-gray-900 sm:pl-6">
                                                                 <button onClick={() => deleteRow(record.ID)}>
