@@ -69,51 +69,51 @@ const worksheetRecords = [
   */
 
 import React, { useState, useEffect } from "react";
-import ContactTable from "../components/ContactTable";
-import EmailTable from "../components/EmailTable";
-import PhonesTable from "../components/PhonesTable";
-import MainTable from "../components/MainTable";
-import MainTableHeader from "../components/MainTableHeader";
-import SideBar from "../components/SideBarAccordian";
-import transformData from "./transformData";
-import ShowTime from "../components/SlideOut";
+import ContactTable from "./ContactTable";
+import EmailTable from "./EmailTable";
+import PhonesTable from "./PhonesTable";
+import MainTable from "./MainTable";
+import MainTableHeader from "./MainTableHeader";
+import SideBar from "./SideBarAccordian";
+import transformData from "../src/transformData";
+import ShowTime from "./SlideOut";
 
-const MyApp = ({data}) => {
+const WorksheetsDom = ({data}) => {
   // console.log(data)
   const json = JSON.parse(data);
   // console.log(json)
   const custObj = json.custObj;
-  const wsArray = json.wsArray;
-  //console.log("initWsArray",wsArray)
+  const wsArray = json.dataArray;
+  // console.log("initWsArray",wsArray)
   const currentState = json.currentState;
   const selectedWorksheet = wsArray.find(wsArray => wsArray.fieldData.Select === "1");
-  const [selectedWorksheetID, setSelectedWorksheetID] = useState(selectedWorksheet.fieldData.__ID);
-  console.log("initSelectedID", selectedWorksheetID)
-  const wsData = transformData(custObj, currentState, wsArray, selectedWorksheetID);
+  const [selectedID, setSelectedID] = useState(selectedWorksheet.fieldData.__ID);
+  // console.log("initSelectedID", selectedID)
+  const wsData = transformData(custObj, currentState, wsArray, selectedID);
   const custEmail = wsData.emails;
   const custRelated = wsData.people;
   const custPhones = wsData.phones;
   const worksheets = wsData.navigation;
   const worksheet = wsData.worksheet;
   const worksheetRecords = wsData.worksheetRecords;
-  const [wsInfo, setWsInfo] = useState(worksheet);
+  const [tableInfo, setTableInfo] = useState(worksheet);
   const [records, setRecords] = useState(worksheetRecords);
   const [open, setOpen] = useState(false); // for side panel open/closed state
 
   useEffect(() => {
     // Fetch new worksheet data, update state, etc.
     // This will re-render the associated components.
-    const newWsData = transformData(custObj, currentState, wsArray, selectedWorksheetID);
-    setWsInfo(newWsData.worksheet);
+    const newWsData = transformData(custObj, currentState, wsArray, selectedID);
+    setTableInfo(newWsData.worksheet);
     setRecords(newWsData.worksheetRecords);
-  }, [selectedWorksheetID]);
+  }, [selectedID]);
 
   return (
     <div id="wrapper" className="container mx-auto max-w-7xl sm:px-6 lg:px-8 columns-2 flex flex-col">
       <div id="panelHeader" className="min-h-max min-w-full mx-auto max-w-7xl "><p className="font-serif text-xl text-center text-transform: uppercase text-slate-700">Worksheets</p></div>
       <div id= "worksheetsContainer" className="w-full pt-2 columns-2 flex flex-row">
         <div id="sidePanel" className="w-auto bg-white" >
-          <SideBar navigation = {worksheets} selectedWorksheetID={selectedWorksheetID} setSelectedWorksheetID={setSelectedWorksheetID}/>
+          <SideBar navigation = {worksheets} selectedID={selectedID} setSelectedID={setSelectedID}/>
         </div>
         <div id="mainPanel" className="container columns-3 flex flex-col">
           <div id="customerinfo" className="container columns-3 flex flex-row gap-2 justify-between">
@@ -122,19 +122,19 @@ const MyApp = ({data}) => {
             <EmailTable email = {custEmail}/>
           </div>
           <div id="mainPanelHeader" className="container mx-auto p-4 bg-gray-100">
-            <MainTableHeader wsInfo={wsInfo} open={open} setOpen={setOpen}/>
+            <MainTableHeader tableInfo={tableInfo} open={open} setOpen={setOpen}/>
           </div>
           <div id="mainPanelWorksheet" className="container mx-auto bg-slate-600">
             <MainTable records={records} setRecords={setRecords}/>
           </div>
         </div>
         <div>
-          <ShowTime wsInfo={wsInfo} setWsInfo={setWsInfo} open={open} setOpen={setOpen}/>
+          <ShowTime tableInfo={tableInfo} setTableInfo={setTableInfo} open={open} setOpen={setOpen}/>
         </div>
       </div>
     </div>
   );
 };
 
-export default MyApp;
+export default WorksheetsDom;
 

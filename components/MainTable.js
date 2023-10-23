@@ -17,19 +17,19 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 deleteRow = function(ID) {
         const obj = {ID, function: "deleteWsRecord"}
-        FileMaker.PerformScript("customers . loadWebViewer . worksheets . callbacks", JSON.stringify(obj));
+        FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
     };
 edit = function(ID) {
         const obj = {ID, function: "editWs"}
-        FileMaker.PerformScript("customers . loadWebViewer . worksheets . callbacks", JSON.stringify(obj));
+        FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
     }; 
 showInfo = function(ID) {
         const obj = {ID, function: "popWsInfo"}
-        FileMaker.PerformScript("customers . loadWebViewer . worksheets . callbacks", JSON.stringify(obj));
+        FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
     }; 
 showSideBar = function(ID) {
         const obj = {ID, function: "popWsSideBar"}
-        FileMaker.PerformScript("customers . loadWebViewer . worksheets . callbacks", JSON.stringify(obj));
+        FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
     }; 
     
 
@@ -47,7 +47,7 @@ showSideBar = function(ID) {
         
             setRecords(reorderedRecords);
             const obj = {reorderedRecords, function: "wsReorderRecords"}
-            FileMaker.PerformScript("customers . loadWebViewer . worksheets . callbacks", JSON.stringify(obj));
+            FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
         };
     
         return (

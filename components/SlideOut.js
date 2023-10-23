@@ -4,8 +4,8 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 
 
 
-export default function ShowTime({wsInfo, setWsInfo, open, setOpen}) {
-    const totalTime = wsInfo.totalTime;
+export default function ShowTime({tableInfo, setTableInfo, open, setOpen}) {
+    const totalTime = tableInfo.totalTime;
     const groupedTime = {
         'Monday': 0,
         'Tuesday': 0,

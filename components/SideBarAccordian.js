@@ -25,8 +25,8 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function SideBar({ navigation, selectedWorksheetID, setSelectedWorksheetID }) {
-    console.log("sideBar:",selectedWorksheetID, "navigation:", navigation)
+export default function SideBar({ navigation, selectedID, setSelectedID }) {
+    console.log("sideBar:",selectedID, "navigation:", navigation)
     return (
         <div className="flex grow flex-col gap-y-5 overflow-y-auto h-full rounded-l-lg border-r border-gray-200 bg-slate-900 px-6">
             <nav className="flex flex-1 flex-col">
@@ -34,7 +34,7 @@ export default function SideBar({ navigation, selectedWorksheetID, setSelectedWo
                     <li>
                         <ul role="list" className="-mx-2 space-y-1">
                             {navigation.map((item) => (
-                                <li key={item.name}>
+                                <li key={item.ID}>
                                     {!item.children ? (
                                         <a
                                         href={item.href}
@@ -46,7 +46,7 @@ export default function SideBar({ navigation, selectedWorksheetID, setSelectedWo
                                         {item.name}
                                         </a>
                                     ) : (
-                                        <Disclosure as="div" defaultOpen={item.children?.some(subItem => subItem.ID === selectedWorksheetID)}>
+                                        <Disclosure as="div" defaultOpen={item.children?.some(subItem => subItem.ID === selectedID)}>
                                         {({ open }) => (
                                             <>
                                             <Disclosure.Button
@@ -68,16 +68,16 @@ export default function SideBar({ navigation, selectedWorksheetID, setSelectedWo
                                                 {item.children.map((subItem) => {
                                                     // console.log(subItem);
                                                     return (
-                                                    <li key={subItem.name}>
+                                                    <li key={subItem.ID}>
                                                         <Disclosure.Button
                                                         as="a"
                                                         href={subItem.href}
                                                         data-id={subItem.ID}
                                                         className={classNames(
-                                                            subItem.ID === selectedWorksheetID ? 'bg-slate-800' : 'hover:bg-slate-800',
+                                                            subItem.ID === selectedID ? 'bg-slate-800' : 'hover:bg-slate-800',
                                                             'block rounded-md py-2 pr-2 pl-9 text-sm leading-6 text-gray-400'
                                                         )}
-                                                        onClick={() => setSelectedWorksheetID(subItem.ID)}
+                                                        onClick={() => setSelectedID(subItem.ID)}
                                                         >
                                                         {subItem.name}
                                                         </Disclosure.Button>

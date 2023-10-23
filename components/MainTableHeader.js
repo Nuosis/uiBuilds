@@ -21,24 +21,25 @@ const worksheet = {
 
 import React, { useState } from "react";
 
-const getInfo = function(worksheet) {
-    if (worksheet.org === worksheet.contractOrg)
+const getInfo = function(table) {
+
+    if (table.org === table.contractOrg)
         {
         const obj = {
-            subCompany: worksheet.provider,
-            subStartDate: worksheet.providerStartDate,
-            contractValue: worksheet.contractValue,
-            payValue: worksheet.providerValue,
-            percent: (worksheet.providerValue / worksheet.contractValue * 100).toFixed(2) + '%'
+            subCompany: table.provider,
+            subStartDate: table.providerStartDate,
+            contractValue: table.contractValue,
+            payValue: table.providerValue,
+            percent: (table.providerValue / table.contractValue * 100).toFixed(2) + '%'
         }
         return obj
     } else {
         const obj = {
-            subCompany: worksheet.cleaner,
-            subStartDate: worksheet.cleanerStartDate,
-            contractValue: worksheet.providerValue,
-            payValue: worksheet.cleanerValue,
-            percent: (worksheet.cleanerValue / worksheet.providerValue * 100).toFixed(2) + '%'
+            subCompany: table.cleaner,
+            subStartDate: table.cleanerStartDate,
+            contractValue: table.providerValue,
+            payValue: table.cleanerValue,
+            percent: (table.cleanerValue / table.providerValue * 100).toFixed(2) + '%'
         }
         return obj
 
@@ -47,24 +48,24 @@ const getInfo = function(worksheet) {
 
 
 edit = function() {
-        const obj = {function: "editWs"}
-        FileMaker.PerformScript("customers . loadWebViewer . worksheets . callbacks", JSON.stringify(obj));
+        const obj = {function: "edit"}
+        FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
     }; 
 showInfo = function(ID) {
-        const obj = {ID, function: "popWsInfo"}
-        FileMaker.PerformScript("customers . loadWebViewer . worksheets . callbacks", JSON.stringify(obj));
+        const obj = {ID, function: "popInfo"}
+        FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
     }; 
 showSideBar = function(ID) {
-        const obj = {ID, function: "popWsSideBar"}
-        FileMaker.PerformScript("customers . loadWebViewer . worksheets . callbacks", JSON.stringify(obj));
+        const obj = {ID, function: "popSideBar"}
+        FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
     }; 
     
 
-export default function MainTableHeader({wsInfo, open, setOpen}) {
-    // console.log("wsHeader",wsInfo)
-    const displayInfo = getInfo(wsInfo);
-    const totalTime = wsInfo.totalTime;
-    console.log("totalTime",totalTime)
+export default function MainTableHeader({tableInfo, open, setOpen}) {
+    // console.log("wsHeader",tableInfo)
+    const displayInfo = getInfo(tableInfo);
+    const totalTime = tableInfo.totalTime;
+    // console.log("totalTime",totalTime)
     const groupedTime = {
         'Monday': 0,
         'Tuesday': 0,
@@ -102,15 +103,15 @@ export default function MainTableHeader({wsInfo, open, setOpen}) {
     const nonZeroKeys = Object.keys(groupedTime).filter(key => groupedTime[key] !== 0);
     const sum = nonZeroKeys.reduce((acc, key) => acc + groupedTime[key], 0);
     const average = nonZeroKeys.length > 0 ? sum / nonZeroKeys.length : 0;
-    const finalAverage = average === 0 ? wsInfo.totalTime.default : average;
-    console.log("timeAverage",average)
+    const finalAverage = (average === 0 ? (tableInfo.totalTime.default == null ? tableInfo.totalTime : tableInfo.totalTime.default) : average);
+    // console.log("timeAverage",average)
     return (
         <div id="headerWrapper" className="w-full columns-2 flex flex-col gap-2">
                 <div className="columns-2 flex flex-row gap-2 font-bold text-lg ">
                     <div onClick={() => edit()} className="w-1/2 font-serif grow-0 pr-8 cursor-pointer">
-                        {wsInfo.name}
+                        {tableInfo.name}
                         <p className="font-serif font-light text-xs leading-4">
-                            {wsInfo.startDate}    {wsInfo.endDate}
+                            {tableInfo.startDate}    {tableInfo.endDate}
                         </p>
                     </div>
                     <div className="w-1/2 columns-3 flex flex-row gap-2 justify-between">
