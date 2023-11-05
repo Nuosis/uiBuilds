@@ -83,11 +83,13 @@ const WorksheetsDom = ({data}) => {
   const json = JSON.parse(data);
   // console.log(json)
   const custObj = json.custObj;
+  const currentState = json.currentState;
   const wsArray = json.dataArray;
   // console.log("initWsArray",wsArray)
-  const currentState = json.currentState;
-  const selectedWorksheet = wsArray.find(wsArray => wsArray.fieldData.Select === "1");
-  const [selectedID, setSelectedID] = useState(selectedWorksheet.fieldData.__ID);
+  const selectedWorksheet = wsArray.find(wsArray => wsArray.fieldData.Select === "1") || // get first ws where selected is true
+    [...wsArray].sort((a, b) => b.recordId - a.recordId)[0] || //get newest ws
+    {};
+  const [selectedID, setSelectedID] = useState(selectedWorksheet.fieldData.__ID || null);
   // console.log("initSelectedID", selectedID)
   const wsData = transformData(custObj, currentState, wsArray, selectedID);
   const custEmail = wsData.emails;

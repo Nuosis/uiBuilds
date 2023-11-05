@@ -15,23 +15,14 @@ const worksheetRecords = [
 import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";  
 
-deleteRow = function(ID) {
+const deleteRow = (ID) => {
         const obj = {ID, function: "deleteRecord"}
         FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
     };
-edit = function(ID) {
+const edit = (ID) => {
         const obj = {ID, function: "editMainTable"}
         FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
     }; 
-showInfo = function(ID) {
-        const obj = {ID, function: "popInfo"}
-        FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
-    }; 
-showSideBar = function(ID) {
-        const obj = {ID, function: "popSideBar"}
-        FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
-    }; 
-    
 
 export default function MainTable({ records, setRecords }) {
 
@@ -58,36 +49,41 @@ export default function MainTable({ records, setRecords }) {
                         <DragDropContext onDragEnd={onDragEnd}>
                             <Droppable droppableId="table">
                                 {(provided) => (
-                                    <tbody {...provided.droppableProps} ref={provided.innerRef} className="divide-y divide-gray-200 bg-white overflow-y-auto">
+                                    <section {...provided.droppableProps} ref={provided.innerRef} className="divide-y divide-gray-200 bg-white overflow-y-auto">
                                         {(records || []).map((record, index) => (
                                             <Draggable key={record.ID} draggableId={record.ID.toString()} index={index}>
                                                 {(provided) => (
-                                                    <tr
-                                                        className="flex flex-row columns-3 items-center"
+                                                    <header
+                                                        className="flex flex-row columns-2 justify-between items-center"
                                                         {...provided.draggableProps}
                                                         {...provided.dragHandleProps}
                                                         ref={provided.innerRef}
                                                     >
-                                                        <td className="w-1/2 whitespace-nowrap py-4 pl-4 pr-4 text-md font-medium text-gray-900 sm:pl-6">
+                                                        <div className="w-1/2 whitespace-nowrap py-4 pl-4 pr-4 text-md font-medium text-gray-900 sm:pl-6">
                                                             <div onClick={() => edit(record.ID)} className="cursor-pointer">
                                                                 {record.area}
                                                                 <p className="text-sm font-light text-gray-600">{record.frequency}</p>
                                                             </div>
-                                                        </td>
-                                                        <td className="whitespace-nowrap py-4 gap-2 text-md font-light text-gray-900">
-                                                            ${parseFloat(record.rate).toFixed(2)} x {record.eot} mins
-                                                        </td>
-                                                        <td className="whitespace-nowrap py-4 pl-4 pr-4 text-md font-light text-gray-900 sm:pl-6">
-                                                            <button onClick={() => deleteRow(record.ID)}>
-                                                                {/* SVG for delete icon */}
-                                                            </button>
-                                                        </td>
-                                                    </tr>
+                                                        </div>
+                                                        <div className="w-1/2 whitespace-nowrap flex flex-row columns-2 justify-between items-center">  
+                                                            <div className="whitespace-nowrap py-4 gap-2 text-md font-light text-gray-900">
+                                                                ${parseFloat(record.rate).toFixed(2)} x {Math.round(record.eot)} mins
+                                                            </div>
+                                                            <div className="whitespace-nowrap py-4 pl-4 pr-4 text-md font-light text-gray-900 sm:pl-6">
+                                                                <button onClick={() => deleteRow(record.ID)}>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-circle" viewBox="0 0 16 16">
+                                                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                                                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                                                    </svg>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </header>
                                                 )}
                                             </Draggable>
                                         ))}
                                         {provided.placeholder}
-                                    </tbody>
+                                    </section>
                                 )}
                             </Droppable>
                         </DragDropContext>

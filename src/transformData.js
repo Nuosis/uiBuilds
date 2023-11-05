@@ -432,17 +432,18 @@ export default function transformData(custObj, currentState, wsArray, selectedWo
 	},
 	];
 	// console.log("navigation",newObj.navigation)
+	const isValidID = selectedWorksheetID && Object.keys(selectedWorksheetID).length !== 0;
 
-	const selectedWorksheet = custObj.portalData.customerWorksheets.find(
+	const selectedWorksheet = isValidID ? custObj.portalData.customerWorksheets.find(
 	(worksheet) => worksheet['customerWorksheets::__ID'] === selectedWorksheetID
-	);
-	const matchingWsArray = wsArray.find(
+	):null;
+	const matchingWsArray = isValidID ? wsArray.find(
 	(fieldData) => fieldData.fieldData['__ID'] === selectedWorksheetID
-	);
+	):null;
 	// console.log("matchingWsArray",matchingWsArray)
 
 	// Worksheet Object
-	newObj.worksheet = {
+	newObj.worksheet = isValidID && selectedWorksheet && matchingWsArray ? {
 	ID: selectedWorksheet['customerWorksheets::__ID'],
 	org: currentState.org,
 	contractOrg: selectedWorksheet['customerWorksheets::_orgID'],
@@ -458,11 +459,11 @@ export default function transformData(custObj, currentState, wsArray, selectedWo
 	contractValue: matchingWsArray.fieldData["saved AMOUNT TOTAL"],
 	providerValue: matchingWsArray.fieldData["saved AMOUNT TOTAL PROVIDER"],
 	cleanerValue: matchingWsArray.fieldData["SCSA Value"],
-	};
+	}:null;
 	// console.log("worksheetObj",newObj.worksheet)
 
 	// WorksheetRecords Array
-	newObj.worksheetRecords = matchingWsArray.portalData.workSheet_WorksheetInfo
+	newObj.worksheetRecords = isValidID && selectedWorksheet && matchingWsArray ? matchingWsArray.portalData.workSheet_WorksheetInfo
 	.sort((a, b) => a['workSheet_WorksheetInfo::~order'] - b['workSheet_WorksheetInfo::~order'])
 	.map((record) => ({
 		area: record['workSheet_WorksheetInfo::Area'],
@@ -470,14 +471,13 @@ export default function transformData(custObj, currentState, wsArray, selectedWo
 		rate: record['workSheet_WorksheetInfo::Rate'],
 		eot: record['workSheet_WorksheetInfo::Total Time Per Visit'],
 		ID: record['workSheet_WorksheetInfo::__ID'],
-	}));
+	})):null;
 	// console.log("recordsArray",newObj)
 
 	// CONSTRUCT TOTALTIME
 	// Initialize an empty object to hold the subtotals based on frequency
-	const totalTime = {};
-	// Calculate the sum of eot based on frequency
-	newObj.worksheetRecords.reduce((acc, record) => {
+	let totalTime = {}
+	totalTime = newObj.worksheetRecords ? newObj.worksheetRecords.reduce((acc, record) => {
 		const frequency = record.frequency;  // Extract frequency from the current record
 		const eotValue = parseFloat(record.eot);  // Extract and convert eot to a floating-point number
 		
@@ -490,13 +490,14 @@ export default function transformData(custObj, currentState, wsArray, selectedWo
 		acc[frequency] += eotValue;
 		
 		return acc;  // Return updated acc for the next iteration
-	}, totalTime);
+	}, totalTime):0;
+	// console.log("newObj",newObj)
 
 	// Add the totalTime object to newObj.worksheet
 	newObj.worksheet.totalTime = totalTime;
 
 	// Get the first record from the worksheetRecords array
-	const firstRecord = newObj.worksheetRecords[0];
+	const firstRecord = newObj.worksheetRecords ? newObj.worksheetRecords[0]:null;
 
 	// Initialize an empty object for firstRecordTotalTime
 	let firstRecordTotalTime = {};

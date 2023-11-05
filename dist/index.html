@@ -6722,11 +6722,15 @@ const WorksheetsDom = ({ data  })=>{
     const json = JSON.parse(data);
     // console.log(json)
     const custObj = json.custObj;
+    const currentState = json.currentState;
     const wsArray = json.dataArray;
     // console.log("initWsArray",wsArray)
-    const currentState = json.currentState;
-    const selectedWorksheet = wsArray.find((wsArray)=>wsArray.fieldData.Select === "1");
-    const [selectedID, setSelectedID] = (0, _react.useState)(selectedWorksheet.fieldData.__ID);
+    const selectedWorksheet = wsArray.find((wsArray)=>wsArray.fieldData.Select === "1") || // get first ws where selected is true
+    [
+        ...wsArray
+    ].sort((a, b)=>b.recordId - a.recordId)[0] || //get newest ws
+    {};
+    const [selectedID, setSelectedID] = (0, _react.useState)(selectedWorksheet.fieldData.__ID || null);
     // console.log("initSelectedID", selectedID)
     const wsData = (0, _transformDataDefault.default)(custObj, currentState, wsArray, selectedID);
     const custEmail = wsData.emails;
@@ -6759,12 +6763,12 @@ const WorksheetsDom = ({ data  })=>{
                     children: "Worksheets"
                 }, void 0, false, {
                     fileName: "components/Worksheets.js",
-                    lineNumber: 113,
+                    lineNumber: 115,
                     columnNumber: 81
                 }, undefined)
             }, void 0, false, {
                 fileName: "components/Worksheets.js",
-                lineNumber: 113,
+                lineNumber: 115,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -6780,12 +6784,12 @@ const WorksheetsDom = ({ data  })=>{
                             setSelectedID: setSelectedID
                         }, void 0, false, {
                             fileName: "components/Worksheets.js",
-                            lineNumber: 116,
+                            lineNumber: 118,
                             columnNumber: 11
                         }, undefined)
                     }, void 0, false, {
                         fileName: "components/Worksheets.js",
-                        lineNumber: 115,
+                        lineNumber: 117,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -6800,27 +6804,27 @@ const WorksheetsDom = ({ data  })=>{
                                         people: custRelated
                                     }, void 0, false, {
                                         fileName: "components/Worksheets.js",
-                                        lineNumber: 120,
+                                        lineNumber: 122,
                                         columnNumber: 13
                                     }, undefined),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _phonesTableDefault.default), {
                                         phones: custPhones
                                     }, void 0, false, {
                                         fileName: "components/Worksheets.js",
-                                        lineNumber: 121,
+                                        lineNumber: 123,
                                         columnNumber: 13
                                     }, undefined),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _emailTableDefault.default), {
                                         email: custEmail
                                     }, void 0, false, {
                                         fileName: "components/Worksheets.js",
-                                        lineNumber: 122,
+                                        lineNumber: 124,
                                         columnNumber: 13
                                     }, undefined)
                                 ]
                             }, void 0, true, {
                                 fileName: "components/Worksheets.js",
-                                lineNumber: 119,
+                                lineNumber: 121,
                                 columnNumber: 11
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -6832,12 +6836,12 @@ const WorksheetsDom = ({ data  })=>{
                                     setOpen: setOpen
                                 }, void 0, false, {
                                     fileName: "components/Worksheets.js",
-                                    lineNumber: 125,
+                                    lineNumber: 127,
                                     columnNumber: 13
                                 }, undefined)
                             }, void 0, false, {
                                 fileName: "components/Worksheets.js",
-                                lineNumber: 124,
+                                lineNumber: 126,
                                 columnNumber: 11
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -6848,18 +6852,18 @@ const WorksheetsDom = ({ data  })=>{
                                     setRecords: setRecords
                                 }, void 0, false, {
                                     fileName: "components/Worksheets.js",
-                                    lineNumber: 128,
+                                    lineNumber: 130,
                                     columnNumber: 13
                                 }, undefined)
                             }, void 0, false, {
                                 fileName: "components/Worksheets.js",
-                                lineNumber: 127,
+                                lineNumber: 129,
                                 columnNumber: 11
                             }, undefined)
                         ]
                     }, void 0, true, {
                         fileName: "components/Worksheets.js",
-                        lineNumber: 118,
+                        lineNumber: 120,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -6870,28 +6874,28 @@ const WorksheetsDom = ({ data  })=>{
                             setOpen: setOpen
                         }, void 0, false, {
                             fileName: "components/Worksheets.js",
-                            lineNumber: 132,
+                            lineNumber: 134,
                             columnNumber: 11
                         }, undefined)
                     }, void 0, false, {
                         fileName: "components/Worksheets.js",
-                        lineNumber: 131,
+                        lineNumber: 133,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "components/Worksheets.js",
-                lineNumber: 114,
+                lineNumber: 116,
                 columnNumber: 7
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "components/Worksheets.js",
-        lineNumber: 112,
+        lineNumber: 114,
         columnNumber: 5
     }, undefined);
 };
-_s(WorksheetsDom, "2+bS9CkXZmRQICbGfGylBOTJgEQ=");
+_s(WorksheetsDom, "FW8bo8I3li3boEP7z+zw5XSIKDU=");
 _c = WorksheetsDom;
 exports.default = WorksheetsDom;
 var _c;
@@ -7853,31 +7857,17 @@ var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
 var _reactBeautifulDnd = require("react-beautiful-dnd");
-deleteRow = function(ID) {
+const deleteRow = (ID)=>{
     const obj = {
         ID,
         function: "deleteRecord"
     };
     FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
 };
-edit = function(ID) {
+const edit = (ID)=>{
     const obj = {
         ID,
         function: "editMainTable"
-    };
-    FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
-};
-showInfo = function(ID) {
-    const obj = {
-        ID,
-        function: "popInfo"
-    };
-    FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
-};
-showSideBar = function(ID) {
-    const obj = {
-        ID,
-        function: "popSideBar"
     };
     FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
 };
@@ -7911,7 +7901,7 @@ function MainTable({ records , setRecords  }) {
                         onDragEnd: onDragEnd,
                         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBeautifulDnd.Droppable), {
                             droppableId: "table",
-                            children: (provided)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("tbody", {
+                            children: (provided)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("section", {
                                     ...provided.droppableProps,
                                     ref: provided.innerRef,
                                     className: "divide-y divide-gray-200 bg-white overflow-y-auto",
@@ -7919,13 +7909,13 @@ function MainTable({ records , setRecords  }) {
                                         (records || []).map((record, index)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBeautifulDnd.Draggable), {
                                                 draggableId: record.ID.toString(),
                                                 index: index,
-                                                children: (provided)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("tr", {
-                                                        className: "flex flex-row columns-3 items-center",
+                                                children: (provided)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("header", {
+                                                        className: "flex flex-row columns-2 justify-between items-center",
                                                         ...provided.draggableProps,
                                                         ...provided.dragHandleProps,
                                                         ref: provided.innerRef,
                                                         children: [
-                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("td", {
+                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                                                                 className: "w-1/2 whitespace-nowrap py-4 pl-4 pr-4 text-md font-medium text-gray-900 sm:pl-6",
                                                                 children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                                                                     onClick: ()=>edit(record.ID),
@@ -7937,94 +7927,131 @@ function MainTable({ records , setRecords  }) {
                                                                             children: record.frequency
                                                                         }, void 0, false, {
                                                                             fileName: "components/MainTable.js",
-                                                                            lineNumber: 74,
+                                                                            lineNumber: 65,
                                                                             columnNumber: 65
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "components/MainTable.js",
-                                                                    lineNumber: 72,
+                                                                    lineNumber: 63,
                                                                     columnNumber: 61
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "components/MainTable.js",
-                                                                lineNumber: 71,
+                                                                lineNumber: 62,
                                                                 columnNumber: 57
                                                             }, this),
-                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("td", {
-                                                                className: "whitespace-nowrap py-4 gap-2 text-md font-light text-gray-900",
+                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                                                                className: "w-1/2 whitespace-nowrap flex flex-row columns-2 justify-between items-center",
                                                                 children: [
-                                                                    "$",
-                                                                    parseFloat(record.rate).toFixed(2),
-                                                                    " x ",
-                                                                    record.eot,
-                                                                    " mins"
+                                                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                                                                        className: "whitespace-nowrap py-4 gap-2 text-md font-light text-gray-900",
+                                                                        children: [
+                                                                            "$",
+                                                                            parseFloat(record.rate).toFixed(2),
+                                                                            " x ",
+                                                                            Math.round(record.eot),
+                                                                            " mins"
+                                                                        ]
+                                                                    }, void 0, true, {
+                                                                        fileName: "components/MainTable.js",
+                                                                        lineNumber: 69,
+                                                                        columnNumber: 61
+                                                                    }, this),
+                                                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                                                                        className: "whitespace-nowrap py-4 pl-4 pr-4 text-md font-light text-gray-900 sm:pl-6",
+                                                                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                                                                            onClick: ()=>deleteRow(record.ID),
+                                                                            children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("svg", {
+                                                                                xmlns: "http://www.w3.org/2000/svg",
+                                                                                width: "16",
+                                                                                height: "16",
+                                                                                fill: "currentColor",
+                                                                                className: "bi bi-x-circle",
+                                                                                viewBox: "0 0 16 16",
+                                                                                children: [
+                                                                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("path", {
+                                                                                        d: "M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                                                                                    }, void 0, false, {
+                                                                                        fileName: "components/MainTable.js",
+                                                                                        lineNumber: 75,
+                                                                                        columnNumber: 73
+                                                                                    }, this),
+                                                                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("path", {
+                                                                                        d: "M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"
+                                                                                    }, void 0, false, {
+                                                                                        fileName: "components/MainTable.js",
+                                                                                        lineNumber: 76,
+                                                                                        columnNumber: 73
+                                                                                    }, this)
+                                                                                ]
+                                                                            }, void 0, true, {
+                                                                                fileName: "components/MainTable.js",
+                                                                                lineNumber: 74,
+                                                                                columnNumber: 69
+                                                                            }, this)
+                                                                        }, void 0, false, {
+                                                                            fileName: "components/MainTable.js",
+                                                                            lineNumber: 73,
+                                                                            columnNumber: 65
+                                                                        }, this)
+                                                                    }, void 0, false, {
+                                                                        fileName: "components/MainTable.js",
+                                                                        lineNumber: 72,
+                                                                        columnNumber: 61
+                                                                    }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "components/MainTable.js",
-                                                                lineNumber: 77,
-                                                                columnNumber: 57
-                                                            }, this),
-                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("td", {
-                                                                className: "whitespace-nowrap py-4 pl-4 pr-4 text-md font-light text-gray-900 sm:pl-6",
-                                                                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
-                                                                    onClick: ()=>deleteRow(record.ID)
-                                                                }, void 0, false, {
-                                                                    fileName: "components/MainTable.js",
-                                                                    lineNumber: 81,
-                                                                    columnNumber: 61
-                                                                }, this)
-                                                            }, void 0, false, {
-                                                                fileName: "components/MainTable.js",
-                                                                lineNumber: 80,
+                                                                lineNumber: 68,
                                                                 columnNumber: 57
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "components/MainTable.js",
-                                                        lineNumber: 65,
+                                                        lineNumber: 56,
                                                         columnNumber: 53
                                                     }, this)
                                             }, record.ID, false, {
                                                 fileName: "components/MainTable.js",
-                                                lineNumber: 63,
+                                                lineNumber: 54,
                                                 columnNumber: 45
                                             }, this)),
                                         provided.placeholder
                                     ]
                                 }, void 0, true, {
                                     fileName: "components/MainTable.js",
-                                    lineNumber: 61,
+                                    lineNumber: 52,
                                     columnNumber: 37
                                 }, this)
                         }, void 0, false, {
                             fileName: "components/MainTable.js",
-                            lineNumber: 59,
+                            lineNumber: 50,
                             columnNumber: 29
                         }, this)
                     }, void 0, false, {
                         fileName: "components/MainTable.js",
-                        lineNumber: 58,
+                        lineNumber: 49,
                         columnNumber: 25
                     }, this)
                 }, void 0, false, {
                     fileName: "components/MainTable.js",
-                    lineNumber: 57,
+                    lineNumber: 48,
                     columnNumber: 21
                 }, this)
             }, void 0, false, {
                 fileName: "components/MainTable.js",
-                lineNumber: 56,
+                lineNumber: 47,
                 columnNumber: 17
             }, this)
         }, void 0, false, {
             fileName: "components/MainTable.js",
-            lineNumber: 55,
+            lineNumber: 46,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "components/MainTable.js",
-        lineNumber: 54,
+        lineNumber: 45,
         columnNumber: 9
     }, this);
 }
@@ -47315,11 +47342,12 @@ function transformData(custObj, currentState, wsArray, selectedWorksheetID) {
         }
     ];
     // console.log("navigation",newObj.navigation)
-    const selectedWorksheet = custObj.portalData.customerWorksheets.find((worksheet)=>worksheet["customerWorksheets::__ID"] === selectedWorksheetID);
-    const matchingWsArray = wsArray.find((fieldData)=>fieldData.fieldData["__ID"] === selectedWorksheetID);
+    const isValidID = selectedWorksheetID && Object.keys(selectedWorksheetID).length !== 0;
+    const selectedWorksheet = isValidID ? custObj.portalData.customerWorksheets.find((worksheet)=>worksheet["customerWorksheets::__ID"] === selectedWorksheetID) : null;
+    const matchingWsArray = isValidID ? wsArray.find((fieldData)=>fieldData.fieldData["__ID"] === selectedWorksheetID) : null;
     // console.log("matchingWsArray",matchingWsArray)
     // Worksheet Object
-    newObj.worksheet = {
+    newObj.worksheet = isValidID && selectedWorksheet && matchingWsArray ? {
         ID: selectedWorksheet["customerWorksheets::__ID"],
         org: currentState.org,
         contractOrg: selectedWorksheet["customerWorksheets::_orgID"],
@@ -47335,22 +47363,21 @@ function transformData(custObj, currentState, wsArray, selectedWorksheetID) {
         contractValue: matchingWsArray.fieldData["saved AMOUNT TOTAL"],
         providerValue: matchingWsArray.fieldData["saved AMOUNT TOTAL PROVIDER"],
         cleanerValue: matchingWsArray.fieldData["SCSA Value"]
-    };
+    } : null;
     // console.log("worksheetObj",newObj.worksheet)
     // WorksheetRecords Array
-    newObj.worksheetRecords = matchingWsArray.portalData.workSheet_WorksheetInfo.sort((a, b)=>a["workSheet_WorksheetInfo::~order"] - b["workSheet_WorksheetInfo::~order"]).map((record)=>({
+    newObj.worksheetRecords = isValidID && selectedWorksheet && matchingWsArray ? matchingWsArray.portalData.workSheet_WorksheetInfo.sort((a, b)=>a["workSheet_WorksheetInfo::~order"] - b["workSheet_WorksheetInfo::~order"]).map((record)=>({
             area: record["workSheet_WorksheetInfo::Area"],
             frequency: record["workSheet_WorksheetInfo::Frequency Specified Horozontal"],
             rate: record["workSheet_WorksheetInfo::Rate"],
             eot: record["workSheet_WorksheetInfo::Total Time Per Visit"],
             ID: record["workSheet_WorksheetInfo::__ID"]
-        }));
+        })) : null;
     // console.log("recordsArray",newObj)
     // CONSTRUCT TOTALTIME
     // Initialize an empty object to hold the subtotals based on frequency
-    const totalTime = {};
-    // Calculate the sum of eot based on frequency
-    newObj.worksheetRecords.reduce((acc, record)=>{
+    let totalTime = {};
+    totalTime = newObj.worksheetRecords ? newObj.worksheetRecords.reduce((acc, record)=>{
         const frequency = record.frequency; // Extract frequency from the current record
         const eotValue = parseFloat(record.eot); // Extract and convert eot to a floating-point number
         // Initialize frequency in acc if it doesn't already exist
@@ -47358,11 +47385,12 @@ function transformData(custObj, currentState, wsArray, selectedWorksheetID) {
         // Add the eot value to the running total for this frequency
         acc[frequency] += eotValue;
         return acc; // Return updated acc for the next iteration
-    }, totalTime);
+    }, totalTime) : 0;
+    console.log("newObj", newObj);
     // Add the totalTime object to newObj.worksheet
     newObj.worksheet.totalTime = totalTime;
     // Get the first record from the worksheetRecords array
-    const firstRecord = newObj.worksheetRecords[0];
+    const firstRecord = newObj.worksheetRecords ? newObj.worksheetRecords[0] : null;
     // Initialize an empty object for firstRecordTotalTime
     let firstRecordTotalTime = {};
     // Extract the total time from totalTime for the key with the same value as firstRecord.frequency
