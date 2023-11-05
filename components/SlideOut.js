@@ -4,7 +4,8 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 
 
 
-export default function ShowTime({tableInfo, setTableInfo, open, setOpen}) {
+export default function ShowTime({tableInfo, open, setOpen}) {
+    console.log(tableInfo)
     const totalTime = tableInfo.totalTime;
     const groupedTime = {
         'Monday': 0,
@@ -23,10 +24,23 @@ export default function ShowTime({tableInfo, setTableInfo, open, setOpen}) {
         Object.keys(totalTime).forEach((key) => {
             let time = totalTime[key];
             const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-        
-            if (key.startsWith("Weekly")) {
+            const weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+            //console.log("key", key)
+            if (key === "Weekly: Weekdays") {
+                console.log("weekly weekdays")
+                weekdays.forEach((day) => {
+                    if (!groupedTime[day]) {
+                        groupedTime[day] = 0;
+                    }
+                    groupedTime[day] += time;
+                });
+            } else if (key.startsWith("Weekly")) {
+                console.log("weekly")
                 daysOfWeek.forEach((day) => {
                     if (key.includes(day)) {
+                        if (!groupedTime[day]) {
+                            groupedTime[day] = 0;
+                        }
                         groupedTime[day] += time;
                     }
                 });
@@ -35,11 +49,14 @@ export default function ShowTime({tableInfo, setTableInfo, open, setOpen}) {
             if (key.startsWith("Bi Weekly") || key.startsWith("Semi Weekly")) {
                 daysOfWeek.forEach((day) => {
                     if (key.includes(day)) {
+                        if (!groupedTime[day]) {
+                            groupedTime[day] = 0;
+                        }
                         groupedTime[day] += Math.ceil(time / 2);
                     }
                 });
             }
-    });
+        });
 
     return (
         <Transition.Root show={open} as={Fragment}>
@@ -95,7 +112,7 @@ export default function ShowTime({tableInfo, setTableInfo, open, setOpen}) {
                                                 borderTopRightRadius: '10px'
                                             }}
                                         ></div><div className="w-32" style={{ marginLeft: '8px', color: (groupedTime[day] === 0 ? 'white' : 'inherit') }}>
-                                            {`${Math.floor(groupedTime[day] / 60)}hrs ${groupedTime[day] % 60}mins`}
+                                            {`${Math.floor(groupedTime[day] / 60)}hrs ${Math.round(groupedTime[day] % 60/5) *5}mins`}
                                         </div>                                    
                                     </div>
                                 ))}

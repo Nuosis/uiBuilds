@@ -13,22 +13,22 @@ const worksheetRecords = [
 
 
 import React, { useState } from 'react';
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";   
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";  
 
 deleteRow = function(ID) {
-        const obj = {ID, function: "deleteWsRecord"}
+        const obj = {ID, function: "deleteRecord"}
         FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
     };
 edit = function(ID) {
-        const obj = {ID, function: "editWs"}
+        const obj = {ID, function: "editMainTable"}
         FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
     }; 
 showInfo = function(ID) {
-        const obj = {ID, function: "popWsInfo"}
+        const obj = {ID, function: "popInfo"}
         FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
     }; 
 showSideBar = function(ID) {
-        const obj = {ID, function: "popWsSideBar"}
+        const obj = {ID, function: "popSideBar"}
         FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
     }; 
     

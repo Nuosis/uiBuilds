@@ -30,7 +30,7 @@ const newOrder = (input) => {
 };
 
 export default function SideBar({ navigation, selectedID, setSelectedID }) {
-    console.log("sideBar:",selectedID, "navigation:", navigation)
+    // console.log("sideBar:",selectedID, "navigation:", navigation)
     return (
         <div className="flex grow flex-col gap-y-5 overflow-y-auto h-full rounded-l-lg border-r border-gray-200 bg-slate-900 px-6">
             <nav className="flex flex-1 flex-col">

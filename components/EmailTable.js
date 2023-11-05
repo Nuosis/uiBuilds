@@ -15,7 +15,7 @@ newMail = (input) => {
     FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
 };
 
-onRowClick = (ID) => {
+editEmail = (ID) => {
     const obj = {ID, function: "editEmail"}
     FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
 }; 
@@ -40,7 +40,7 @@ export default EmailTable = ({email}) => {
                         <div className="divide-y divide-gray-200 bg-white overflow-y-auto">
                             {email.map((mail) => (
                             <div key={mail.ID} style={{height: "77px"}} className="flex flex-row justify-between items-center">
-                                <div onClick={() => onRowClick(mail.ID)} className="whitespace-nowrap py-4 px-4 text-md font-medium capitalize text-gray-900 cursor-pointer">
+                                <div onClick={() => editEmail(mail.ID)} className="whitespace-nowrap py-4 px-4 text-md font-medium capitalize text-gray-900 cursor-pointer">
                                     {mail.label}
                                 </div>
                                 <div onClick={() => sendMail(mail.ID)} className="py-4 px-4 text-md font-light text-gray-900 cursor-pointer">

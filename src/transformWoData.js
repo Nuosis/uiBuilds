@@ -2073,9 +2073,9 @@ const currentState = {org: "6FF320DD-757B-42BB-ACD5-00BFCD5F58E0"};
 const selectedWorkOrderID = {ID: "353A2DC3-FF39-447B-8004-1393F5F53843"}
 
 export default function transformWoData(custObj, currentState, dataArray, selectedWorkOrderID) {
-	console.log("custObj", custObj)
-	console.log("dataArray", dataArray)
-	console.log("selectedWO", selectedWorkOrderID)
+	// console.log("custObj", custObj)
+	// console.log("dataArray", dataArray)
+	// console.log("selectedWO", selectedWorkOrderID)
 	const newObj = {};
 	
 	// Emails Array

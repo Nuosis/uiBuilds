@@ -61,11 +61,14 @@ showSideBar = function(ID) {
     }; 
     
 
-export default function MainTableHeader({tableInfo, open, setOpen}) {
-    // console.log("wsHeader",tableInfo)
+export default function MainTableHeader({tableInfo, open, setOpen}) {// If tableInfo is null or empty, we return null or some placeholder
+    if (!tableInfo || Object.keys(tableInfo).length === 0) {
+      return null; // or <div>No data available</div> or some other placeholder component
+    }
+    console.log("wsHeader",tableInfo)
     const displayInfo = getInfo(tableInfo);
     const totalTime = tableInfo.totalTime;
-    // console.log("totalTime",totalTime)
+    console.log("totalTime",totalTime)
     const groupedTime = {
         'Monday': 0,
         'Tuesday': 0,
@@ -83,6 +86,27 @@ export default function MainTableHeader({tableInfo, open, setOpen}) {
         Object.keys(totalTime).forEach((key) => {
             let time = totalTime[key];
             const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+            const weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+            //console.log("key", key)
+            if (key === "Weekly: Weekdays") {
+                console.log("Weekly Weekdays")
+                weekdays.forEach((day) => {
+                    if (!groupedTime[day]) {
+                        groupedTime[day] = 0;
+                    }
+                    groupedTime[day] += time;
+                });
+            } else if (key.startsWith("Weekly")) {
+                console.log("Weekly")
+                daysOfWeek.forEach((day) => {
+                    if (key.includes(day)) {
+                        if (!groupedTime[day]) {
+                            groupedTime[day] = 0;
+                        }
+                        groupedTime[day] += time;
+                    }
+                });
+            }
         
             if (key.startsWith("Weekly")) {
                 daysOfWeek.forEach((day) => {
@@ -104,7 +128,7 @@ export default function MainTableHeader({tableInfo, open, setOpen}) {
     const sum = nonZeroKeys.reduce((acc, key) => acc + groupedTime[key], 0);
     const average = nonZeroKeys.length > 0 ? sum / nonZeroKeys.length : 0;
     const finalAverage = (average === 0 ? (tableInfo.totalTime.default == null ? tableInfo.totalTime : tableInfo.totalTime.default) : average);
-    // console.log("timeAverage",average)
+    // console.log("time",finalAverage)
     return (
         <div id="headerWrapper" className="w-full columns-2 flex flex-col gap-2">
                 <div className="columns-2 flex flex-row gap-2 font-bold text-lg ">
@@ -122,7 +146,7 @@ export default function MainTableHeader({tableInfo, open, setOpen}) {
                         <div className="w-52 columns-2 flex flex-row gap-1 font-serif text-base justify-start items-center">
                             <div className="w-24">Target TPC</div>
                             <div>
-                                {`${Math.floor(finalAverage / 60)}hrs ${Math.round(average % 60/5) * 5}mins`}
+                                {`${Math.floor(finalAverage / 60)}hrs ${Math.round(finalAverage % 60/5) * 5}mins`}
                             </div>
                         </div>
                         <div className="w-16 columns-2 flex flex-row gap-2">

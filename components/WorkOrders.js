@@ -81,18 +81,18 @@ import ShowTime from "./SlideOut";
 const WorkordersDom = ({data}) => {
   //console.log(data)
   const json = JSON.parse(data);
-  //console.log(json)
+  // console.log(json)
   const custObj = json.custObj;
   const dataArray = json.dataArray;
-  console.log("initWoDataArray",dataArray)
+  // console.log("initWoDataArray",dataArray)
   const currentState = json.currentState;
   const selectedWorkorder = dataArray.find(item => item.fieldData.Select === 1) || 
     [...dataArray].sort((a, b) => b.recordId - a.recordId)[0] || 
     {};
   const [selectedID, setSelectedID] = useState(selectedWorkorder.fieldData?.__ID || null);  
-  console.log("initSelectedWoID", selectedID)
+  // console.log("initSelectedWoID", selectedID)
   const woData = transformWoData(custObj, currentState, dataArray, selectedID);
-  console.log("initWoData", woData)
+  // console.log("initWoData", woData)
   const custEmail = woData.emails;
   const custRelated = woData.people;
   const custPhones = woData.phones;

@@ -368,9 +368,9 @@ const wsArray = [
 const currentState = {org: "6FF320DD-757B-42BB-ACD5-00BFCD5F58E0"}
 
 export default function transformData(custObj, currentState, wsArray, selectedWorksheetID) {
-	console.log("custObj", custObj)
-	console.log("wsArray", wsArray)
-	console.log("selectedWS", selectedWorksheetID)
+	// console.log("custObj", custObj)
+	// console.log("wsArray", wsArray)
+	// console.log("selectedWS", selectedWorksheetID)
 	const newObj = {};
 	
 	// Emails Array
@@ -511,9 +511,9 @@ export default function transformData(custObj, currentState, wsArray, selectedWo
 	// console.log("worksheetObj",newObj.worksheet)
 
 	// Check if totalTime has only two keys
-	if (newObj.worksheet.totalTime && Object.keys(newObj.worksheet.totalTime).length === 2) {
+	//if (newObj.worksheet.totalTime && Object.keys(newObj.worksheet.totalTime).length === 2) {
 		// Remove the key that matches firstRecord.frequency
-		delete newObj.worksheet.totalTime[firstRecord.frequency];
-	}
+		//delete newObj.worksheet.totalTime[firstRecord.frequency];
+	//}
 	return newObj;
 }
