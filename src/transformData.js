@@ -404,10 +404,12 @@ export default function transformData(custObj, currentState, wsArray, selectedWo
 		name: 'Worksheets',
 		href: '#',
 		current: true,
+		ID: 1,
 	},
 	{
 		name: 'Active',
 		current: false,
+		ID: 2,
 		children: custObj.portalData.customerWorksheets
 		.filter((worksheet) => worksheet['customerWorksheets::Select'] === "1")
 		.map((worksheet) => ({
@@ -419,6 +421,7 @@ export default function transformData(custObj, currentState, wsArray, selectedWo
 	{
 		name: 'Inactive',
 		current: false,
+		ID: 3,
 		children: custObj.portalData.customerWorksheets
 		.filter((worksheet) => worksheet['customerWorksheets::Select'] !== "1")
 		.map((worksheet) => ({

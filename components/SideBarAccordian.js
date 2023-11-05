@@ -24,6 +24,10 @@ const navigation = [
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
+const newOrder = (input) => {
+    const obj = {input, function: "newOrder"}
+    FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
+};
 
 export default function SideBar({ navigation, selectedID, setSelectedID }) {
     console.log("sideBar:",selectedID, "navigation:", navigation)
@@ -40,13 +44,20 @@ export default function SideBar({ navigation, selectedID, setSelectedID }) {
                                         href={item.href}
                                         className={classNames(
                                             item.current ? 'bg-slate-900' : 'hover:bg-gray-50',
-                                            'rounded-lg block mt-1.5 py-2 pr-2 pl-10 text-sm leading-6 font-semibold text-gray-300'
+                                            'rounded-lg block mt-1.5 py-2 pr-2 pl-10 text-sm leading-6 font-semibold text-gray-300',
+                                            'flex flew-row columns-2 justify-between'
                                         )}
                                         >
                                         {item.name}
+                                            <button className="w-12 flex justify-center items-center" onClick={() => newOrder(item.name)}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-plus-circle" viewBox="0 0 16 16">
+                                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                                </svg>
+                                            </button>
                                         </a>
                                     ) : (
-                                        <Disclosure as="div" defaultOpen={item.children?.some(subItem => subItem.ID === selectedID)}>
+                                        <Disclosure as="div" defaultOpen={selectedID && item.children?.some(subItem => subItem.ID === selectedID)}>
                                         {({ open }) => (
                                             <>
                                             <Disclosure.Button
@@ -77,7 +88,7 @@ export default function SideBar({ navigation, selectedID, setSelectedID }) {
                                                             subItem.ID === selectedID ? 'bg-slate-800' : 'hover:bg-slate-800',
                                                             'block rounded-md py-2 pr-2 pl-9 text-sm leading-6 text-gray-400'
                                                         )}
-                                                        onClick={() => setSelectedID(subItem.ID)}
+                                                        onClick={() => selectedID !== null && setSelectedID(subItem.ID)}
                                                         >
                                                         {subItem.name}
                                                         </Disclosure.Button>

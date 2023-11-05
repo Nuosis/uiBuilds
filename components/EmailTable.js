@@ -6,9 +6,9 @@ const email = [
     // More people...
     ]*/
 sendMail = (input) => {
-        const obj = {input, function: "sendMail"}
-        FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
-    }; 
+    const obj = {input, function: "sendMail"}
+    FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
+}; 
 
 newMail = (input) => {
     const obj = {input, function: "newMail"}
@@ -16,9 +16,9 @@ newMail = (input) => {
 };
 
 onRowClick = (ID) => {
-        const obj = {ID, function: "editEmail"}
-        FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
-    }; 
+    const obj = {ID, function: "editEmail"}
+    FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
+}; 
 
 export default EmailTable = ({email}) => {
     return (

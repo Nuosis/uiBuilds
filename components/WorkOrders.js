@@ -86,10 +86,13 @@ const WorkordersDom = ({data}) => {
   const dataArray = json.dataArray;
   console.log("initWoDataArray",dataArray)
   const currentState = json.currentState;
-  const selectedWorkorder = dataArray.find(dataArray => dataArray.fieldData.Select === 1);
-  const [selectedID, setSelectedID] = useState(selectedWorkorder.fieldData.__ID);
+  const selectedWorkorder = dataArray.find(item => item.fieldData.Select === 1) || 
+    [...dataArray].sort((a, b) => b.recordId - a.recordId)[0] || 
+    {};
+  const [selectedID, setSelectedID] = useState(selectedWorkorder.fieldData?.__ID || null);  
   console.log("initSelectedWoID", selectedID)
   const woData = transformWoData(custObj, currentState, dataArray, selectedID);
+  console.log("initWoData", woData)
   const custEmail = woData.emails;
   const custRelated = woData.people;
   const custPhones = woData.phones;
@@ -101,12 +104,13 @@ const WorkordersDom = ({data}) => {
   const [open, setOpen] = useState(false); // for side panel open/closed state
 
   useEffect(() => {
-    // Fetch new workorder data, update state, etc.
-    // This will re-render the associated components.
-    const newWoData = transformWoData(custObj, currentState, dataArray, selectedID);
-    setTableInfo(newWoData.workorder);
-    setRecords(newWoData.workorderRecords);
-  }, [selectedID]);
+    if (selectedID !== null) {
+      // Only fetch new workorder data if selectedID is not null
+      const newWoData = transformWoData(custObj, currentState, dataArray, selectedID);
+      setTableInfo(newWoData.workorder);
+      setRecords(newWoData.workorderRecords);
+    }
+  }, [selectedID]);  
 
   return (
     <div id="wrapper" className="container mx-auto max-w-7xl sm:px-6 lg:px-8 columns-2 flex flex-col">

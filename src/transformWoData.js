@@ -2070,7 +2070,7 @@ const dataArray = [
 
 const currentState = {org: "6FF320DD-757B-42BB-ACD5-00BFCD5F58E0"};
 
-const selectedWorkOrderID = {org: "353A2DC3-FF39-447B-8004-1393F5F53843"}
+const selectedWorkOrderID = {ID: "353A2DC3-FF39-447B-8004-1393F5F53843"}
 
 export default function transformWoData(custObj, currentState, dataArray, selectedWorkOrderID) {
 	console.log("custObj", custObj)
@@ -2109,10 +2109,12 @@ export default function transformWoData(custObj, currentState, dataArray, select
 		name: 'WorkOrders',
 		href: '#',
 		current: true,
+		ID: 1,
 	},
 	{
 		name: 'Active',
 		current: false,
+		ID: 2,
 		children: custObj.portalData.customerWorkOrders
 		.filter((workorder) => workorder['customerWorkOrders::Select'] === 1)
 		.map((workorder) => ({
@@ -2124,6 +2126,7 @@ export default function transformWoData(custObj, currentState, dataArray, select
 	{
 		name: 'Inactive',
 		current: false,
+		ID: 3,
 		children: custObj.portalData.customerWorkOrders
 		.filter((workorder) => workorder['customerWorkOrders::Select'] !== "1")
 		.map((workorder) => ({
@@ -2134,20 +2137,22 @@ export default function transformWoData(custObj, currentState, dataArray, select
 	},
 	];
 	// console.log("navigation",newObj.navigation)
+	const isValidID = selectedWorkOrderID && Object.keys(selectedWorkOrderID).length !== 0;
 
-	const selectedWorkorder = custObj.portalData.customerWorkOrders.find(
-	(workorder) => workorder['customerWorkOrders::__ID'] === selectedWorkOrderID
-	);
+	const selectedWorkorder = isValidID ? custObj.portalData.customerWorkOrders.find(
+		(workorder) => workorder['customerWorkOrders::__ID'] === selectedWorkOrderID
+	) : null;
+	
+	const matchingDataArray = isValidID ? dataArray.find(
+		(fieldData) => fieldData.fieldData['__ID'] === selectedWorkOrderID
+	) : null;
 	// console.log("selectedWorkorders",custObj.portalData.customerWorkOrders)
 	// console.log("selectedWorkorder",selectedWorkorder)
-	const matchingDataArray = dataArray.find(
-	(fieldData) => fieldData.fieldData['__ID'] === selectedWorkOrderID
-	);
 	// console.log("matchingDataArray",dataArray[0].fieldData)
 	// console.log("matchingData",matchingDataArray)
 
 	// Workorder Object
-	newObj.workorder = {
+	newObj.workorder = isValidID && selectedWorkorder && matchingDataArray ? {
 	ID: selectedWorkorder['customerWorkOrders::__ID'],
 	org: currentState.org,
 	contractOrg: selectedWorkorder['customerWorkOrders::_orgID'],
@@ -2163,30 +2168,32 @@ export default function transformWoData(custObj, currentState, dataArray, select
 	contractValue: matchingDataArray.fieldData["contract AMOUNT"],
 	providerValue: matchingDataArray.fieldData["contract AMOUNT PROVIDER"],
 	cleanerValue: matchingDataArray.fieldData["SCSA Value"],
-	};
+	} : null;
 	// console.log("workorderObj",newObj.workorder)
 
 	// WorkorderRecords Array
-	newObj.workorderRecords = matchingDataArray.portalData.WorkOrdersWorkOrdersRecords
+	newObj.workorderRecords = isValidID && selectedWorkorder && matchingDataArray ? matchingDataArray.portalData.WorkOrdersWorkOrdersRecords
 	.sort((a, b) => a['WorkOrdersWorkOrdersRecords::~order'] - b['WorkOrdersWorkOrdersRecords::~order'])
 	.map((record) => ({
 		area: record['WorkOrdersWorkOrdersRecords::Area'],
 		rate: record['WorkOrdersWorkOrdersRecords::Rate'],
 		eot: record['WorkOrdersWorkOrdersRecords::Time'],
 		ID: record['WorkOrdersWorkOrdersRecords::__ID'],
-	}));
+	})) : null ;
 	// console.log("recordsArray",newObj)
 
 	// CONSTRUCT TOTALTIME
 	// Calculate the sum of eot
-	const totalTime = newObj.workorderRecords.reduce((acc, record) => {
+	const totalTime = newObj.workorderRecords ? newObj.workorderRecords.reduce((acc, record) => {
 		const eotValue = parseFloat(record.eot);  // Extract and convert eot to a floating-point number
-		return acc + eotValue;  // Add the eot value to the running total
-	}, 0);  // Initialize accumulator to 0	 
+		return acc + (isNaN(eotValue) ? 0 : eotValue);  // Add the eot value to the running total
+	  }, 0) : 0;  // Initialize accumulator to 0	 
 	// console.log("workorderTotalTime",totalTime) 
 
 	// Add the totalTime object to newObj.workorder
-	newObj.workorder.totalTime = totalTime;
+	if (newObj.workorder) {
+		newObj.workorder.totalTime = totalTime;
+	}
 
 	// finish up
 	// console.log("workorderObj",newObj)
