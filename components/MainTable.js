@@ -1,6 +1,5 @@
-
 /*
-const worksheetRecords = [
+const records = [
     { area: 'Main', frequency: 'Weekly: Tuesday, Friday', rate: '30.75', eot: '24 min', ID: 'UUID1' },
     { area: 'Stairwell', frequency: 'Weekly: Tuesday, Friday', rate: '30.75', eot: '3 min', ID: 'UUID2'  },
     { area: 'Kitchen', frequency: 'Weekly: Tuesday, Friday', rate: '30.75', eot: '27 min', ID: 'UUID3'  },
@@ -14,18 +13,22 @@ const worksheetRecords = [
 
 import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";  
+import RecordEdit from './slideOutRecordEdit';
 
-const deleteRow = (ID) => {
+export default function MainTable({ records, setRecords, recordEditOpen, setRecordEditOpen, selectedRecord, setSelectedRecord }) {
+    selectedRecordID = selectedRecord.ID;
+    console.log("selectedRecordID", selectedRecordID)
+    const deleteRow = (ID) => {
         const obj = {ID, function: "deleteRecord"}
         FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
     };
-const edit = (ID) => {
-        const obj = {ID, function: "editMainTable"}
-        FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
-    }; 
-
-export default function MainTable({ records, setRecords }) {
-
+    const edit = (ID) => {
+        const selectedRecordObj = records.find(record => record.ID === ID);
+        setSelectedRecord(selectedRecordObj);
+        setRecordEditOpen(true);
+        // const obj = {ID, function: "editMainTable"}
+        // FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
+    };
     const onDragEnd = (result) => {
         const { destination, source } = result;
         if (!destination) {
@@ -45,7 +48,7 @@ export default function MainTable({ records, setRecords }) {
         <div className="grow overflow-x-auto">
             <div className="inline-block min-w-full align-middle">
                 <div id="tableWrapper" className="shadow ring-1 ring-black ring-opacity-5" style={{maxHeight: '308px'}}>
-                    <table className="min-w-full divide-y divide-gray-300 ">
+                    <div className="min-w-full divide-y divide-gray-300 ">
                         <DragDropContext onDragEnd={onDragEnd}>
                             <Droppable droppableId="table">
                                 {(provided) => (
@@ -54,12 +57,12 @@ export default function MainTable({ records, setRecords }) {
                                             <Draggable key={record.ID} draggableId={record.ID.toString()} index={index}>
                                                 {(provided) => (
                                                     <header
-                                                        className="flex flex-row columns-2 justify-between items-center"
+                                                        className={`flex flex-row columns-2 justify-between items-center ${record.ID === selectedRecordID ? 'bg-slate-300' : ''}`}
                                                         {...provided.draggableProps}
                                                         {...provided.dragHandleProps}
                                                         ref={provided.innerRef}
                                                     >
-                                                        <div className="w-1/2 whitespace-nowrap py-4 pl-4 pr-4 text-md font-medium text-gray-900 sm:pl-6">
+                                                        <div className={`w-1/2 whitespace-nowrap py-4 pl-4 pr-4 text-md font-medium text-gray-900 sm:pl-6`}>
                                                             <div onClick={() => edit(record.ID)} className="cursor-pointer">
                                                                 {record.area}
                                                                 <p className="text-sm font-light text-gray-600">{record.frequency}</p>
@@ -87,7 +90,7 @@ export default function MainTable({ records, setRecords }) {
                                 )}
                             </Droppable>
                         </DragDropContext>
-                    </table>
+                    </div>
                 </div>
             </div>
         </div>

@@ -5,7 +5,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 
 
 export default function ShowTime({tableInfo, open, setOpen}) {
-    console.log(tableInfo)
+    // console.log(tableInfo)
     const totalTime = tableInfo.totalTime;
     const groupedTime = {
         'Monday': 0,
@@ -27,7 +27,7 @@ export default function ShowTime({tableInfo, open, setOpen}) {
             const weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
             //console.log("key", key)
             if (key === "Weekly: Weekdays") {
-                console.log("weekly weekdays")
+                // console.log("weekly weekdays")
                 weekdays.forEach((day) => {
                     if (!groupedTime[day]) {
                         groupedTime[day] = 0;
@@ -35,7 +35,7 @@ export default function ShowTime({tableInfo, open, setOpen}) {
                     groupedTime[day] += time;
                 });
             } else if (key.startsWith("Weekly")) {
-                console.log("weekly")
+                // console.log("weekly")
                 daysOfWeek.forEach((day) => {
                     if (key.includes(day)) {
                         if (!groupedTime[day]) {

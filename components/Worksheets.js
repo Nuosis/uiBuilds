@@ -77,6 +77,7 @@ import MainTableHeader from "./MainTableHeader";
 import SideBar from "./SideBarAccordian";
 import transformData from "../src/transformData";
 import ShowTime from "./SlideOut";
+import RecordEdit from "./slideOutRecordEdit";
 
 const WorksheetsDom = ({data}) => {
   // console.log(data)
@@ -98,9 +99,11 @@ const WorksheetsDom = ({data}) => {
   const worksheets = wsData.navigation;
   const worksheet = wsData.worksheet;
   const worksheetRecords = wsData.worksheetRecords;
+  const [selectedRecord, setSelectedRecord] = useState(worksheetRecords[0])
   const [tableInfo, setTableInfo] = useState(worksheet);
   const [records, setRecords] = useState(worksheetRecords);
   const [open, setOpen] = useState(false); // for side panel open/closed state
+  const [recordEditOpen, setRecordEditOpen] = useState(false) // for record edit side panel open/closed state
 
   useEffect(() => {
     // Fetch new worksheet data, update state, etc.
@@ -108,6 +111,7 @@ const WorksheetsDom = ({data}) => {
     const newWsData = transformData(custObj, currentState, wsArray, selectedID);
     setTableInfo(newWsData.worksheet);
     setRecords(newWsData.worksheetRecords);
+    setSelectedRecord(newWsData.worksheetRecords[0]);
   }, [selectedID]);
 
   return (
@@ -127,7 +131,8 @@ const WorksheetsDom = ({data}) => {
             <MainTableHeader tableInfo={tableInfo} open={open} setOpen={setOpen}/>
           </div>
           <div id="mainPanelWorksheet" className="container mx-auto bg-slate-600">
-            <MainTable records={records} setRecords={setRecords}/>
+            <RecordEdit recordEditOpen={recordEditOpen} setRecordEditOpen={setRecordEditOpen} selectedRecord = {selectedRecord} setSelectedRecord={setSelectedRecord}/>
+            <MainTable records={records} setRecords={setRecords} recordEditOpen={recordEditOpen} setRecordEditOpen={setRecordEditOpen} selectedRecord = {selectedRecord} setSelectedRecord={setSelectedRecord}/>
           </div>
         </div>
         <div>

@@ -65,10 +65,10 @@ export default function MainTableHeader({tableInfo, open, setOpen}) {// If table
     if (!tableInfo || Object.keys(tableInfo).length === 0) {
       return null; // or <div>No data available</div> or some other placeholder component
     }
-    console.log("wsHeader",tableInfo)
+    // console.log("wsHeader",tableInfo)
     const displayInfo = getInfo(tableInfo);
     const totalTime = tableInfo.totalTime;
-    console.log("totalTime",totalTime)
+    // console.log("totalTime",totalTime)
     const groupedTime = {
         'Monday': 0,
         'Tuesday': 0,
@@ -89,7 +89,7 @@ export default function MainTableHeader({tableInfo, open, setOpen}) {// If table
             const weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
             //console.log("key", key)
             if (key === "Weekly: Weekdays") {
-                console.log("Weekly Weekdays")
+                // console.log("Weekly Weekdays")
                 weekdays.forEach((day) => {
                     if (!groupedTime[day]) {
                         groupedTime[day] = 0;
@@ -97,7 +97,7 @@ export default function MainTableHeader({tableInfo, open, setOpen}) {// If table
                     groupedTime[day] += time;
                 });
             } else if (key.startsWith("Weekly")) {
-                console.log("Weekly")
+                // console.log("Weekly")
                 daysOfWeek.forEach((day) => {
                     if (key.includes(day)) {
                         if (!groupedTime[day]) {
@@ -144,7 +144,7 @@ export default function MainTableHeader({tableInfo, open, setOpen}) {// If table
                             <div>${parseFloat(displayInfo.contractValue).toFixed(2)}</div>
                         </div>
                         <div className="w-52 columns-2 flex flex-row gap-1 font-serif text-base justify-start items-center">
-                            <div className="w-24">Target TPC</div>
+                            <div className="w-12">Time</div>
                             <div>
                                 {`${Math.floor(finalAverage / 60)}hrs ${Math.round(finalAverage % 60/5) * 5}mins`}
                             </div>
