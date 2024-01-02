@@ -24,13 +24,19 @@ const navigation = [
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
+
+function setSelectedID(selectedID) {
+    const obj = {selectedID, function: "select"}
+    FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
+}
+
 const newOrder = (input) => {
     const obj = {input, function: "newOrder"}
     FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
 };
 
-export default function SideBar({ navigation, selectedID, setSelectedID }) {
-    // console.log("sideBar:",selectedID, "navigation:", navigation)
+export default function SideBar({ navigation, selectedID }) {
+    console.log("sideBar:",selectedID, "navigation:", navigation)
     return (
         <div className="flex grow flex-col gap-y-5 overflow-y-auto h-full rounded-l-lg border-r border-gray-200 bg-slate-900 px-6">
             <nav className="flex flex-1 flex-col">

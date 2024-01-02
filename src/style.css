@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body {
+    height: 100%;
+}
+
+#root { /* assuming your React app is mounted in a div with id 'root' */
+height: 100%;
+}
+
 .rounded-top-right {
     border-top-right-radius: 0.375rem; /* or any value you prefer */
 }

@@ -365,12 +365,12 @@ const wsArray = [
 	}
 ]
 
-const currentState = {org: "6FF320DD-757B-42BB-ACD5-00BFCD5F58E0"}
+const currentOrg = {org: "6FF320DD-757B-42BB-ACD5-00BFCD5F58E0"}
 
-export default function transformData(custObj, currentState, wsArray, selectedWorksheetID) {
+export default function transformData(custObj, currentOrg, wsArray, selectedWorksheetID) {
 	// console.log("custObj", custObj)
-	// console.log("wsArray", wsArray)
-	// console.log("selectedWS", selectedWorksheetID)
+	console.log("tfd.js_wsArray", wsArray)
+	console.log("tfd.js_selectedWS", selectedWorksheetID)
 	const newObj = {};
 	
 	// Emails Array
@@ -440,12 +440,12 @@ export default function transformData(custObj, currentState, wsArray, selectedWo
 	const matchingWsArray = isValidID ? wsArray.find(
 	(fieldData) => fieldData.fieldData['__ID'] === selectedWorksheetID
 	):null;
-	// console.log("matchingWsArray",matchingWsArray)
+	console.log("tfd.js_matchingWsArray",matchingWsArray)
 
 	// Worksheet Object
 	newObj.worksheet = isValidID && selectedWorksheet && matchingWsArray ? {
 	ID: selectedWorksheet['customerWorksheets::__ID'],
-	org: currentState.org,
+	org: currentOrg.org,
 	contractOrg: selectedWorksheet['customerWorksheets::_orgID'],
 	name: selectedWorksheet['customerWorksheets::Worksheet Name'],
 	startDate: matchingWsArray.fieldData['Start Date'],

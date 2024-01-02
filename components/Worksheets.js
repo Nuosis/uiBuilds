@@ -80,23 +80,25 @@ import ShowTime from "./SlideOut";
 import RecordEdit from "./slideOutRecordEdit";
 
 const WorksheetsDom = ({data}) => {
-  // console.log(data)
-  const json = JSON.parse(data);
-  // console.log(json)
+  console.log('wsDomDataInit',data)
+  const json = data;
+  //console.log(json)
   const custObj = json.custObj;
-  const currentState = json.currentState;
+  const currentOrg = json.currentState;
   const wsArray = json.dataArray;
+  const wsID = json.selectedID;
   // console.log("initWsArray",wsArray)
+  /*
   const selectedWorksheet = wsArray.find(wsArray => wsArray.fieldData.Select === "1") || // get first ws where selected is true
     [...wsArray].sort((a, b) => b.recordId - a.recordId)[0] || //get newest ws
     {};
-  const [selectedID, setSelectedID] = useState(selectedWorksheet.fieldData.__ID || null);
-  // console.log("initSelectedID", selectedID)
-  const wsData = transformData(custObj, currentState, wsArray, selectedID);
+  */
+  // const [selectedID, setSelectedID] = useState(wsID || null);
+  console.log("initSelectedID", wsID)
+  const [wsData, setWsData] = useState(transformData(custObj, currentOrg, wsArray, wsID));
   const custEmail = wsData.emails;
   const custRelated = wsData.people;
   const custPhones = wsData.phones;
-  const worksheets = wsData.navigation;
   const worksheet = wsData.worksheet;
   const worksheetRecords = wsData.worksheetRecords;
   const [selectedRecord, setSelectedRecord] = useState(worksheetRecords[0])
@@ -105,21 +107,25 @@ const WorksheetsDom = ({data}) => {
   const [open, setOpen] = useState(false); // for side panel open/closed state
   const [recordEditOpen, setRecordEditOpen] = useState(false) // for record edit side panel open/closed state
 
+  /*
   useEffect(() => {
     // Fetch new worksheet data, update state, etc.
     // This will re-render the associated components.
-    const newWsData = transformData(custObj, currentState, wsArray, selectedID);
-    setTableInfo(newWsData.worksheet);
-    setRecords(newWsData.worksheetRecords);
-    setSelectedRecord(newWsData.worksheetRecords[0]);
+    // const newWsData = transformData(custObj, currentState, wsArray, selectedID);
+    // setWsData(newWsData);
+    console.log("newWsData",wsData);
+    setTableInfo(wsData.worksheet);
+    setRecords(wsData.worksheetRecords);
+    setSelectedRecord(wsData.worksheetRecords[0]);
   }, [selectedID]);
+  */
 
   return (
-    <div id="wrapper" className="container mx-auto max-w-7xl sm:px-6 lg:px-8 columns-2 flex flex-col">
+    <div id="wrapper" className="container min-h-max mx-auto max-w-7xl sm:px-6 lg:px-8 columns-2 flex flex-col" style={{ height: '100%' }}>
       <div id="panelHeader" className="min-h-max min-w-full mx-auto max-w-7xl "><p className="font-serif text-xl text-center text-transform: uppercase text-slate-700">Worksheets</p></div>
-      <div id= "worksheetsContainer" className="w-full pt-2 columns-2 flex flex-row">
+      <div id= "worksheetsContainer" className="w-full pt-2 columns-2 flex flex-row" style={{ height: '100%' }}>
         <div id="sidePanel" className="w-auto bg-white" >
-          <SideBar navigation = {worksheets} selectedID={selectedID} setSelectedID={setSelectedID}/>
+          <SideBar navigation = {wsData.navigation} selectedID={wsID}/>
         </div>
         <div id="mainPanel" className="container columns-3 flex flex-col">
           <div id="customerinfo" className="container columns-3 flex flex-row gap-2 justify-between">
@@ -132,7 +138,7 @@ const WorksheetsDom = ({data}) => {
           </div>
           <div id="mainPanelWorksheet" className="container mx-auto bg-slate-600">
             <RecordEdit recordEditOpen={recordEditOpen} setRecordEditOpen={setRecordEditOpen} selectedRecord = {selectedRecord} setSelectedRecord={setSelectedRecord}/>
-            <MainTable records={records} setRecords={setRecords} recordEditOpen={recordEditOpen} setRecordEditOpen={setRecordEditOpen} selectedRecord = {selectedRecord} setSelectedRecord={setSelectedRecord}/>
+            <MainTable records={records} setRecords={setRecords} recordEditOpen={recordEditOpen} setRecordEditOpen={setRecordEditOpen} selectedRecord = {selectedRecord} setSelectedRecord={setSelectedRecord} selectedID={wsID} wsData={wsData} setWsData={setWsData}/>
           </div>
         </div>
         <div>

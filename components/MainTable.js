@@ -11,20 +11,20 @@ const records = [
 */
 
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";  
 import RecordEdit from './slideOutRecordEdit';
 
-export default function MainTable({ records, setRecords, recordEditOpen, setRecordEditOpen, selectedRecord, setSelectedRecord }) {
-    selectedRecordID = selectedRecord.ID;
+export default function MainTable({ records, setRecords, selectedID, recordEditOpen, setRecordEditOpen, selectedRecord, setSelectedRecord, wsData, setWsData }) {
+    const selectedRecordID = selectedRecord;
     console.log("selectedRecordID", selectedRecordID)
     const deleteRow = (ID) => {
         const obj = {ID, function: "deleteRecord"}
         FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
     };
-    const edit = (ID) => {
-        const selectedRecordObj = records.find(record => record.ID === ID);
-        setSelectedRecord(selectedRecordObj);
+    const edit = (record) => {
+        //const selectedRecordObj = records.find(record => record.ID === ID);
+        setSelectedRecord(record);
         setRecordEditOpen(true);
         // const obj = {ID, function: "editMainTable"}
         // FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
@@ -34,20 +34,29 @@ export default function MainTable({ records, setRecords, recordEditOpen, setReco
         if (!destination) {
             return;
         }
-    
+        console.log("wsData",wsData);
         const reorderedRecords = Array.from(records);
         const [removed] = reorderedRecords.splice(source.index, 1);
         reorderedRecords.splice(destination.index, 0, removed);
     
         setRecords(reorderedRecords);
-        const obj = {reorderedRecords, function: "wsReorderRecords"}
+        const updateWsData = (wsData, reorderedRecords) => {
+            // Clone the original wsData object
+            let updatedWsData = {...wsData};
+            // Replace worksheetRecords with reorderedRecords
+            updatedWsData.worksheetRecords = reorderedRecords;
+            return updatedWsData;
+        };
+        const updatedWsData = updateWsData(wsData, reorderedRecords);
+        setWsData(updatedWsData)
+        const obj = {reorderedRecords, selectedID, function: "wsReorderRecords"}
         FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
     };
 
     return (
         <div className="grow overflow-x-auto">
             <div className="inline-block min-w-full align-middle">
-                <div id="tableWrapper" className="shadow ring-1 ring-black ring-opacity-5" style={{maxHeight: '308px'}}>
+                <div id="tableWrapper" className="shadow ring-1 ring-black ring-opacity-5" style={{maxHeight: '60vh', overflowY: 'auto'}}>
                     <div className="min-w-full divide-y divide-gray-300 ">
                         <DragDropContext onDragEnd={onDragEnd}>
                             <Droppable droppableId="table">
@@ -63,7 +72,7 @@ export default function MainTable({ records, setRecords, recordEditOpen, setReco
                                                         ref={provided.innerRef}
                                                     >
                                                         <div className={`w-1/2 whitespace-nowrap py-4 pl-4 pr-4 text-md font-medium text-gray-900 sm:pl-6`}>
-                                                            <div onClick={() => edit(record.ID)} className="cursor-pointer">
+                                                            <div onClick={() => edit(record)} className="cursor-pointer">
                                                                 {record.area}
                                                                 <p className="text-sm font-light text-gray-600">{record.frequency}</p>
                                                             </div>

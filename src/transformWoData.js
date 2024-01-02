@@ -2068,11 +2068,11 @@ const dataArray = [
 	}
 ];
 
-const currentState = {org: "6FF320DD-757B-42BB-ACD5-00BFCD5F58E0"};
+const currentOrg = {org: "6FF320DD-757B-42BB-ACD5-00BFCD5F58E0"};
 
 const selectedWorkOrderID = {ID: "353A2DC3-FF39-447B-8004-1393F5F53843"}
 
-export default function transformWoData(custObj, currentState, dataArray, selectedWorkOrderID) {
+export default function transformWoData(custObj, currentOrg, dataArray, selectedWorkOrderID) {
 	// console.log("custObj", custObj)
 	// console.log("dataArray", dataArray)
 	// console.log("selectedWO", selectedWorkOrderID)
@@ -2146,15 +2146,17 @@ export default function transformWoData(custObj, currentState, dataArray, select
 	const matchingDataArray = isValidID ? dataArray.find(
 		(fieldData) => fieldData.fieldData['__ID'] === selectedWorkOrderID
 	) : null;
-	// console.log("selectedWorkorders",custObj.portalData.customerWorkOrders)
-	// console.log("selectedWorkorder",selectedWorkorder)
-	// console.log("matchingDataArray",dataArray[0].fieldData)
-	// console.log("matchingData",matchingDataArray)
+	/*
+	console.log("selectedWorkorders",custObj.portalData.customerWorkOrders)
+	console.log("selectedWorkorder",selectedWorkorder)
+	console.log("matchingDataArray",dataArray[0].fieldData)
+	console.log("matchingData",matchingDataArray)
+	*/
 
 	// Workorder Object
 	newObj.workorder = isValidID && selectedWorkorder && matchingDataArray ? {
 	ID: selectedWorkorder['customerWorkOrders::__ID'],
-	org: currentState.org,
+	org: currentOrg,
 	contractOrg: selectedWorkorder['customerWorkOrders::_orgID'],
 	name: selectedWorkorder['customerWorkOrders::WorkOrder Name'],
 	startDate: matchingDataArray.fieldData['Start Date'],

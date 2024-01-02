@@ -80,19 +80,25 @@ import ShowTime from "./SlideOut";
 
 const WorkordersDom = ({data}) => {
   //console.log(data)
-  const json = JSON.parse(data);
+  const json = data;
   // console.log(json)
   const custObj = json.custObj;
+  const currentObj = json.currentState;
+  //console.log(currentObj)
   const dataArray = json.dataArray;
+  const woID = json.selectedID;
+  /*
   // console.log("initWoDataArray",dataArray)
-  const currentState = json.currentState;
+
   const selectedWorkorder = dataArray.find(item => item.fieldData.Select === 1) || 
     [...dataArray].sort((a, b) => b.recordId - a.recordId)[0] || 
     {};
   const [selectedID, setSelectedID] = useState(selectedWorkorder.fieldData?.__ID || null);  
   // console.log("initSelectedWoID", selectedID)
-  const woData = transformWoData(custObj, currentState, dataArray, selectedID);
-  // console.log("initWoData", woData)
+  */
+  
+  const woData = transformWoData(custObj, currentObj.org, dataArray, woID);
+  //console.log("initTransformedData", woData)
   const custEmail = woData.emails;
   const custRelated = woData.people;
   const custPhones = woData.phones;
@@ -103,21 +109,23 @@ const WorkordersDom = ({data}) => {
   const [records, setRecords] = useState(workorderRecords);
   const [open, setOpen] = useState(false); // for side panel open/closed state
 
+  /*
   useEffect(() => {
     if (selectedID !== null) {
       // Only fetch new workorder data if selectedID is not null
-      const newWoData = transformWoData(custObj, currentState, dataArray, selectedID);
+      const newWoData = transformWoData(custObj, currentObj, dataArray, selectedID);
       setTableInfo(newWoData.workorder);
       setRecords(newWoData.workorderRecords);
     }
   }, [selectedID]);  
+*/
 
   return (
     <div id="wrapper" className="container mx-auto max-w-7xl sm:px-6 lg:px-8 columns-2 flex flex-col">
       <div id="panelHeader" className="min-h-max min-w-full mx-auto max-w-7xl "><p className="font-serif text-xl text-center text-transform: uppercase text-slate-700">Workorders</p></div>
       <div id= "workordersContainer" className="w-full pt-2 columns-2 flex flex-row">
         <div id="sidePanel" className="w-auto bg-white" >
-          <SideBar navigation = {workorders} selectedID={selectedID} setSelectedID={setSelectedID}/>
+          <SideBar navigation = {workorders} selectedID={woID}/>
         </div>
         <div id="mainPanel" className="container columns-3 flex flex-col">
           <div id="customerinfo" className="container columns-3 flex flex-row gap-2 justify-between">

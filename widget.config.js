@@ -1,7 +1,7 @@
 
 module.exports = {
-  widgetName: "uiBuilds",
+  widgetName: "wsWoPanel",
   server: "$",
-  file: "jsDev",
-  uploadScript: "UploadToHTML",
+  file: "Clean Sweep",
+  uploadScript: "jsWidgets . UploadToHTML",
 };
