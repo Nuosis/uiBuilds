@@ -3,7 +3,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 
 export default function RecordEdit({recordEditOpen, setRecordEditOpen, selectedRecord, setSelectedRecord}) {
-    console.log("selectedRecord", selectedRecord)
+    console.log("selectedRecord", selectedRecord);
     const [area, setArea] = useState(selectedRecord.area);
     const [eot, setEot] = useState(Math.round(selectedRecord.eot));
     const [rate, setRate] = useState(Math.round(selectedRecord.rate*100)/100);
@@ -11,24 +11,33 @@ export default function RecordEdit({recordEditOpen, setRecordEditOpen, selectedR
     //console.log("frequency", frequency)
     const [dayOrMonth, setDayOrMonth] = useState(frequency.includes("Weekly") ? "day":"month");
     //console.log("dayMonth", dayOrMonth)
-    const initDayValue = selectedRecord.frequency.split(': ')[1];
-    const initDayArray = initDayValue.split(', '); //used to designate "selectsDay(s) or Weekdays, Weekend, Everyday"
+    const initDayValue = selectedRecord.frequency && selectedRecord.frequency.includes(': ') ? selectedRecord.frequency.split(': ')[1] : '';
+    const initDayArray = typeof initDayValue === 'string' ? initDayValue.split(', ') : [];
     //console.log("daySelection", daySelection)
     const [selectedFrequencyValues, setSelectedFrequencyValues] = useState(setFrequencyValues(initDayArray));
+
     const initDaySelection = function getInitialDaySelection() {
-        if (initDayArray[0].includes('Weekdays')) return 'Weekdays';
-        if (initDayArray[0].includes('Weekend')) return 'Weekend';
-        if (initDayArray[0].includes('Everyday')) return 'Everyday';
-        if (dayOrMonth==="day") return "Select Day(s)";
-        return null; // default case
+        if (initDayArray.length > 0 && typeof initDayArray[0] === 'string') {
+            if (initDayArray[0].includes('Weekdays')) return 'Weekdays';
+            if (initDayArray[0].includes('Weekend')) return 'Weekend';
+            if (initDayArray[0].includes('Everyday')) return 'Everyday';
+        }
+        if (dayOrMonth === "day") return "Select Day(s)";
+        return null; // default case, when initDayArray is empty or its first element is not a string
     }
+    
+    
     const [daySelection, setDaySelection] = useState(initDaySelection);
+
     function setFrequencyValues(value) {
-        if (value[0].includes('Weekdays')) return ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-        if (value[0].includes('Weekend')) return ["Saturday"];
-        if (value[0].includes('Everyday')) return ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-        return value; // default case
+        if (value.length > 0 && typeof value[0] === 'string') {
+            if (value[0].includes('Weekdays')) return ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+            if (value[0].includes('Weekend')) return ["Saturday"];
+            if (value[0].includes('Everyday')) return ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+        }
+        return value; // default case, returns the original array if the first element is not a string or array is empty
     };
+    
 
     useEffect(() => {
         setArea(selectedRecord.area);
