@@ -19,8 +19,7 @@ window.getTransformedData = (data) => {
 
 let root; // Store the root outside the function
 window.loadWorksheets = (data) => {
-    console.log('version', "0.02.01");
-    console.log('data', data);
+    console.log('version', "0.2.3");
     const json = JSON.parse(data);
     console.log('initWsData', json);
 
@@ -50,7 +49,7 @@ window.loadWorksheets = (data) => {
 };
 
 window.loadWorkorders = (data) => {
-    console.log('version', "0.02.01");
+    console.log('version', "0.02.02");
     const json = JSON.parse(data);
     console.log('initWoData', json);
 

@@ -17,7 +17,7 @@ import RecordEdit from './slideOutRecordEdit';
 
 export default function MainTable({ records, setRecords, selectedID, recordEditOpen, setRecordEditOpen, selectedRecord, setSelectedRecord, wsData, setWsData }) {
     const selectedRecordID = selectedRecord;
-    console.log("selectedRecordID", selectedRecordID)
+    // console.log("selectedRecordID", selectedRecordID)
     const deleteRow = (ID) => {
         const obj = {ID, function: "deleteRecord"}
         FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
@@ -73,7 +73,7 @@ export default function MainTable({ records, setRecords, selectedID, recordEditO
                                                     >
                                                         <div className={`w-1/2 whitespace-nowrap py-4 pl-4 pr-4 text-md font-medium text-gray-900 sm:pl-6`}>
                                                             <div onClick={() => edit(record)} className="cursor-pointer">
-                                                                {record.area}
+                                                                {record.area + ` (x` + record.multiplier +`)`}
                                                                 <p className="text-sm font-light text-gray-600">{record.frequency}</p>
                                                             </div>
                                                         </div>

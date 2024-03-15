@@ -177,6 +177,179 @@ img, video {
   height: auto;
 }
 
+[type="text"], input:where(:not([type])), [type="email"], [type="url"], [type="password"], [type="number"], [type="date"], [type="datetime-local"], [type="month"], [type="search"], [type="tel"], [type="time"], [type="week"], [multiple], textarea, select {
+  appearance: none;
+  --tw-shadow: 0 0 #0000;
+  background-color: #fff;
+  border-width: 1px;
+  border-color: #6b7280;
+  border-radius: 0;
+  padding: .5rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+[type="text"]:focus, input:where(:not([type])):focus, [type="email"]:focus, [type="url"]:focus, [type="password"]:focus, [type="number"]:focus, [type="date"]:focus, [type="datetime-local"]:focus, [type="month"]:focus, [type="search"]:focus, [type="tel"]:focus, [type="time"]:focus, [type="week"]:focus, [multiple]:focus, textarea:focus, select:focus {
+  outline-offset: 2px;
+  --tw-ring-inset: var(--tw-empty, );
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: #2563eb;
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  border-color: #2563eb;
+  outline: 2px solid #0000;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #6b7280;
+  opacity: 1;
+}
+
+::-webkit-datetime-edit-fields-wrapper {
+  padding: 0;
+}
+
+::-webkit-date-and-time-value {
+  min-height: 1.5em;
+  text-align: inherit;
+}
+
+::-webkit-datetime-edit {
+  display: inline-flex;
+}
+
+::-webkit-datetime-edit, ::-webkit-datetime-edit-year-field, ::-webkit-datetime-edit-month-field, ::-webkit-datetime-edit-day-field, ::-webkit-datetime-edit-hour-field, ::-webkit-datetime-edit-minute-field, ::-webkit-datetime-edit-second-field, ::-webkit-datetime-edit-millisecond-field, ::-webkit-datetime-edit-meridiem-field {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+select {
+  print-color-adjust: exact;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right .5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+}
+
+[multiple], [size]:where(select:not([size="1"])) {
+  background-image: initial;
+  background-position: initial;
+  background-repeat: unset;
+  background-size: initial;
+  print-color-adjust: unset;
+  padding-right: .75rem;
+}
+
+[type="checkbox"], [type="radio"] {
+  appearance: none;
+  print-color-adjust: exact;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  user-select: none;
+  height: 1rem;
+  width: 1rem;
+  color: #2563eb;
+  --tw-shadow: 0 0 #0000;
+  background-color: #fff;
+  background-origin: border-box;
+  border-width: 1px;
+  border-color: #6b7280;
+  flex-shrink: 0;
+  padding: 0;
+  display: inline-block;
+}
+
+[type="checkbox"] {
+  border-radius: 0;
+}
+
+[type="radio"] {
+  border-radius: 100%;
+}
+
+[type="checkbox"]:focus, [type="radio"]:focus {
+  outline-offset: 2px;
+  --tw-ring-inset: var(--tw-empty, );
+  --tw-ring-offset-width: 2px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: #2563eb;
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  outline: 2px solid #0000;
+}
+
+[type="checkbox"]:checked, [type="radio"]:checked {
+  background-color: currentColor;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  border-color: #0000;
+}
+
+[type="checkbox"]:checked {
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
+}
+
+@media (forced-colors: active) {
+  [type="checkbox"]:checked {
+    appearance: auto;
+  }
+}
+
+[type="radio"]:checked {
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e");
+}
+
+@media (forced-colors: active) {
+  [type="radio"]:checked {
+    appearance: auto;
+  }
+}
+
+[type="checkbox"]:checked:hover, [type="checkbox"]:checked:focus, [type="radio"]:checked:hover, [type="radio"]:checked:focus {
+  background-color: currentColor;
+  border-color: #0000;
+}
+
+[type="checkbox"]:indeterminate {
+  background-color: currentColor;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 16 16'%3e%3cpath stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8h8'/%3e%3c/svg%3e");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  border-color: #0000;
+}
+
+@media (forced-colors: active) {
+  [type="checkbox"]:indeterminate {
+    appearance: auto;
+  }
+}
+
+[type="checkbox"]:indeterminate:hover, [type="checkbox"]:indeterminate:focus {
+  background-color: currentColor;
+  border-color: #0000;
+}
+
+[type="file"] {
+  background: unset;
+  border-color: inherit;
+  font-size: unset;
+  line-height: inherit;
+  border-width: 0;
+  border-radius: 0;
+  padding: 0;
+}
+
+[type="file"]:focus {
+  outline: 1px solid ButtonText;
+  outline: 1px auto -webkit-focus-ring-color;
+}
+
 *, :before, :after, ::backdrop {
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
@@ -258,6 +431,84 @@ img, video {
   }
 }
 
+.form-checkbox, .form-radio {
+  appearance: none;
+  print-color-adjust: exact;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  user-select: none;
+  height: 1rem;
+  width: 1rem;
+  color: #2563eb;
+  --tw-shadow: 0 0 #0000;
+  background-color: #fff;
+  background-origin: border-box;
+  border-width: 1px;
+  border-color: #6b7280;
+  flex-shrink: 0;
+  padding: 0;
+  display: inline-block;
+}
+
+.form-checkbox {
+  border-radius: 0;
+}
+
+.form-checkbox:focus, .form-radio:focus {
+  outline-offset: 2px;
+  --tw-ring-inset: var(--tw-empty, );
+  --tw-ring-offset-width: 2px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: #2563eb;
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  outline: 2px solid #0000;
+}
+
+.form-checkbox:checked, .form-radio:checked {
+  background-color: currentColor;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  border-color: #0000;
+}
+
+.form-checkbox:checked {
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
+}
+
+@media (forced-colors: active) {
+  .form-checkbox:checked {
+    appearance: auto;
+  }
+}
+
+.form-checkbox:checked:hover, .form-checkbox:checked:focus, .form-radio:checked:hover, .form-radio:checked:focus {
+  background-color: currentColor;
+  border-color: #0000;
+}
+
+.form-checkbox:indeterminate {
+  background-color: currentColor;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 16 16'%3e%3cpath stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8h8'/%3e%3c/svg%3e");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  border-color: #0000;
+}
+
+@media (forced-colors: active) {
+  .form-checkbox:indeterminate {
+    appearance: auto;
+  }
+}
+
+.form-checkbox:indeterminate:hover, .form-checkbox:indeterminate:focus {
+  background-color: currentColor;
+  border-color: #0000;
+}
+
 .sr-only {
   width: 1px;
   height: 1px;
@@ -332,9 +583,19 @@ img, video {
   margin-right: -.5rem;
 }
 
+.my-2 {
+  margin-top: .5rem;
+  margin-bottom: .5rem;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
+}
+
+.mx-4 {
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 
 .mt-1\.5 {
@@ -594,10 +855,10 @@ img, video {
   margin-bottom: calc(.25rem * var(--tw-space-y-reverse));
 }
 
-.space-y-4 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(1rem * var(--tw-space-y-reverse));
+.space-x-6 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(1.5rem * var(--tw-space-x-reverse));
+  margin-left: calc(1.5rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .divide-y > :not([hidden]) ~ :not([hidden]) {
@@ -647,6 +908,10 @@ img, video {
 .rounded-l-lg {
   border-top-left-radius: .5rem;
   border-bottom-left-radius: .5rem;
+}
+
+.border {
+  border-width: 1px;
 }
 
 .border-r {
@@ -788,6 +1053,10 @@ img, video {
   padding-top: .5rem;
 }
 
+.pr-1 {
+  padding-right: .25rem;
+}
+
 .text-left {
   text-align: left;
 }
@@ -885,6 +1154,11 @@ img, video {
   color: rgb(156 163 175 / var(--tw-text-opacity));
 }
 
+.text-gray-800 {
+  --tw-text-opacity: 1;
+  color: rgb(31 41 55 / var(--tw-text-opacity));
+}
+
 .text-gray-700 {
   --tw-text-opacity: 1;
   color: rgb(55 65 81 / var(--tw-text-opacity));
@@ -914,6 +1188,12 @@ img, video {
 .shadow-xl {
   --tw-shadow: 0 20px 25px -5px #0000001a, 0 8px 10px -6px #0000001a;
   --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.shadow-md {
+  --tw-shadow: 0 4px 6px -1px #0000001a, 0 2px 4px -2px #0000001a;
+  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
@@ -4019,8 +4299,7 @@ window.getTransformedData = (data)=>{
 };
 let root; // Store the root outside the function
 window.loadWorksheets = (data)=>{
-    console.log("version", "0.02.01");
-    console.log("data", data);
+    console.log("version", "0.2.3");
     const json = JSON.parse(data);
     console.log("initWsData", json);
     // Unmount existing React component if any
@@ -4040,7 +4319,7 @@ window.loadWorksheets = (data)=>{
                 data: json
             }, void 0, false, {
                 fileName: "src/index.js",
-                lineNumber: 43,
+                lineNumber: 42,
                 columnNumber: 25
             }, undefined));
         } else console.error("Element with id 'root' not found during mount");
@@ -4049,7 +4328,7 @@ window.loadWorksheets = (data)=>{
     }
 };
 window.loadWorkorders = (data)=>{
-    console.log("version", "0.02.01");
+    console.log("version", "0.02.02");
     const json = JSON.parse(data);
     console.log("initWoData", json);
     // Unmount existing React component if any
@@ -4070,7 +4349,7 @@ window.loadWorkorders = (data)=>{
                 data: json
             }, void 0, false, {
                 fileName: "src/index.js",
-                lineNumber: 74,
+                lineNumber: 73,
                 columnNumber: 25
             }, undefined));
         } else console.error("Element with id 'root' not found during mount");
@@ -6889,21 +7168,16 @@ var _slideOutRecordEditDefault = parcelHelpers.interopDefault(_slideOutRecordEdi
 var _s = $RefreshSig$();
 const WorksheetsDom = ({ data  })=>{
     _s();
-    console.log("wsDomDataInit", data);
+    //console.log('wsDomDataInit',data)
     const json = data;
     //console.log(json)
     const custObj = json.custObj;
     const currentOrg = json.currentState;
     const wsArray = json.dataArray;
     const wsID = json.selectedID;
-    // console.log("initWsArray",wsArray)
-    /*
-  const selectedWorksheet = wsArray.find(wsArray => wsArray.fieldData.Select === "1") || // get first ws where selected is true
-    [...wsArray].sort((a, b) => b.recordId - a.recordId)[0] || //get newest ws
-    {};
-  */ // const [selectedID, setSelectedID] = useState(wsID || null);
-    console.log("initSelectedID", wsID);
+    // console.log("initSelectedID", wsID)
     const [wsData, setWsData] = (0, _react.useState)((0, _transformDataDefault.default)(custObj, currentOrg, wsArray, wsID));
+    // console.log("wsData",wsData);
     const custEmail = wsData.emails;
     const custRelated = wsData.people;
     const custPhones = wsData.phones;
@@ -6941,12 +7215,12 @@ const WorksheetsDom = ({ data  })=>{
                     children: "Worksheets"
                 }, void 0, false, {
                     fileName: "components/Worksheets.js",
-                    lineNumber: 125,
+                    lineNumber: 119,
                     columnNumber: 81
                 }, undefined)
             }, void 0, false, {
                 fileName: "components/Worksheets.js",
-                lineNumber: 125,
+                lineNumber: 119,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -6964,12 +7238,12 @@ const WorksheetsDom = ({ data  })=>{
                             selectedID: wsID
                         }, void 0, false, {
                             fileName: "components/Worksheets.js",
-                            lineNumber: 128,
+                            lineNumber: 122,
                             columnNumber: 11
                         }, undefined)
                     }, void 0, false, {
                         fileName: "components/Worksheets.js",
-                        lineNumber: 127,
+                        lineNumber: 121,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -6984,27 +7258,27 @@ const WorksheetsDom = ({ data  })=>{
                                         people: custRelated
                                     }, void 0, false, {
                                         fileName: "components/Worksheets.js",
-                                        lineNumber: 132,
+                                        lineNumber: 126,
                                         columnNumber: 13
                                     }, undefined),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _phonesTableDefault.default), {
                                         phones: custPhones
                                     }, void 0, false, {
                                         fileName: "components/Worksheets.js",
-                                        lineNumber: 133,
+                                        lineNumber: 127,
                                         columnNumber: 13
                                     }, undefined),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _emailTableDefault.default), {
                                         email: custEmail
                                     }, void 0, false, {
                                         fileName: "components/Worksheets.js",
-                                        lineNumber: 134,
+                                        lineNumber: 128,
                                         columnNumber: 13
                                     }, undefined)
                                 ]
                             }, void 0, true, {
                                 fileName: "components/Worksheets.js",
-                                lineNumber: 131,
+                                lineNumber: 125,
                                 columnNumber: 11
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -7016,12 +7290,12 @@ const WorksheetsDom = ({ data  })=>{
                                     setOpen: setOpen
                                 }, void 0, false, {
                                     fileName: "components/Worksheets.js",
-                                    lineNumber: 137,
+                                    lineNumber: 131,
                                     columnNumber: 13
                                 }, undefined)
                             }, void 0, false, {
                                 fileName: "components/Worksheets.js",
-                                lineNumber: 136,
+                                lineNumber: 130,
                                 columnNumber: 11
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -7035,7 +7309,7 @@ const WorksheetsDom = ({ data  })=>{
                                         setSelectedRecord: setSelectedRecord
                                     }, void 0, false, {
                                         fileName: "components/Worksheets.js",
-                                        lineNumber: 140,
+                                        lineNumber: 134,
                                         columnNumber: 13
                                     }, undefined),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _mainTableDefault.default), {
@@ -7050,19 +7324,19 @@ const WorksheetsDom = ({ data  })=>{
                                         setWsData: setWsData
                                     }, void 0, false, {
                                         fileName: "components/Worksheets.js",
-                                        lineNumber: 141,
+                                        lineNumber: 135,
                                         columnNumber: 13
                                     }, undefined)
                                 ]
                             }, void 0, true, {
                                 fileName: "components/Worksheets.js",
-                                lineNumber: 139,
+                                lineNumber: 133,
                                 columnNumber: 11
                             }, undefined)
                         ]
                     }, void 0, true, {
                         fileName: "components/Worksheets.js",
-                        lineNumber: 130,
+                        lineNumber: 124,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -7073,24 +7347,24 @@ const WorksheetsDom = ({ data  })=>{
                             setOpen: setOpen
                         }, void 0, false, {
                             fileName: "components/Worksheets.js",
-                            lineNumber: 145,
+                            lineNumber: 139,
                             columnNumber: 11
                         }, undefined)
                     }, void 0, false, {
                         fileName: "components/Worksheets.js",
-                        lineNumber: 144,
+                        lineNumber: 138,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "components/Worksheets.js",
-                lineNumber: 126,
+                lineNumber: 120,
                 columnNumber: 7
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "components/Worksheets.js",
-        lineNumber: 124,
+        lineNumber: 118,
         columnNumber: 5
     }, undefined);
 };
@@ -8060,7 +8334,7 @@ var _slideOutRecordEdit = require("./slideOutRecordEdit");
 var _slideOutRecordEditDefault = parcelHelpers.interopDefault(_slideOutRecordEdit);
 function MainTable({ records , setRecords , selectedID , recordEditOpen , setRecordEditOpen , selectedRecord , setSelectedRecord , wsData , setWsData  }) {
     const selectedRecordID = selectedRecord;
-    console.log("selectedRecordID", selectedRecordID);
+    // console.log("selectedRecordID", selectedRecordID)
     const deleteRow = (ID)=>{
         const obj = {
             ID,
@@ -8138,7 +8412,7 @@ function MainTable({ records , setRecords , selectedID , recordEditOpen , setRec
                                                                     onClick: ()=>edit(record),
                                                                     className: "cursor-pointer",
                                                                     children: [
-                                                                        record.area,
+                                                                        record.area + ` (x` + record.multiplier + `)`,
                                                                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
                                                                             className: "text-sm font-light text-gray-600",
                                                                             children: record.frequency
@@ -39623,20 +39897,46 @@ var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
 var _react1 = require("@headlessui/react");
 var _outline = require("@heroicons/react/24/outline");
+var _fmGofer = require("fm-gofer");
+var _fmGoferDefault = parcelHelpers.interopDefault(_fmGofer);
+var _reactBeautifulDnd = require("react-beautiful-dnd");
 var _s = $RefreshSig$();
 function RecordEdit({ recordEditOpen , setRecordEditOpen , selectedRecord , setSelectedRecord  }) {
     _s();
     console.log("selectedRecord", selectedRecord);
+    if (!selectedRecord) // Handle the case where selectedRecord is null.
+    // You might want to return null or some placeholder UI here.
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        className: "p-4 flex justify-center items-center",
+        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+            className: "text-center p-4 border border-gray-300 rounded-lg shadow-md bg-white",
+            children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                className: "text-lg font-semibold text-gray-800",
+                children: "No line items available"
+            }, void 0, false, {
+                fileName: "components/SlideOutRecordEdit.js",
+                lineNumber: 15,
+                columnNumber: 21
+            }, this)
+        }, void 0, false, {
+            fileName: "components/SlideOutRecordEdit.js",
+            lineNumber: 14,
+            columnNumber: 17
+        }, this)
+    }, void 0, false, {
+        fileName: "components/SlideOutRecordEdit.js",
+        lineNumber: 13,
+        columnNumber: 13
+    }, this);
+    const [multiplier, setMultiplier] = (0, _react.useState)(selectedRecord.multiplier);
+    const [tasks, setTasks] = (0, _react.useState)([]);
     const [area, setArea] = (0, _react.useState)(selectedRecord.area);
     const [eot, setEot] = (0, _react.useState)(Math.round(selectedRecord.eot));
     const [rate, setRate] = (0, _react.useState)(Math.round(selectedRecord.rate * 100) / 100);
     const [frequency, setFrequency] = (0, _react.useState)(selectedRecord.frequency.split(": ")[0]);
-    //console.log("frequency", frequency)
     const [dayOrMonth, setDayOrMonth] = (0, _react.useState)(frequency.includes("Weekly") ? "day" : "month");
-    //console.log("dayMonth", dayOrMonth)
     const initDayValue = selectedRecord.frequency && selectedRecord.frequency.includes(": ") ? selectedRecord.frequency.split(": ")[1] : "";
     const initDayArray = typeof initDayValue === "string" ? initDayValue.split(", ") : [];
-    //console.log("daySelection", daySelection)
     const [selectedFrequencyValues, setSelectedFrequencyValues] = (0, _react.useState)(setFrequencyValues(initDayArray));
     const initDaySelection = function getInitialDaySelection() {
         if (initDayArray.length > 0 && typeof initDayArray[0] === "string") {
@@ -39673,14 +39973,33 @@ function RecordEdit({ recordEditOpen , setRecordEditOpen , selectedRecord , setS
         return value; // default case, returns the original array if the first element is not a string or array is empty
     }
     (0, _react.useEffect)(()=>{
-        setArea(selectedRecord.area);
-        setEot(Math.round(selectedRecord.eot));
-        setRate(Math.round(selectedRecord.rate * 100) / 100);
-        setFrequency(selectedRecord.frequency.split(": ")[0]);
-        setDayOrMonth(frequency.includes("Weekly") ? "day" : "month");
-        setDaySelection(initDaySelection);
-        setSelectedFrequencyValues(setFrequencyValues(initDayArray));
-        console.log("selectedFrequencyValues", selectedFrequencyValues);
+        async function fetchTasks() {
+            if (selectedRecord) {
+                setMultiplier(selectedRecord.multipier || 1);
+                setArea(selectedRecord.area || "");
+                setEot(selectedRecord.eot ? Math.round(selectedRecord.eot) : 0);
+                setRate(selectedRecord.rate ? Math.round(selectedRecord.rate * 100) / 100 : 0);
+                setFrequency(selectedRecord.frequency ? selectedRecord.frequency.split(": ")[0] : "Weekly");
+                setDayOrMonth(frequency.includes("Weekly") ? "day" : "month");
+                setDaySelection(initDaySelection());
+                setSelectedFrequencyValues(setFrequencyValues(initDayArray));
+                try {
+                    const tasksResponse = await (0, _fmGoferDefault.default).PerformScript("customers * FMgofer * callback", JSON.stringify({
+                        "path": "getTasks",
+                        "ID": selectedRecord.ID
+                    }));
+                    const taskObj = JSON.parse(tasksResponse);
+                    console.log("tasks: ", taskObj.result);
+                    const taskFmError = taskObj.error;
+                    const tasks = taskObj.result;
+                    setTasks(tasks);
+                } catch (error) {
+                    console.error("Error fetching tasks:", error);
+                // Handle errors as needed
+                }
+            }
+        }
+        fetchTasks();
     }, [
         selectedRecord
     ]);
@@ -39732,29 +40051,63 @@ function RecordEdit({ recordEditOpen , setRecordEditOpen , selectedRecord , setS
             return i;
         });
     };
+    const handleMultiplierChange = (value)=>{
+        setMultiplier(value);
+    };
     const handleRadioChange = (value)=>{
         setDaySelection(value);
         const e = setFrequencyValues(value);
         setSelectedFrequencyValues(e);
+    };
+    const handleFormSubmit = ()=>{
+        console.log("formSubmitted");
+        const obj = formRecordObj();
+        if (obj.modified == true) {
+            obj.function = "wsSaveArea";
+            FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
+        }
     };
     const formRecordObj = ()=>{
         const selectedValues = ()=>{
             if (daySelection === "Weekdays") return "Weekdays";
             if (daySelection === "Weekend") return "Weekend";
             if (daySelection === "Everyday") return "Everyday";
-            return selectedFrequencyValues;
+            return selectedFrequencyValues.join(", "); // Assuming array needs to be string
         };
         const newObj = {
             "ID": selectedRecord.ID,
             "area": area,
             "eot": eot,
             "frequency": frequency + ": " + selectedValues(),
+            "multiplier": multiplier,
             "rate": rate
         };
-        // Compare the serialized objects
-        newObj.modified = JSON.stringify(newObj) !== JSON.stringify(selectedRecord);
-        console.log("formObj", newObj);
+        // Manual comparison for each property
+        const hasChanged = newObj.area !== selectedRecord.area || newObj.eot !== selectedRecord.eot || newObj.frequency !== selectedRecord.frequency || newObj.multiplier !== selectedRecord.multiplier || newObj.rate !== selectedRecord.rate;
+        const areaHasChanged = newObj.area !== selectedRecord.area;
+        const eotHasChanged = newObj.eot !== selectedRecord.eot;
+        const frequencyHasChanged = newObj.frequency !== selectedRecord.frequency;
+        const multiplierHasChanged = newObj.multiplier !== selectedRecord.multiplier;
+        const rateHasChanged = newObj.rate !== selectedRecord.rate;
+        newObj.modified = hasChanged;
+        newObj.modification = {
+            areaHasChanged,
+            eotHasChanged,
+            frequencyHasChanged,
+            multiplierHasChanged,
+            rateHasChanged
+        };
+        // console.log("Comparison result", newObj.modified);
+        setTasks([]);
         setRecordEditOpen(false);
+        return newObj;
+    };
+    const onDragEnd = (result)=>{
+        if (!result.destination) return;
+        const reorderedTasks = Array.from(tasks);
+        const [removed] = reorderedTasks.splice(result.source.index, 1);
+        reorderedTasks.splice(result.destination.index, 0, removed);
+        setTasks(reorderedTasks);
     };
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react1.Transition).Root, {
         show: recordEditOpen,
@@ -39768,7 +40121,7 @@ function RecordEdit({ recordEditOpen , setRecordEditOpen , selectedRecord , setS
                     className: "fixed inset-0"
                 }, void 0, false, {
                     fileName: "components/SlideOutRecordEdit.js",
-                    lineNumber: 109,
+                    lineNumber: 183,
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -39803,7 +40156,7 @@ function RecordEdit({ recordEditOpen , setRecordEditOpen , selectedRecord , setS
                                                                     children: "Edit Record"
                                                                 }, void 0, false, {
                                                                     fileName: "components/SlideOutRecordEdit.js",
-                                                                    lineNumber: 127,
+                                                                    lineNumber: 201,
                                                                     columnNumber: 53
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -39817,7 +40170,7 @@ function RecordEdit({ recordEditOpen , setRecordEditOpen , selectedRecord , setS
                                                                                 className: "absolute -inset-2.5"
                                                                             }, void 0, false, {
                                                                                 fileName: "components/SlideOutRecordEdit.js",
-                                                                                lineNumber: 136,
+                                                                                lineNumber: 210,
                                                                                 columnNumber: 57
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
@@ -39825,7 +40178,7 @@ function RecordEdit({ recordEditOpen , setRecordEditOpen , selectedRecord , setS
                                                                                 children: "Close panel"
                                                                             }, void 0, false, {
                                                                                 fileName: "components/SlideOutRecordEdit.js",
-                                                                                lineNumber: 137,
+                                                                                lineNumber: 211,
                                                                                 columnNumber: 57
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _outline.XMarkIcon), {
@@ -39833,243 +40186,277 @@ function RecordEdit({ recordEditOpen , setRecordEditOpen , selectedRecord , setS
                                                                                 "aria-hidden": "true"
                                                                             }, void 0, false, {
                                                                                 fileName: "components/SlideOutRecordEdit.js",
-                                                                                lineNumber: 138,
+                                                                                lineNumber: 212,
                                                                                 columnNumber: 57
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "components/SlideOutRecordEdit.js",
-                                                                        lineNumber: 131,
+                                                                        lineNumber: 205,
                                                                         columnNumber: 57
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "components/SlideOutRecordEdit.js",
-                                                                    lineNumber: 130,
+                                                                    lineNumber: 204,
                                                                     columnNumber: 53
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "components/SlideOutRecordEdit.js",
-                                                            lineNumber: 126,
+                                                            lineNumber: 200,
                                                             columnNumber: 49
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "components/SlideOutRecordEdit.js",
-                                                        lineNumber: 125,
+                                                        lineNumber: 199,
                                                         columnNumber: 45
                                                     }, this),
                                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                                                        id: "recordEditForm",
                                                         className: "relative mt-6 flex-1 px-4 sm:px-6 gap-1",
-                                                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("form", {
-                                                            children: [
-                                                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
-                                                                    className: "block text-sm font-medium text-gray-700",
-                                                                    children: "Area"
-                                                                }, void 0, false, {
-                                                                    fileName: "components/SlideOutRecordEdit.js",
-                                                                    lineNumber: 147,
-                                                                    columnNumber: 53
-                                                                }, this),
-                                                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
-                                                                    type: "text",
-                                                                    value: area,
-                                                                    onChange: (e)=>setArea(e.target.value),
-                                                                    className: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                                                }, void 0, false, {
-                                                                    fileName: "components/SlideOutRecordEdit.js",
-                                                                    lineNumber: 148,
-                                                                    columnNumber: 53
-                                                                }, this),
-                                                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
-                                                                    className: "block text-sm font-medium text-gray-700 mt-4",
-                                                                    children: "Est. of Time (minutes)"
-                                                                }, void 0, false, {
-                                                                    fileName: "components/SlideOutRecordEdit.js",
-                                                                    lineNumber: 156,
-                                                                    columnNumber: 53
-                                                                }, this),
-                                                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
-                                                                    type: "number",
-                                                                    value: eot,
-                                                                    onChange: (e)=>setEot(e.target.value),
-                                                                    className: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                                                }, void 0, false, {
-                                                                    fileName: "components/SlideOutRecordEdit.js",
-                                                                    lineNumber: 157,
-                                                                    columnNumber: 53
-                                                                }, this),
-                                                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
-                                                                    className: "block text-sm font-medium text-gray-700 mt-4",
-                                                                    children: "Rate"
-                                                                }, void 0, false, {
-                                                                    fileName: "components/SlideOutRecordEdit.js",
-                                                                    lineNumber: 165,
-                                                                    columnNumber: 53
-                                                                }, this),
-                                                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
-                                                                    type: "text",
-                                                                    value: rate,
-                                                                    onChange: (e)=>setRate(e.target.value),
-                                                                    className: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm",
-                                                                    placeholder: "$0.00"
-                                                                }, void 0, false, {
-                                                                    fileName: "components/SlideOutRecordEdit.js",
-                                                                    lineNumber: 166,
-                                                                    columnNumber: 53
-                                                                }, this),
-                                                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
-                                                                    className: "block text-sm font-medium text-gray-700 mt-4",
-                                                                    children: "Frequency"
-                                                                }, void 0, false, {
-                                                                    fileName: "components/SlideOutRecordEdit.js",
-                                                                    lineNumber: 175,
-                                                                    columnNumber: 53
-                                                                }, this),
-                                                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("select", {
-                                                                    value: frequency,
-                                                                    onChange: (e)=>handleFrequencyChange(e.target.value),
-                                                                    className: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm",
-                                                                    children: [
-                                                                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
-                                                                            value: "Weekly",
-                                                                            children: "Weekly"
-                                                                        }, void 0, false, {
+                                                        children: [
+                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("form", {
+                                                                children: [
+                                                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                                                                        className: "flex items-center space-x-6 my-2",
+                                                                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                                                                            className: "flex-1",
+                                                                            children: [
+                                                                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                                                                                    className: "block text-sm font-medium text-gray-700",
+                                                                                    children: "Area"
+                                                                                }, void 0, false, {
+                                                                                    fileName: "components/SlideOutRecordEdit.js",
+                                                                                    lineNumber: 223,
+                                                                                    columnNumber: 61
+                                                                                }, this),
+                                                                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                                                                                    type: "text",
+                                                                                    value: area,
+                                                                                    onChange: (e)=>setArea(e.target.value),
+                                                                                    className: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                                                                }, void 0, false, {
+                                                                                    fileName: "components/SlideOutRecordEdit.js",
+                                                                                    lineNumber: 224,
+                                                                                    columnNumber: 61
+                                                                                }, this)
+                                                                            ]
+                                                                        }, void 0, true, {
                                                                             fileName: "components/SlideOutRecordEdit.js",
-                                                                            lineNumber: 181,
-                                                                            columnNumber: 57
-                                                                        }, this),
-                                                                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
-                                                                            value: "Semi-Weekly",
-                                                                            children: "Semi-Weekly"
-                                                                        }, void 0, false, {
-                                                                            fileName: "components/SlideOutRecordEdit.js",
-                                                                            lineNumber: 182,
-                                                                            columnNumber: 57
-                                                                        }, this),
-                                                                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
-                                                                            value: "Monthly",
-                                                                            children: "Monthly"
-                                                                        }, void 0, false, {
-                                                                            fileName: "components/SlideOutRecordEdit.js",
-                                                                            lineNumber: 183,
-                                                                            columnNumber: 57
-                                                                        }, this),
-                                                                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
-                                                                            value: "Semi-Monthly",
-                                                                            children: "Semi-Monthly"
-                                                                        }, void 0, false, {
-                                                                            fileName: "components/SlideOutRecordEdit.js",
-                                                                            lineNumber: 184,
-                                                                            columnNumber: 57
-                                                                        }, this),
-                                                                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
-                                                                            value: "Quarterly",
-                                                                            children: "Quarterly"
-                                                                        }, void 0, false, {
-                                                                            fileName: "components/SlideOutRecordEdit.js",
-                                                                            lineNumber: 185,
-                                                                            columnNumber: 57
-                                                                        }, this),
-                                                                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
-                                                                            value: "Tri-Annually",
-                                                                            children: "Tri-Annually"
-                                                                        }, void 0, false, {
-                                                                            fileName: "components/SlideOutRecordEdit.js",
-                                                                            lineNumber: 186,
-                                                                            columnNumber: 57
-                                                                        }, this),
-                                                                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
-                                                                            value: "Bi-Annually",
-                                                                            children: "Bi-Annually"
-                                                                        }, void 0, false, {
-                                                                            fileName: "components/SlideOutRecordEdit.js",
-                                                                            lineNumber: 187,
-                                                                            columnNumber: 57
-                                                                        }, this),
-                                                                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
-                                                                            value: "Annually",
-                                                                            children: "Annually"
-                                                                        }, void 0, false, {
-                                                                            fileName: "components/SlideOutRecordEdit.js",
-                                                                            lineNumber: 188,
+                                                                            lineNumber: 222,
                                                                             columnNumber: 57
                                                                         }, this)
-                                                                    ]
-                                                                }, void 0, true, {
-                                                                    fileName: "components/SlideOutRecordEdit.js",
-                                                                    lineNumber: 176,
-                                                                    columnNumber: 53
-                                                                }, this),
-                                                                dayOrMonth === "day" && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("fieldset", {
-                                                                    children: [
-                                                                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("legend", {
-                                                                            className: "block text-sm font-medium text-gray-700 mt-4",
-                                                                            children: "Select Frequency"
-                                                                        }, void 0, false, {
-                                                                            fileName: "components/SlideOutRecordEdit.js",
-                                                                            lineNumber: 194,
-                                                                            columnNumber: 53
-                                                                        }, this),
-                                                                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                                                                            className: "mt-4 space-y-4",
+                                                                    }, void 0, false, {
+                                                                        fileName: "components/SlideOutRecordEdit.js",
+                                                                        lineNumber: 220,
+                                                                        columnNumber: 53
+                                                                    }, this),
+                                                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                                                                        className: "flex items-center space-x-6 mt-4",
+                                                                        children: [
+                                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                                                                                className: "flex-1",
+                                                                                children: [
+                                                                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                                                                                        className: "block text-sm font-medium text-gray-700",
+                                                                                        children: "Multiplier"
+                                                                                    }, void 0, false, {
+                                                                                        fileName: "components/SlideOutRecordEdit.js",
+                                                                                        lineNumber: 235,
+                                                                                        columnNumber: 61
+                                                                                    }, this),
+                                                                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                                                                                        type: "number",
+                                                                                        value: multiplier,
+                                                                                        onChange: (e)=>setMultiplier(e.target.value),
+                                                                                        className: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                                                                    }, void 0, false, {
+                                                                                        fileName: "components/SlideOutRecordEdit.js",
+                                                                                        lineNumber: 236,
+                                                                                        columnNumber: 61
+                                                                                    }, this)
+                                                                                ]
+                                                                            }, void 0, true, {
+                                                                                fileName: "components/SlideOutRecordEdit.js",
+                                                                                lineNumber: 234,
+                                                                                columnNumber: 57
+                                                                            }, this),
+                                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                                                                                className: "flex-1",
+                                                                                children: [
+                                                                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                                                                                        className: "block text-sm font-medium text-gray-700",
+                                                                                        children: "Minutes"
+                                                                                    }, void 0, false, {
+                                                                                        fileName: "components/SlideOutRecordEdit.js",
+                                                                                        lineNumber: 245,
+                                                                                        columnNumber: 61
+                                                                                    }, this),
+                                                                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                                                                                        type: "number",
+                                                                                        value: eot,
+                                                                                        onChange: (e)=>setEot(e.target.value),
+                                                                                        className: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                                                                    }, void 0, false, {
+                                                                                        fileName: "components/SlideOutRecordEdit.js",
+                                                                                        lineNumber: 246,
+                                                                                        columnNumber: 61
+                                                                                    }, this)
+                                                                                ]
+                                                                            }, void 0, true, {
+                                                                                fileName: "components/SlideOutRecordEdit.js",
+                                                                                lineNumber: 244,
+                                                                                columnNumber: 57
+                                                                            }, this),
+                                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                                                                                className: "flex-1",
+                                                                                children: [
+                                                                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                                                                                        className: "block text-sm font-medium text-gray-700",
+                                                                                        children: "Rate"
+                                                                                    }, void 0, false, {
+                                                                                        fileName: "components/SlideOutRecordEdit.js",
+                                                                                        lineNumber: 255,
+                                                                                        columnNumber: 61
+                                                                                    }, this),
+                                                                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                                                                                        type: "text",
+                                                                                        value: `$${rate}`,
+                                                                                        onChange: (e)=>setRate(e.target.value.replace(/[^0-9.]/g, "")),
+                                                                                        onBlur: ()=>setRate(parseFloat(rate).toFixed(2)),
+                                                                                        className: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm",
+                                                                                        placeholder: "$0.00"
+                                                                                    }, void 0, false, {
+                                                                                        fileName: "components/SlideOutRecordEdit.js",
+                                                                                        lineNumber: 256,
+                                                                                        columnNumber: 61
+                                                                                    }, this)
+                                                                                ]
+                                                                            }, void 0, true, {
+                                                                                fileName: "components/SlideOutRecordEdit.js",
+                                                                                lineNumber: 254,
+                                                                                columnNumber: 57
+                                                                            }, this)
+                                                                        ]
+                                                                    }, void 0, true, {
+                                                                        fileName: "components/SlideOutRecordEdit.js",
+                                                                        lineNumber: 232,
+                                                                        columnNumber: 53
+                                                                    }, this),
+                                                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                                                                        className: "block text-lg font-semibold text-gray-700 mt-4",
+                                                                        children: "Frequency"
+                                                                    }, void 0, false, {
+                                                                        fileName: "components/SlideOutRecordEdit.js",
+                                                                        lineNumber: 268,
+                                                                        columnNumber: 53
+                                                                    }, this),
+                                                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("select", {
+                                                                        value: frequency,
+                                                                        onChange: (e)=>handleFrequencyChange(e.target.value),
+                                                                        className: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm",
+                                                                        children: [
+                                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
+                                                                                value: "Weekly",
+                                                                                children: "Weekly"
+                                                                            }, void 0, false, {
+                                                                                fileName: "components/SlideOutRecordEdit.js",
+                                                                                lineNumber: 274,
+                                                                                columnNumber: 57
+                                                                            }, this),
+                                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
+                                                                                value: "Semi-Weekly",
+                                                                                children: "Semi-Weekly"
+                                                                            }, void 0, false, {
+                                                                                fileName: "components/SlideOutRecordEdit.js",
+                                                                                lineNumber: 275,
+                                                                                columnNumber: 57
+                                                                            }, this),
+                                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
+                                                                                value: "Monthly",
+                                                                                children: "Monthly"
+                                                                            }, void 0, false, {
+                                                                                fileName: "components/SlideOutRecordEdit.js",
+                                                                                lineNumber: 276,
+                                                                                columnNumber: 57
+                                                                            }, this),
+                                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
+                                                                                value: "Semi-Monthly",
+                                                                                children: "Semi-Monthly"
+                                                                            }, void 0, false, {
+                                                                                fileName: "components/SlideOutRecordEdit.js",
+                                                                                lineNumber: 277,
+                                                                                columnNumber: 57
+                                                                            }, this),
+                                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
+                                                                                value: "Quarterly",
+                                                                                children: "Quarterly"
+                                                                            }, void 0, false, {
+                                                                                fileName: "components/SlideOutRecordEdit.js",
+                                                                                lineNumber: 278,
+                                                                                columnNumber: 57
+                                                                            }, this),
+                                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
+                                                                                value: "Tri-Annually",
+                                                                                children: "Tri-Annually"
+                                                                            }, void 0, false, {
+                                                                                fileName: "components/SlideOutRecordEdit.js",
+                                                                                lineNumber: 279,
+                                                                                columnNumber: 57
+                                                                            }, this),
+                                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
+                                                                                value: "Bi-Annually",
+                                                                                children: "Bi-Annually"
+                                                                            }, void 0, false, {
+                                                                                fileName: "components/SlideOutRecordEdit.js",
+                                                                                lineNumber: 280,
+                                                                                columnNumber: 57
+                                                                            }, this),
+                                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
+                                                                                value: "Annually",
+                                                                                children: "Annually"
+                                                                            }, void 0, false, {
+                                                                                fileName: "components/SlideOutRecordEdit.js",
+                                                                                lineNumber: 281,
+                                                                                columnNumber: 57
+                                                                            }, this)
+                                                                        ]
+                                                                    }, void 0, true, {
+                                                                        fileName: "components/SlideOutRecordEdit.js",
+                                                                        lineNumber: 269,
+                                                                        columnNumber: 53
+                                                                    }, this),
+                                                                    dayOrMonth === "day" && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                                                                        className: "mt-4",
+                                                                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("select", {
+                                                                            value: daySelection,
+                                                                            onChange: (e)=>handleRadioChange(e.target.value),
+                                                                            className: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm",
                                                                             children: [
                                                                                 "Select Day(s)",
                                                                                 "Weekend",
                                                                                 "Weekdays",
                                                                                 "Everyday"
-                                                                            ].map((option)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                                                                                    className: "flex items-center",
-                                                                                    children: [
-                                                                                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
-                                                                                            id: `radio-${option}`,
-                                                                                            name: "daySelection",
-                                                                                            type: "radio",
-                                                                                            value: option,
-                                                                                            checked: daySelection === option,
-                                                                                            onChange: ()=>handleRadioChange(option),
-                                                                                            className: "h-4 w-4 text-indigo-600 border-gray- 300 focus:ring-indigo-500"
-                                                                                        }, void 0, false, {
-                                                                                            fileName: "components/SlideOutRecordEdit.js",
-                                                                                            lineNumber: 198,
-                                                                                            columnNumber: 61
-                                                                                        }, this),
-                                                                                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
-                                                                                            htmlFor: `radio-${option}`,
-                                                                                            className: "ml-3 text-sm text-gray-700",
-                                                                                            children: option
-                                                                                        }, void 0, false, {
-                                                                                            fileName: "components/SlideOutRecordEdit.js",
-                                                                                            lineNumber: 207,
-                                                                                            columnNumber: 61
-                                                                                        }, this)
-                                                                                    ]
-                                                                                }, option, true, {
+                                                                            ].map((option)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
+                                                                                    value: option,
+                                                                                    children: option
+                                                                                }, option, false, {
                                                                                     fileName: "components/SlideOutRecordEdit.js",
-                                                                                    lineNumber: 197,
-                                                                                    columnNumber: 57
+                                                                                    lineNumber: 293,
+                                                                                    columnNumber: 65
                                                                                 }, this))
                                                                         }, void 0, false, {
                                                                             fileName: "components/SlideOutRecordEdit.js",
-                                                                            lineNumber: 195,
-                                                                            columnNumber: 53
+                                                                            lineNumber: 287,
+                                                                            columnNumber: 61
                                                                         }, this)
-                                                                    ]
-                                                                }, void 0, true, {
-                                                                    fileName: "components/SlideOutRecordEdit.js",
-                                                                    lineNumber: 193,
-                                                                    columnNumber: 53
-                                                                }, this),
-                                                                daySelection === "Select Day(s)" && dayOrMonth === "day" && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("fieldset", {
-                                                                    children: [
-                                                                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("legend", {
-                                                                            className: "block text-sm font-medium text-gray-700 mt-4",
-                                                                            children: "Select Day(s)"
-                                                                        }, void 0, false, {
-                                                                            fileName: "components/SlideOutRecordEdit.js",
-                                                                            lineNumber: 219,
-                                                                            columnNumber: 57
-                                                                        }, this),
-                                                                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                                                                    }, void 0, false, {
+                                                                        fileName: "components/SlideOutRecordEdit.js",
+                                                                        lineNumber: 286,
+                                                                        columnNumber: 57
+                                                                    }, this),
+                                                                    daySelection === "Select Day(s)" && dayOrMonth === "day" && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("fieldset", {
+                                                                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                                                                             className: "mt-4 grid grid-cols-1 md:grid-cols-2 gap-4",
                                                                             children: [
                                                                                 "Monday",
@@ -40089,10 +40476,10 @@ function RecordEdit({ recordEditOpen , setRecordEditOpen , selectedRecord , setS
                                                                                             value: day,
                                                                                             checked: selectedFrequencyValues.includes(day),
                                                                                             onChange: ()=>handleCheckboxChange(day),
-                                                                                            className: "h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
+                                                                                            className: "form-checkbox h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
                                                                                         }, void 0, false, {
                                                                                             fileName: "components/SlideOutRecordEdit.js",
-                                                                                            lineNumber: 223,
+                                                                                            lineNumber: 309,
                                                                                             columnNumber: 61
                                                                                         }, this),
                                                                                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
@@ -40101,95 +40488,231 @@ function RecordEdit({ recordEditOpen , setRecordEditOpen , selectedRecord , setS
                                                                                             children: day
                                                                                         }, void 0, false, {
                                                                                             fileName: "components/SlideOutRecordEdit.js",
-                                                                                            lineNumber: 232,
+                                                                                            lineNumber: 318,
                                                                                             columnNumber: 61
                                                                                         }, this)
                                                                                     ]
                                                                                 }, day, true, {
                                                                                     fileName: "components/SlideOutRecordEdit.js",
-                                                                                    lineNumber: 222,
+                                                                                    lineNumber: 308,
                                                                                     columnNumber: 61
                                                                                 }, this))
                                                                         }, void 0, false, {
                                                                             fileName: "components/SlideOutRecordEdit.js",
-                                                                            lineNumber: 220,
+                                                                            lineNumber: 306,
                                                                             columnNumber: 57
                                                                         }, this)
-                                                                    ]
-                                                                }, void 0, true, {
-                                                                    fileName: "components/SlideOutRecordEdit.js",
-                                                                    lineNumber: 218,
-                                                                    columnNumber: 53
-                                                                }, this),
-                                                                dayOrMonth === "month" && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("fieldset", {
-                                                                    children: [
-                                                                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("legend", {
-                                                                            className: "block text-sm font-medium text-gray-700 mt-4",
-                                                                            children: "Select Month(s)"
-                                                                        }, void 0, false, {
-                                                                            fileName: "components/SlideOutRecordEdit.js",
-                                                                            lineNumber: 244,
-                                                                            columnNumber: 57
-                                                                        }, this),
-                                                                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                                                                            className: "mt-4 grid grid-cols-1 md:grid-cols-2 gap-4",
-                                                                            children: monthOptions.map((month)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                                                                                    className: "flex items-center",
-                                                                                    children: [
-                                                                                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
-                                                                                            id: `checkbox-${month}`,
-                                                                                            name: "selectedMonths",
-                                                                                            type: "checkbox",
-                                                                                            value: month,
-                                                                                            checked: selectedFrequencyValues.includes(month),
-                                                                                            onChange: ()=>handleCheckboxChange(month),
-                                                                                            className: "h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
-                                                                                        }, void 0, false, {
+                                                                    }, void 0, false, {
+                                                                        fileName: "components/SlideOutRecordEdit.js",
+                                                                        lineNumber: 304,
+                                                                        columnNumber: 53
+                                                                    }, this),
+                                                                    dayOrMonth === "month" && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("fieldset", {
+                                                                        children: [
+                                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("legend", {
+                                                                                className: "block text-sm font-medium text-gray-700 mt-4",
+                                                                                children: "Select Month(s)"
+                                                                            }, void 0, false, {
+                                                                                fileName: "components/SlideOutRecordEdit.js",
+                                                                                lineNumber: 330,
+                                                                                columnNumber: 57
+                                                                            }, this),
+                                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                                                                                className: "mt-4 grid grid-cols-1 md:grid-cols-2 gap-4",
+                                                                                children: monthOptions.map((month)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                                                                                        className: "flex items-center",
+                                                                                        children: [
+                                                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                                                                                                id: `checkbox-${month}`,
+                                                                                                name: "selectedMonths",
+                                                                                                type: "checkbox",
+                                                                                                value: month,
+                                                                                                checked: selectedFrequencyValues.includes(month),
+                                                                                                onChange: ()=>handleCheckboxChange(month),
+                                                                                                className: "h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
+                                                                                            }, void 0, false, {
+                                                                                                fileName: "components/SlideOutRecordEdit.js",
+                                                                                                lineNumber: 334,
+                                                                                                columnNumber: 61
+                                                                                            }, this),
+                                                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                                                                                                htmlFor: `checkbox-${month}`,
+                                                                                                className: "ml-3 text-sm text-gray-700",
+                                                                                                children: month
+                                                                                            }, void 0, false, {
+                                                                                                fileName: "components/SlideOutRecordEdit.js",
+                                                                                                lineNumber: 343,
+                                                                                                columnNumber: 61
+                                                                                            }, this)
+                                                                                        ]
+                                                                                    }, month, true, {
+                                                                                        fileName: "components/SlideOutRecordEdit.js",
+                                                                                        lineNumber: 333,
+                                                                                        columnNumber: 61
+                                                                                    }, this))
+                                                                            }, void 0, false, {
+                                                                                fileName: "components/SlideOutRecordEdit.js",
+                                                                                lineNumber: 331,
+                                                                                columnNumber: 57
+                                                                            }, this)
+                                                                        ]
+                                                                    }, void 0, true, {
+                                                                        fileName: "components/SlideOutRecordEdit.js",
+                                                                        lineNumber: 329,
+                                                                        columnNumber: 53
+                                                                    }, this)
+                                                                ]
+                                                            }, void 0, true, {
+                                                                fileName: "components/SlideOutRecordEdit.js",
+                                                                lineNumber: 219,
+                                                                columnNumber: 49
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                                                                className: "block text-lg font-semibold text-gray-700 mt-4",
+                                                                children: "Tasks"
+                                                            }, void 0, false, {
+                                                                fileName: "components/SlideOutRecordEdit.js",
+                                                                lineNumber: 354,
+                                                                columnNumber: 49
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBeautifulDnd.DragDropContext), {
+                                                                onDragEnd: onDragEnd,
+                                                                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBeautifulDnd.Droppable), {
+                                                                    droppableId: "tasksDroppable",
+                                                                    children: (provided)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                                                                            ...provided.droppableProps,
+                                                                            ref: provided.innerRef,
+                                                                            className: "grow overflow-x-auto",
+                                                                            children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                                                                                className: "inline-block min-w-full align-middle",
+                                                                                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                                                                                    className: "shadow ring-1 ring-black ring-opacity-5",
+                                                                                    style: {
+                                                                                        maxHeight: "60vh",
+                                                                                        overflowY: "auto"
+                                                                                    },
+                                                                                    children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                                                                                        className: "min-w-full divide-y divide-gray-300",
+                                                                                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("section", {
+                                                                                            className: "divide-y divide-gray-200 bg-white overflow-y-auto",
+                                                                                            children: [
+                                                                                                tasks.map((task, index)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBeautifulDnd.Draggable), {
+                                                                                                        draggableId: task.fieldData.__ID.toString(),
+                                                                                                        index: index,
+                                                                                                        children: (provided)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                                                                                                                ref: provided.innerRef,
+                                                                                                                ...provided.draggableProps,
+                                                                                                                ...provided.dragHandleProps,
+                                                                                                                className: "flex flex-row justify-between items-center py-4",
+                                                                                                                children: [
+                                                                                                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                                                                                                                        className: "pl-4 text-md font-medium text-gray-900",
+                                                                                                                        children: [
+                                                                                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                                                                                                                                className: "pr-2",
+                                                                                                                                children: task.fieldData.Action
+                                                                                                                            }, void 0, false, {
+                                                                                                                                fileName: "components/SlideOutRecordEdit.js",
+                                                                                                                                lineNumber: 377,
+                                                                                                                                columnNumber: 101
+                                                                                                                            }, this),
+                                                                                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                                                                                                                                className: "pr-2",
+                                                                                                                                children: task.fieldData.Object
+                                                                                                                            }, void 0, false, {
+                                                                                                                                fileName: "components/SlideOutRecordEdit.js",
+                                                                                                                                lineNumber: 378,
+                                                                                                                                columnNumber: 101
+                                                                                                                            }, this)
+                                                                                                                        ]
+                                                                                                                    }, void 0, true, {
+                                                                                                                        fileName: "components/SlideOutRecordEdit.js",
+                                                                                                                        lineNumber: 376,
+                                                                                                                        columnNumber: 97
+                                                                                                                    }, this),
+                                                                                                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                                                                                                                        className: "flex-1 text-sm font-light text-gray-600",
+                                                                                                                        children: [
+                                                                                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                                                                                                                                className: "pr-2",
+                                                                                                                                children: task.fieldData["Extra details"]
+                                                                                                                            }, void 0, false, {
+                                                                                                                                fileName: "components/SlideOutRecordEdit.js",
+                                                                                                                                lineNumber: 381,
+                                                                                                                                columnNumber: 101
+                                                                                                                            }, this),
+                                                                                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                                                                                                                                className: "pr-2",
+                                                                                                                                children: task.fieldData.Comment
+                                                                                                                            }, void 0, false, {
+                                                                                                                                fileName: "components/SlideOutRecordEdit.js",
+                                                                                                                                lineNumber: 382,
+                                                                                                                                columnNumber: 101
+                                                                                                                            }, this)
+                                                                                                                        ]
+                                                                                                                    }, void 0, true, {
+                                                                                                                        fileName: "components/SlideOutRecordEdit.js",
+                                                                                                                        lineNumber: 380,
+                                                                                                                        columnNumber: 97
+                                                                                                                    }, this)
+                                                                                                                ]
+                                                                                                            }, void 0, true, {
+                                                                                                                fileName: "components/SlideOutRecordEdit.js",
+                                                                                                                lineNumber: 370,
+                                                                                                                columnNumber: 93
+                                                                                                            }, this)
+                                                                                                    }, task.fieldData.__ID, false, {
+                                                                                                        fileName: "components/SlideOutRecordEdit.js",
+                                                                                                        lineNumber: 368,
+                                                                                                        columnNumber: 85
+                                                                                                    }, this)),
+                                                                                                provided.placeholder
+                                                                                            ]
+                                                                                        }, void 0, true, {
                                                                                             fileName: "components/SlideOutRecordEdit.js",
-                                                                                            lineNumber: 248,
-                                                                                            columnNumber: 61
-                                                                                        }, this),
-                                                                                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
-                                                                                            htmlFor: `checkbox-${month}`,
-                                                                                            className: "ml-3 text-sm text-gray-700",
-                                                                                            children: month
-                                                                                        }, void 0, false, {
-                                                                                            fileName: "components/SlideOutRecordEdit.js",
-                                                                                            lineNumber: 257,
-                                                                                            columnNumber: 61
+                                                                                            lineNumber: 366,
+                                                                                            columnNumber: 77
                                                                                         }, this)
-                                                                                    ]
-                                                                                }, month, true, {
+                                                                                    }, void 0, false, {
+                                                                                        fileName: "components/SlideOutRecordEdit.js",
+                                                                                        lineNumber: 365,
+                                                                                        columnNumber: 73
+                                                                                    }, this)
+                                                                                }, void 0, false, {
                                                                                     fileName: "components/SlideOutRecordEdit.js",
-                                                                                    lineNumber: 247,
-                                                                                    columnNumber: 61
-                                                                                }, this))
+                                                                                    lineNumber: 364,
+                                                                                    columnNumber: 69
+                                                                                }, this)
+                                                                            }, void 0, false, {
+                                                                                fileName: "components/SlideOutRecordEdit.js",
+                                                                                lineNumber: 363,
+                                                                                columnNumber: 65
+                                                                            }, this)
                                                                         }, void 0, false, {
                                                                             fileName: "components/SlideOutRecordEdit.js",
-                                                                            lineNumber: 245,
-                                                                            columnNumber: 57
+                                                                            lineNumber: 358,
+                                                                            columnNumber: 61
                                                                         }, this)
-                                                                    ]
-                                                                }, void 0, true, {
+                                                                }, void 0, false, {
                                                                     fileName: "components/SlideOutRecordEdit.js",
-                                                                    lineNumber: 243,
+                                                                    lineNumber: 356,
                                                                     columnNumber: 53
                                                                 }, this)
-                                                            ]
-                                                        }, void 0, true, {
-                                                            fileName: "components/SlideOutRecordEdit.js",
-                                                            lineNumber: 145,
-                                                            columnNumber: 49
-                                                        }, this)
-                                                    }, void 0, false, {
+                                                            }, void 0, false, {
+                                                                fileName: "components/SlideOutRecordEdit.js",
+                                                                lineNumber: 355,
+                                                                columnNumber: 49
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
                                                         fileName: "components/SlideOutRecordEdit.js",
-                                                        lineNumber: 143,
+                                                        lineNumber: 217,
                                                         columnNumber: 45
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "components/SlideOutRecordEdit.js",
-                                                lineNumber: 124,
+                                                lineNumber: 198,
                                                 columnNumber: 41
                                             }, this),
                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -40202,69 +40725,70 @@ function RecordEdit({ recordEditOpen , setRecordEditOpen , selectedRecord , setS
                                                         children: "Cancel"
                                                     }, void 0, false, {
                                                         fileName: "components/SlideOutRecordEdit.js",
-                                                        lineNumber: 270,
+                                                        lineNumber: 400,
                                                         columnNumber: 45
                                                     }, this),
                                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
-                                                        type: "submit",
+                                                        type: "button",
                                                         className: "ml-4 inline-flex justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500",
+                                                        onClick: ()=>handleFormSubmit(),
                                                         children: "Save"
                                                     }, void 0, false, {
                                                         fileName: "components/SlideOutRecordEdit.js",
-                                                        lineNumber: 277,
+                                                        lineNumber: 407,
                                                         columnNumber: 45
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "components/SlideOutRecordEdit.js",
-                                                lineNumber: 269,
+                                                lineNumber: 399,
                                                 columnNumber: 41
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "components/SlideOutRecordEdit.js",
-                                        lineNumber: 123,
+                                        lineNumber: 197,
                                         columnNumber: 37
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "components/SlideOutRecordEdit.js",
-                                    lineNumber: 122,
+                                    lineNumber: 196,
                                     columnNumber: 33
                                 }, this)
                             }, void 0, false, {
                                 fileName: "components/SlideOutRecordEdit.js",
-                                lineNumber: 113,
+                                lineNumber: 187,
                                 columnNumber: 29
                             }, this)
                         }, void 0, false, {
                             fileName: "components/SlideOutRecordEdit.js",
-                            lineNumber: 112,
+                            lineNumber: 186,
                             columnNumber: 25
                         }, this)
                     }, void 0, false, {
                         fileName: "components/SlideOutRecordEdit.js",
-                        lineNumber: 111,
+                        lineNumber: 185,
                         columnNumber: 21
                     }, this)
                 }, void 0, false, {
                     fileName: "components/SlideOutRecordEdit.js",
-                    lineNumber: 110,
+                    lineNumber: 184,
                     columnNumber: 17
                 }, this)
             ]
         }, void 0, true, {
             fileName: "components/SlideOutRecordEdit.js",
-            lineNumber: 108,
+            lineNumber: 182,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "components/SlideOutRecordEdit.js",
-        lineNumber: 107,
+        lineNumber: 181,
         columnNumber: 9
     }, this);
 }
 exports.default = RecordEdit;
-_s(RecordEdit, "1JfDtKkpHEYfHpkvNqsHVTqRYD4=");
+_s(RecordEdit, "y3nQ0r8pL+na7H+YSpTDWMrYv58=");
 _c = RecordEdit;
 var _c;
 $RefreshReg$(_c, "RecordEdit");
@@ -40274,7 +40798,7 @@ $RefreshReg$(_c, "RecordEdit");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"f4wnQ","react":"b4tPL","@headlessui/react":"kxdZe","@heroicons/react/24/outline":"kqhTQ","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"62Vgh"}],"kxdZe":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"f4wnQ","react":"b4tPL","@headlessui/react":"kxdZe","@heroicons/react/24/outline":"kqhTQ","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"62Vgh","fm-gofer":"aiRNP","react-beautiful-dnd":"aM1nX"}],"kxdZe":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Portal", ()=>(0, _portalJs.Portal));
@@ -47164,7 +47688,100 @@ function XMarkIcon({ title , titleId , ...props }, svgRef) {
 const ForwardRef = _react.forwardRef(XMarkIcon);
 exports.default = ForwardRef;
 
-},{"react":"b4tPL","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"ir5T9":[function(require,module,exports) {
+},{"react":"b4tPL","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"aiRNP":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "PerformScript", ()=>b);
+parcelHelpers.export(exports, "PerformScriptWithOption", ()=>d);
+parcelHelpers.export(exports, "default", ()=>O);
+const w = "The FM script call timed out", l = "fmGoferCallbackD7738642C91848E08720EAC24EDDA483";
+function x() {
+    return "xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx".replace(/[xy]/g, (r)=>{
+        var o = Math.random() * 16 | 0, e = r == "x" ? o : o & 3 | 8;
+        return e.toString(16);
+    });
+}
+function I() {
+    return typeof window.fmGofer == "object" && window.fmGofer !== null && !Array.isArray(window.fmGofer);
+}
+function y() {
+    I() || (window.fmGofer = {
+        promises: {},
+        callbackName: l
+    }, window[l] = G);
+}
+function v(t, r, o, e) {
+    const n = x(), i = {
+        resolve: t,
+        reject: r
+    };
+    return o !== 0 && (i.timeoutID = setTimeout(()=>{
+        i.fmOnReadyIntervalID && clearInterval(i.fmOnReadyIntervalID), u(n), r(e);
+    }, o)), window.fmGofer.promises[n] = i, n;
+}
+function D(t) {
+    return window.fmGofer.promises[t];
+}
+function u(t) {
+    var o, e;
+    const r = (e = (o = window.fmGofer) == null ? void 0 : o.promises) == null ? void 0 : e[t];
+    return r && (r.timeoutID && clearTimeout(r.timeoutID), r.fmOnReadyIntervalID && clearInterval(r.fmOnReadyIntervalID)), delete window.fmGofer.promises[t];
+}
+function G(t, r, o) {
+    try {
+        o === "0" && (o = "");
+        const e = D(t);
+        if (typeof e > "u") throw new Error(`No promise found for promiseID ${t}.`);
+        e.timeoutID && clearTimeout(e.timeoutID), o ? e.reject(r) : e.resolve(r), u(t);
+    } catch (e1) {
+        console.error(e1);
+    }
+}
+function h(t, r, o) {
+    let e;
+    return {
+        promise: new Promise((i, a)=>{
+            if (typeof window.FileMaker == "object") {
+                window.FileMaker.PerformScriptWithOption(t, r, o);
+                return;
+            }
+            const f = 5, m = 2e3;
+            let s = 0;
+            e = setInterval(()=>{
+                s += f, s > m && (clearInterval(e), a(`window.FileMaker not found within ${m} ms`)), typeof window.FileMaker == "object" && (clearInterval(e), window.FileMaker.PerformScriptWithOption(t, r, o), i());
+            }, f);
+        }),
+        intervalID: e
+    };
+}
+function d(t, r, o, e = 15e3, n = w) {
+    if (typeof t != "string" || !t) throw new Error("script must be a string");
+    if (typeof e != "number") throw new Error("timeout must be a number");
+    if (typeof n != "string") throw new Error("timeoutMessage must be a string");
+    return new Promise(async (i, a)=>{
+        y();
+        const f = v(i, a, e, n), m = {
+            promiseID: f,
+            callbackName: l,
+            parameter: r
+        }, s = JSON.stringify(m);
+        try {
+            const { promise: c , intervalID: p  } = h(t, s, o);
+            window.fmGofer.promises[f].fmOnReadyIntervalID = p, await c;
+        } catch (c1) {
+            u(f), a(c1);
+        }
+    });
+}
+function b(t, r, o = 15e3, e = w) {
+    return d(t, r, void 0, o, e);
+}
+const O = {
+    PerformScript: b,
+    PerformScriptWithOption: d
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"ir5T9":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$565e = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -49080,8 +49697,8 @@ const currentOrg = {
 };
 function transformData(custObj, currentOrg, wsArray, selectedWorksheetID) {
     // console.log("custObj", custObj)
-    console.log("tfd.js_wsArray", wsArray);
-    console.log("tfd.js_selectedWS", selectedWorksheetID);
+    //console.log("tfd.js_wsArray", wsArray)
+    //console.log("tfd.js_selectedWS", selectedWorksheetID)
     const newObj = {};
     // Emails Array
     newObj.emails = custObj.portalData.customersEmail.map((email)=>({
@@ -49137,7 +49754,7 @@ function transformData(custObj, currentOrg, wsArray, selectedWorksheetID) {
     const isValidID = selectedWorksheetID && Object.keys(selectedWorksheetID).length !== 0;
     const selectedWorksheet = isValidID ? custObj.portalData.customerWorksheets.find((worksheet)=>worksheet["customerWorksheets::__ID"] === selectedWorksheetID) : null;
     const matchingWsArray = isValidID ? wsArray.find((fieldData)=>fieldData.fieldData["__ID"] === selectedWorksheetID) : null;
-    console.log("tfd.js_matchingWsArray", matchingWsArray);
+    //console.log("tfd.js_matchingWsArray",matchingWsArray)
     // Worksheet Object
     newObj.worksheet = isValidID && selectedWorksheet && matchingWsArray ? {
         ID: selectedWorksheet["customerWorksheets::__ID"],
@@ -49160,12 +49777,13 @@ function transformData(custObj, currentOrg, wsArray, selectedWorksheetID) {
     // WorksheetRecords Array
     newObj.worksheetRecords = isValidID && selectedWorksheet && matchingWsArray ? matchingWsArray.portalData.workSheet_WorksheetInfo.sort((a, b)=>a["workSheet_WorksheetInfo::~order"] - b["workSheet_WorksheetInfo::~order"]).map((record)=>({
             area: record["workSheet_WorksheetInfo::Area"],
+            multiplier: record["workSheet_WorksheetInfo::Multiplier"],
             frequency: record["workSheet_WorksheetInfo::Frequency Specified Horozontal"],
             rate: record["workSheet_WorksheetInfo::Rate"],
             eot: record["workSheet_WorksheetInfo::Total Time Per Visit"],
             ID: record["workSheet_WorksheetInfo::__ID"]
         })) : null;
-    // console.log("recordsArray",newObj)
+    //console.log("recordsArray",newObj)
     // CONSTRUCT TOTALTIME
     // Initialize an empty object to hold the subtotals based on frequency
     let totalTime = {};

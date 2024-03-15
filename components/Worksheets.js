@@ -80,22 +80,16 @@ import ShowTime from "./SlideOut";
 import RecordEdit from "./slideOutRecordEdit";
 
 const WorksheetsDom = ({data}) => {
-  console.log('wsDomDataInit',data)
+  //console.log('wsDomDataInit',data)
   const json = data;
   //console.log(json)
   const custObj = json.custObj;
   const currentOrg = json.currentState;
   const wsArray = json.dataArray;
   const wsID = json.selectedID;
-  // console.log("initWsArray",wsArray)
-  /*
-  const selectedWorksheet = wsArray.find(wsArray => wsArray.fieldData.Select === "1") || // get first ws where selected is true
-    [...wsArray].sort((a, b) => b.recordId - a.recordId)[0] || //get newest ws
-    {};
-  */
-  // const [selectedID, setSelectedID] = useState(wsID || null);
-  console.log("initSelectedID", wsID)
+  // console.log("initSelectedID", wsID)
   const [wsData, setWsData] = useState(transformData(custObj, currentOrg, wsArray, wsID));
+  // console.log("wsData",wsData);
   const custEmail = wsData.emails;
   const custRelated = wsData.people;
   const custPhones = wsData.phones;

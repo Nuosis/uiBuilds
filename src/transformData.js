@@ -369,8 +369,8 @@ const currentOrg = {org: "6FF320DD-757B-42BB-ACD5-00BFCD5F58E0"}
 
 export default function transformData(custObj, currentOrg, wsArray, selectedWorksheetID) {
 	// console.log("custObj", custObj)
-	console.log("tfd.js_wsArray", wsArray)
-	console.log("tfd.js_selectedWS", selectedWorksheetID)
+	//console.log("tfd.js_wsArray", wsArray)
+	//console.log("tfd.js_selectedWS", selectedWorksheetID)
 	const newObj = {};
 	
 	// Emails Array
@@ -440,7 +440,7 @@ export default function transformData(custObj, currentOrg, wsArray, selectedWork
 	const matchingWsArray = isValidID ? wsArray.find(
 	(fieldData) => fieldData.fieldData['__ID'] === selectedWorksheetID
 	):null;
-	console.log("tfd.js_matchingWsArray",matchingWsArray)
+	//console.log("tfd.js_matchingWsArray",matchingWsArray)
 
 	// Worksheet Object
 	newObj.worksheet = isValidID && selectedWorksheet && matchingWsArray ? {
@@ -467,12 +467,13 @@ export default function transformData(custObj, currentOrg, wsArray, selectedWork
 	.sort((a, b) => a['workSheet_WorksheetInfo::~order'] - b['workSheet_WorksheetInfo::~order'])
 	.map((record) => ({
 		area: record['workSheet_WorksheetInfo::Area'],
+		multiplier: record['workSheet_WorksheetInfo::Multiplier'],
 		frequency: record['workSheet_WorksheetInfo::Frequency Specified Horozontal'],
 		rate: record['workSheet_WorksheetInfo::Rate'],
 		eot: record['workSheet_WorksheetInfo::Total Time Per Visit'],
 		ID: record['workSheet_WorksheetInfo::__ID'],
 	})):null;
-	// console.log("recordsArray",newObj)
+	//console.log("recordsArray",newObj)
 
 	// CONSTRUCT TOTALTIME
 	// Initialize an empty object to hold the subtotals based on frequency

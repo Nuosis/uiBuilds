@@ -1,21 +1,34 @@
 import { Fragment, useState, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
+import FMGofer from 'fm-gofer';
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"; 
 
 export default function RecordEdit({recordEditOpen, setRecordEditOpen, selectedRecord, setSelectedRecord}) {
     console.log("selectedRecord", selectedRecord);
+    if (!selectedRecord) {
+        // Handle the case where selectedRecord is null.
+        // You might want to return null or some placeholder UI here.
+        return (
+            <div className="p-4 flex justify-center items-center">
+                <div className="text-center p-4 border border-gray-300 rounded-lg shadow-md bg-white">
+                    <p className="text-lg font-semibold text-gray-800">No line items available</p>
+                </div>
+            </div>
+        );
+        
+        
+    }
+    const [multiplier, setMultiplier] = useState(selectedRecord.multiplier);
+    const [tasks, setTasks] = useState([]);
     const [area, setArea] = useState(selectedRecord.area);
     const [eot, setEot] = useState(Math.round(selectedRecord.eot));
     const [rate, setRate] = useState(Math.round(selectedRecord.rate*100)/100);
     const [frequency, setFrequency] = useState(selectedRecord.frequency.split(': ')[0]);
-    //console.log("frequency", frequency)
     const [dayOrMonth, setDayOrMonth] = useState(frequency.includes("Weekly") ? "day":"month");
-    //console.log("dayMonth", dayOrMonth)
     const initDayValue = selectedRecord.frequency && selectedRecord.frequency.includes(': ') ? selectedRecord.frequency.split(': ')[1] : '';
     const initDayArray = typeof initDayValue === 'string' ? initDayValue.split(', ') : [];
-    //console.log("daySelection", daySelection)
     const [selectedFrequencyValues, setSelectedFrequencyValues] = useState(setFrequencyValues(initDayArray));
-
     const initDaySelection = function getInitialDaySelection() {
         if (initDayArray.length > 0 && typeof initDayArray[0] === 'string') {
             if (initDayArray[0].includes('Weekdays')) return 'Weekdays';
@@ -25,8 +38,6 @@ export default function RecordEdit({recordEditOpen, setRecordEditOpen, selectedR
         if (dayOrMonth === "day") return "Select Day(s)";
         return null; // default case, when initDayArray is empty or its first element is not a string
     }
-    
-    
     const [daySelection, setDaySelection] = useState(initDaySelection);
 
     function setFrequencyValues(value) {
@@ -40,14 +51,34 @@ export default function RecordEdit({recordEditOpen, setRecordEditOpen, selectedR
     
 
     useEffect(() => {
-        setArea(selectedRecord.area);
-        setEot(Math.round(selectedRecord.eot));
-        setRate(Math.round(selectedRecord.rate*100)/100);
-        setFrequency(selectedRecord.frequency.split(': ')[0]);
-        setDayOrMonth(frequency.includes("Weekly") ? "day":"month");
-        setDaySelection(initDaySelection);
-        setSelectedFrequencyValues(setFrequencyValues(initDayArray));
-        console.log("selectedFrequencyValues", selectedFrequencyValues)
+        async function fetchTasks() {
+            if (selectedRecord) {
+                setMultiplier(selectedRecord.multipier || 1);
+                setArea(selectedRecord.area || '');
+                setEot(selectedRecord.eot ? Math.round(selectedRecord.eot) : 0);
+                setRate(selectedRecord.rate ? Math.round(selectedRecord.rate * 100) / 100 : 0);
+                setFrequency(selectedRecord.frequency ? selectedRecord.frequency.split(': ')[0] : 'Weekly');
+                setDayOrMonth(frequency.includes("Weekly") ? "day" : "month");
+                setDaySelection(initDaySelection());
+                setSelectedFrequencyValues(setFrequencyValues(initDayArray));
+                try {
+                    const tasksResponse = await FMGofer.PerformScript("customers * FMgofer * callback", JSON.stringify({"path": "getTasks", "ID": selectedRecord.ID}));
+                    const taskObj = JSON.parse(tasksResponse)
+                    console.log("tasks: ", taskObj.result);
+                    const taskFmError = taskObj.error
+                    const tasks = taskObj.result
+                    setTasks(tasks)
+
+                } catch (error) {
+                    console.error('Error fetching tasks:', error);
+                    // Handle errors as needed
+                }
+            }
+                
+        }
+        
+        fetchTasks()
+
     }, [selectedRecord]);
 
     // Options based on frequency
@@ -76,32 +107,75 @@ export default function RecordEdit({recordEditOpen, setRecordEditOpen, selectedR
         return i
     })};
 
+    const handleMultiplierChange = (value) => {
+        setMultiplier(value);
+    };
+
     const handleRadioChange = (value) => {
         setDaySelection(value);
         const e = setFrequencyValues(value)
         setSelectedFrequencyValues(e);
     };
 
+    const handleFormSubmit = () => {
+        console.log("formSubmitted")
+        const obj = formRecordObj();
+        if(obj.modified == true){
+            obj.function = "wsSaveArea"
+            FileMaker.PerformScript("customers . loadWebViewer . callbacks", JSON.stringify(obj));
+        }
+    };
+
     const formRecordObj = () => {
         const selectedValues = () => {
-            if (daySelection==='Weekdays') return 'Weekdays';
-            if (daySelection==='Weekend') return 'Weekend';
-            if (daySelection==='Everyday') return 'Everyday';
-            return selectedFrequencyValues;
-        }
+            if (daySelection === 'Weekdays') return 'Weekdays';
+            if (daySelection === 'Weekend') return 'Weekend';
+            if (daySelection === 'Everyday') return 'Everyday';
+            return selectedFrequencyValues.join(', '); // Assuming array needs to be string
+        };
+    
         const newObj = {
             'ID': selectedRecord.ID, 
             'area': area,
             'eot': eot,
             'frequency': frequency + ': ' + selectedValues(),
+            'multiplier': multiplier,
             'rate': rate
-        }
+        };
+    
+        // Manual comparison for each property
+        const hasChanged =  newObj.area !== selectedRecord.area ||
+                            newObj.eot !== selectedRecord.eot ||
+                            newObj.frequency !== selectedRecord.frequency ||
+                            newObj.multiplier !== selectedRecord.multiplier ||
+                            newObj.rate !== selectedRecord.rate;
+        
+        const areaHasChanged =  newObj.area !== selectedRecord.area;
+        const eotHasChanged =  newObj.eot !== selectedRecord.eot;
+        const frequencyHasChanged =  newObj.frequency !== selectedRecord.frequency;
+        const multiplierHasChanged =  newObj.multiplier !== selectedRecord.multiplier;
+        const rateHasChanged =  newObj.rate !== selectedRecord.rate;
 
-        // Compare the serialized objects
-        newObj.modified = JSON.stringify(newObj) !== JSON.stringify(selectedRecord);
-        console.log("formObj", newObj);
-        setRecordEditOpen(false)
+        newObj.modified = hasChanged;
+        newObj.modification = {areaHasChanged,eotHasChanged,frequencyHasChanged, multiplierHasChanged, rateHasChanged};
+        // console.log("Comparison result", newObj.modified);
+        setTasks([])
+        setRecordEditOpen(false);
+        return newObj
     };
+
+    const onDragEnd = (result) => {
+        if (!result.destination) {
+            return;
+        }
+    
+        const reorderedTasks = Array.from(tasks);
+        const [removed] = reorderedTasks.splice(result.source.index, 1);
+        reorderedTasks.splice(result.destination.index, 0, removed);
+    
+        setTasks(reorderedTasks);
+    };
+    
 
     return (
         <Transition.Root show={recordEditOpen} as={Fragment}>
@@ -140,39 +214,58 @@ export default function RecordEdit({recordEditOpen, setRecordEditOpen, selectedR
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="relative mt-6 flex-1 px-4 sm:px-6 gap-1">
+                                            <div id = "recordEditForm" className="relative mt-6 flex-1 px-4 sm:px-6 gap-1">
                                                 {/* Form start */}
                                                 <form>
-                                                    {/* Area field */}
-                                                    <label className="block text-sm font-medium text-gray-700">Area</label>
-                                                    <input
-                                                    type="text"
-                                                    value={area}
-                                                    onChange={(e) => setArea(e.target.value)}
-                                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                                    />
-
-                                                    {/* EOT field */}
-                                                    <label className="block text-sm font-medium text-gray-700 mt-4">Est. of Time (minutes)</label>
-                                                    <input
-                                                    type="number"
-                                                    value={eot}
-                                                    onChange={(e) => setEot(e.target.value)}
-                                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                                    />
-
-                                                    {/* Rate field */}
-                                                    <label className="block text-sm font-medium text-gray-700 mt-4">Rate</label>
-                                                    <input
-                                                    type="text"
-                                                    value={rate}
-                                                    onChange={(e) => setRate(e.target.value)}
-                                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                                    placeholder="$0.00"
-                                                    />
+                                                    <div className="flex items-center space-x-6 my-2">
+                                                        {/* Area field */}
+                                                        <div className="flex-1">
+                                                            <label className="block text-sm font-medium text-gray-700">Area</label>
+                                                            <input
+                                                            type="text"
+                                                            value={area}
+                                                            onChange={(e) => setArea(e.target.value)}
+                                                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex items-center space-x-6 mt-4">
+                                                        {/* Multiplier field */}
+                                                        <div className="flex-1">
+                                                            <label className="block text-sm font-medium text-gray-700">Multiplier</label>
+                                                            <input
+                                                            type="number"
+                                                            value={multiplier}
+                                                            onChange={(e) => setMultiplier(e.target.value)}
+                                                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                                            />
+                                                        </div>
+                                                        {/* EOT field */}
+                                                        <div className="flex-1">
+                                                            <label className="block text-sm font-medium text-gray-700">Minutes</label>
+                                                            <input
+                                                            type="number"
+                                                            value={eot}
+                                                            onChange={(e) => setEot(e.target.value)}
+                                                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                                            />
+                                                        </div>
+                                                        {/* Rate field */}
+                                                        <div className="flex-1">
+                                                            <label className="block text-sm font-medium text-gray-700">Rate</label>
+                                                            <input
+                                                                type="text"
+                                                                value={`$${rate}`}
+                                                                onChange={(e) => setRate(e.target.value.replace(/[^0-9.]/g, ''))}
+                                                                onBlur={() => setRate(parseFloat(rate).toFixed(2))}
+                                                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                                                placeholder="$0.00"
+                                                            />
+                                                        </div>
+                                                    </div>
 
                                                     {/* Frequency dropdown */}
-                                                    <label className="block text-sm font-medium text-gray-700 mt-4">Frequency</label>
+                                                    <label className="block text-lg font-semibold text-gray-700 mt-4">Frequency</label>
                                                     <select
                                                         value={frequency}
                                                         onChange={(e) => handleFrequencyChange(e.target.value)}
@@ -188,37 +281,30 @@ export default function RecordEdit({recordEditOpen, setRecordEditOpen, selectedR
                                                         <option value="Annually">Annually</option>
                                                     </select>
 
-                                                    {/* Radio buttons for Day selection */}
+                                                    {/* Frequency Pattern */}
                                                     {dayOrMonth === 'day' && (
-                                                    <fieldset>
-                                                    <legend className="block text-sm font-medium text-gray-700 mt-4">Select Frequency</legend>
-                                                    <div className="mt-4 space-y-4">
-                                                        {['Select Day(s)', 'Weekend', 'Weekdays', 'Everyday'].map((option) => (
-                                                        <div key={option} className="flex items-center">
-                                                            <input
-                                                            id={`radio-${option}`}
-                                                            name="daySelection"
-                                                            type="radio"
-                                                            value={option}
-                                                            checked={daySelection === option}
-                                                            onChange={() => handleRadioChange(option)}
-                                                            className="h-4 w-4 text-indigo-600 border-gray- 300 focus:ring-indigo-500"
-                                                            />
-                                                            <label htmlFor={`radio-${option}`} className="ml-3 text-sm text-gray-700">
-                                                            {option}
-                                                            </label>
+                                                        <div className="mt-4">
+                                                            <select
+                                                            value={daySelection}
+                                                            onChange={(e) => handleRadioChange(e.target.value)}
+                                                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                                            >
+                                                            {['Select Day(s)', 'Weekend', 'Weekdays', 'Everyday'].map((option) => (
+                                                                <option key={option} value={option}>
+                                                                {option}
+                                                                </option>
+                                                            ))}
+                                                            </select>
                                                         </div>
-                                                        ))}
-                                                    </div>
-                                                    </fieldset>
                                                     )}
+
 
                                                     {/* Checkboxes for individual days, shown only when 'Select Day(s)' is chosen */}
                                                     {daySelection === 'Select Day(s)' && dayOrMonth === 'day' && (
                                                     <fieldset>
-                                                        <legend className="block text-sm font-medium text-gray-700 mt-4">Select Day(s)</legend>
+                                                    
                                                         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                        {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day) => (
+                                                            {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day) => (
                                                             <div key={day} className="flex items-center">
                                                             <input
                                                                 id={`checkbox-${day}`}
@@ -227,7 +313,7 @@ export default function RecordEdit({recordEditOpen, setRecordEditOpen, selectedR
                                                                 value={day}
                                                                 checked={selectedFrequencyValues.includes(day)}
                                                                 onChange={() => handleCheckboxChange(day)}
-                                                                className="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
+                                                                className="form-checkbox h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
                                                             />
                                                             <label htmlFor={`checkbox-${day}`} className="ml-3 text-sm text-gray-700">
                                                                 {day}
@@ -264,6 +350,50 @@ export default function RecordEdit({recordEditOpen, setRecordEditOpen, selectedR
                                                     )}
                                                 </form>
                                                 {/* Form end */}
+                                                {/* TASK TABLE */}
+                                                <label className="block text-lg font-semibold text-gray-700 mt-4">Tasks</label>
+                                                <DragDropContext onDragEnd={onDragEnd}>
+                                                    <Droppable droppableId="tasksDroppable">
+                                                        {(provided) => (
+                                                            <div
+                                                                {...provided.droppableProps}
+                                                                ref={provided.innerRef}
+                                                                className="grow overflow-x-auto"
+                                                            >
+                                                                <div className="inline-block min-w-full align-middle">
+                                                                    <div className="shadow ring-1 ring-black ring-opacity-5" style={{ maxHeight: '60vh', overflowY: 'auto' }}>
+                                                                        <div className="min-w-full divide-y divide-gray-300">
+                                                                            <section className="divide-y divide-gray-200 bg-white overflow-y-auto">
+                                                                                {tasks.map((task, index) => (
+                                                                                    <Draggable key={task.fieldData.__ID} draggableId={task.fieldData.__ID.toString()} index={index}>
+                                                                                        {(provided) => (
+                                                                                            <div
+                                                                                                ref={provided.innerRef}
+                                                                                                {...provided.draggableProps}
+                                                                                                {...provided.dragHandleProps}
+                                                                                                className="flex flex-row justify-between items-center py-4"
+                                                                                            >
+                                                                                                <div className="pl-4 text-md font-medium text-gray-900">
+                                                                                                    <span className="pr-2">{task.fieldData.Action}</span>
+                                                                                                    <span className="pr-2">{task.fieldData.Object}</span>
+                                                                                                </div>
+                                                                                                <div className="flex-1 text-sm font-light text-gray-600">
+                                                                                                    <span className="pr-2">{task.fieldData['Extra details']}</span>
+                                                                                                    <span className="pr-2">{task.fieldData.Comment}</span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        )}
+                                                                                    </Draggable>
+                                                                                ))}
+                                                                                {provided.placeholder}
+                                                                            </section>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        )}
+                                                    </Droppable>
+                                                </DragDropContext>
                                             </div>
                                         </div>
                                         <div className="flex flex-shrink-0 justify-end px-4 py-4">
@@ -275,8 +405,9 @@ export default function RecordEdit({recordEditOpen, setRecordEditOpen, selectedR
                                                 Cancel
                                             </button>
                                             <button
-                                                type="submit"
+                                                type="button"
                                                 className="ml-4 inline-flex justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                                                onClick={() => handleFormSubmit()}
                                             >
                                                 Save
                                             </button>
