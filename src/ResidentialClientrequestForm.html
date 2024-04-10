@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            #cleaningCalculator {
+                margin: 20px 0;
+            }
+            #cleaningCalculator label,
+            #cleaningCalculator input,
+            #cleaningCalculator p {
+                display: block;
+                margin-bottom: 10px;
+            }
+            #cleaningCalculator button {
+                font-size: 16px;
+                padding: 10px;
+                cursor: pointer;
+                background-color: #57b784;
+                border: 1px solid #57b784 !important;
+                margin-top: 10px;
+                color: #fff !important;
+                font-size: 1em;
+                font-family: 'Lato';
+                text-transform: uppercase;
+                font-weight: 700;
+                letter-spacing: 1px;
+                padding: 10px 50px;
+                border-radius: 50px;
+                transition: 0.5s;
+            }
+            #cleaningCalculator button:hover {
+                background-color: #9fcc70;
+                border: 1px solid #9fcc70 !important;
+                color: #fff !important;
+                transition: 0.5s;
+            }
+            table#cleaningTasks {
+                margin-top: 10px; /* Adds 10px margin to the top of the table */
+            }
+
+            table#cleaningTasks th {
+                background-color: #f0f0f0; /* Sets a slight grey background */
+            }
+
+            table#cleaningTasks td {
+                position: relative;
+                text-align: left; /* Ensures text aligns to the left */
+                width: 100%; /* You might adjust this based on your layout */
+            }
+            .remove-task {
+                position: absolute;
+                right: 0; /* Aligns to the far right */
+                top: 50%; /* Adjusts vertical alignment */
+                transform: translateY(-50%); /* Centers vertically */
+                cursor: pointer; /* Changes cursor to indicate clickable */
+            }
+            .remove-task svg {
+                fill: #757575; /* Sets the SVG color, change as needed */
+                width: 16px; /* Adjust size as needed */
+                height: 16px; /* Adjust size as needed */
+            }
+            #taskInputRow {
+                display: flex;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+
+            #taskInputRow input[type="text"] {
+                flex-grow: 1;
+                margin-right: 10px;
+            }
+
+            #taskInputRow input {
+                margin: 0;
+                width: 50%;
+            }
+
+            #taskInputRow label {
+                margin: 0;
+            }
+            
+            #addTaskButton {
+                background-color: #e0e0e0; /* Subdued grey background */
+                color: #555; /* Darker text for contrast */
+                border: none; /* Remove default border */
+                padding: 8px 20px; /* Moderate padding for a smaller look */
+                font-size: 14px; /* Smaller font size */
+                border-radius: 20px; /* Rounded corners for a modern look */
+                cursor: pointer; /* Cursor changes to pointer to indicate clickable */
+                transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effects */
+                font-family: 'Lato', sans-serif; /* Modern font, ensure you have this font loaded or choose a similar one */
+                font-weight: 600; /* Slightly bold to keep the text legible */
+            }
+
+            #addTaskButton:hover {
+                background-color: #d4d4d4; /* Slightly darker on hover for interaction feedback */
+                color: #333; /* Text color darkens on hover for better contrast */
+            }
+
+
+            /* Adjustments for checkbox alignment */
+            .checkbox-container {
+                display: flex;
+                align-items: center;
+            }
+        </style>
+    </head>
+
+    <body>
+        <form id="cleaningCalculator">
+            <label for="hours">Select Hours:</label>
+            <input type="number" id="hours" name="hours" value="2" min="2" onchange="onHoursChange()" required>
+            <div id="cleaningPrice">
+            </div>
+            <div id="cleaningTasks">
+            </div>
+            <div id="cleaningDate">
+            </div>
+            <button type="button" onclick="loadTasks()">Build Workorder</button>
+        </form>
+
+        <script>
+            window.onload = function() {
+                calculatePrice(); // Initial price calculation on page load
+            }
+
+            function calculatePrice() {
+                var hours = document.getElementById("hours").value;
+                var price = hours * 40; // Multiply hours by 40
+                var priceText = "Price: $" + price + " this visit";
+                document.getElementById("cleaningPrice").innerHTML = priceText;
+            }
+
+            function onHoursChange() {
+                calculatePrice(); // Recalculate price when hours change
+            }
+
+            function loadTasks() {
+                // Reset button text and onclick event
+                var button = document.querySelector("#cleaningCalculator button");
+                button.textContent = "Select Date";
+                button.setAttribute("onclick", "getDate()");
+                
+                // Create table for tasks
+                var tasksHtml = `
+                    <table id="cleaningTasks">
+                        <thead>
+                            <tr><th colspan="2">High Priority</th></tr>
+                        </thead>
+                        <tbody id="highPriorityTasks">
+                        <tr><td>Detail Kitchen <span class="remove-task" onclick="removeTask(this)">
+                            <svg viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12Z"/></svg>
+                        </span></td></tr>
+                        <tr><td>Clean Bathrooms <span class="remove-task" onclick="removeTask(this)">
+                            <svg viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12Z"/></svg>
+                        </span></td></tr>
+                        <tr><td>Attend to Floors <span class="remove-task" onclick="removeTask(this)">
+                            <svg viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12Z"/></svg>
+                        </span></td></tr>
+                        </tbody>
+                        <thead>
+                            <tr><th colspan="2">In Remaining Time</th></tr>
+                        </thead>
+                        <tbody id="remainingTimeTasks">
+                        <tr><td>Dust Throughout <span class="remove-task" onclick="removeTask(this)">
+                            <svg viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12Z"/></svg>
+                        </span></td></tr>
+                        </tbody>
+                    </table>
+                    <div id="taskInputRow">
+                        <input type="text" id="newTaskName" placeholder="+ add task">
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="isHighPriority"> 
+                            <label for="isHighPriority">High Priority</label>
+                        </div>
+                    </div>
+                    <div">
+                        <button 
+                            type="button" 
+                            id="addTaskButton" 
+                            style = "background-color: #e0e0e0; /* Subdued grey background */
+                                color: #555; /* Darker text for contrast */
+                                border: #757575 !important; /* Remove default border */
+                                padding: 8px 20px; /* Moderate padding for a smaller look */
+                                font-size: 14px; /* Smaller font size */
+                                border-radius: 20px; /* Rounded corners for a modern look */
+                                cursor: pointer; /* Cursor changes to pointer to indicate clickable */
+                                font-family: 'Lato', sans-serif; /* Modern font, ensure you have this font loaded or choose a similar one */
+                                font-weight: 600;" 
+                            onclick="onAddWorkorderLineItem()">
+                            Add
+                        </button>
+                    </div>
+                `;
+                document.getElementById("cleaningTasks").innerHTML = tasksHtml;
+            }
+
+            function onAddWorkorderLineItem() {
+                var taskName = document.getElementById("newTaskName").value;
+                var isHighPriority = document.getElementById("isHighPriority").checked;
+                var taskRow = `<tr><td>${taskName}</td><td class="remove-task-cell"><span class="remove-task" onclick="removeTask(this)">
+                            <svg viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12Z"/></svg>
+                        </span></td></tr>`;
+
+                if (isHighPriority) {
+                    // Add task above "In Remaining Time" header
+                    var highPriorityTasksTbody = document.getElementById("highPriorityTasks");
+                    highPriorityTasksTbody.insertAdjacentHTML('beforeend', taskRow);
+                } else {
+                    // Add task at the end of the table
+                    var remainingTimeTasksTbody = document.getElementById("remainingTimeTasks");
+                    remainingTimeTasksTbody.insertAdjacentHTML('beforeend', taskRow);
+                }
+                // Reset input and checkbox after adding the task
+                document.getElementById("newTaskName").value = ""; // Clear input field
+                document.getElementById("isHighPriority").checked = false; // Uncheck the checkbox
+
+            }
+
+            function removeTask(element) {
+                // Removes the task row when the X is clicked
+                element.parentElement.parentElement.remove();
+            }
+
+            function getDate() {
+                // Reset button text and onclick event
+                // Grab all buttons within the form and select the last one
+                var buttons = document.querySelectorAll("#cleaningCalculator button");
+                var button = buttons[buttons.length - 1]; // Selects the last button
+                button.textContent = "Schedule Clean";
+                button.setAttribute("onclick", "onScheduleClean()");
+
+                var dateHtml = `
+                    <div id="dateInput">
+                        <label for="cleaningDateInput">Select Date:</label>
+                        <input type="date" id="cleaningDateInput" name="cleaningDate">
+                    </div>
+                `
+
+                document.getElementById("cleaningDate").innerHTML = dateHtml
+            }
+
+            function onScheduleClean() {
+                // Gather data from the form
+                const hours = document.getElementById("hours").value;
+                const cleaningDate = document.getElementById("cleaningDateInput").value;
+                const tasks = Array.from(document.querySelectorAll("#cleaningTasks td:first-child")).map(td => td.textContent.trim());
+
+                // Create an object to store
+                const formData = {
+                    hours,
+                    tasks,
+                    cleaningDate,
+                };
+                console.log({formData})
+
+                // Store data in local storage
+                localStorage.setItem('cleaningFormData', JSON.stringify(formData));
+
+                // Redirect to your React app
+                window.location.href = 'http://localhost:3000';
+            }
+        </script>
+    </body>
+</html>
